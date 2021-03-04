@@ -80,7 +80,7 @@ require_once(__DIR__.'/../src/loader.php'); ?>
 							<div class="logo"><div class="row"><div class="col-sm-2"><img class="icon" src="https://<?php echo $_ENV['SITE_URL']; ?>/front/wf.png"></div><div class="col"><h2>Waterfall</h2></div></div></div>
 							<p>Let your creativity flow.</p>
 
-							<p><a href="https://<?php echo $_ENV['SITE_URL']; ?>/login" class="btn-lg btn-info">Log in</a></p> <p><a class="btn-lg btn-primary" href="https://<?php echo $_ENV['SITE_URL']; ?>/register<?php if (isset($_GET['invite'])) {echo '/'.$_GET['invite']; } ?>">Register</a></p>
+							<p><a href="https://<?php echo $_ENV['SITE_URL']; ?>/login" class="btn-lg btn-info">Log in</a></p> <p><a class="btn-lg btn-primary" href="https://<?php echo $_ENV['SITE_URL']; ?>/register<?php if (isset($_GET['invite'])) {echo '/'.htmlspecialchars($_GET['invite']); } ?>">Register</a></p>
 
 
 					</section>

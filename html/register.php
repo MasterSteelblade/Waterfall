@@ -89,7 +89,7 @@ if ($session == false) {
                         $invite = '';
                     }
                         ?>
-                        <input type="hidden" id="inviteCode" name="invite" value="<?php echo $invite; ?>">
+                        <input type="hidden" id="inviteCode" name="invite" value="<?php echo htmlspecialchars($invite); ?>">
                     
     
                         <div class="form-group">
