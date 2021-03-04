@@ -129,7 +129,7 @@ if ($session == false) {
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
-                                <div class="g-recaptcha" data-sitekey="6LfIF7MUAAAAAINVc5SEGIIB6xNAPW1bExTs9lRk"></div>
+                                <div class="g-recaptcha" data-sitekey="<?php echo $ENV['CAPTCHA_SITEKEY']; ?>"></div>
                             </div>
                         </div>
                     </form>
