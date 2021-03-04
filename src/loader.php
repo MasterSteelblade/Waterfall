@@ -38,21 +38,10 @@ require_once(__DIR__."/classes/posts/AudioPost.class.php");
 require_once(__DIR__."/classes/posts/QuotePost.class.php");
 require_once(__DIR__."/classes/posts/LinkPost.class.php");
 require_once(__DIR__."/classes/posts/VideoPost.class.php");
-
-
 require_once(__DIR__."/classes/posts/ChatPost.class.php");
 require_once(__DIR__."/classes/posts/Reblog.class.php");
-
-
 require_once(__DIR__."/classes/Page.class.php");
-
-
 require_once(__DIR__."/classes/JohnDeLancie.class.php");
-
-require_once(__DIR__."/classes/UserMySQL.class.php");
-require_once(__DIR__."/classes/BlogMySQL.class.php");
-
-
 require_once(__DIR__."/modules/Huntress.class.php");
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
