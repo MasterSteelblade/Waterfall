@@ -5,7 +5,7 @@ require_once(__DIR__.'/includes/header.php');
 $isMobile = WFUtils::detectMobile();
 
 if (isset($_GET['tagged'])) {
-	$tagged = strtolower($_GET['tagged']);
+	$tagged = htmlspecialchars(strtolower($_GET['tagged']));
 } else {
 	$failed = true;
 }

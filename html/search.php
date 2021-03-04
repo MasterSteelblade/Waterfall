@@ -5,7 +5,7 @@ require_once(__DIR__.'/includes/header.php');
 $userID = $sessionObj->sessionData['userID'];
 $postCollector = new PostCollector($userID, $sessionObj->sessionData['activeBlog']);
 if (!empty($_GET['search'])) {
-	$tagged = $_GET['search'];
+	$tagged = htmlspecialchars(strtolower($_GET['search']));
 } else {
 	$failed = true;
 }
