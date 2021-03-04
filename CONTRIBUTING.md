@@ -24,3 +24,16 @@ If you have more technical chops about you, helping to design Waterfall 2.0 is a
 If you're a new developer, check to see if there's any issues tagged "beginner" or "good first issue" - they'll help ease you in. For more of a challenge, look for stuff tagged "help wanted". 
 
 
+### Branches
+
+There's two important branches to keep an eye on - dev and main. 
+
+The dev branch is where my own work is done, which gets pushed into main when I'm happy with something. 
+
+Main is considered the testing build, and should be stuff that's relatively stable. Once everything is stability checked, this gets cloned into release branches and packaged up for people to use. 
+
+The "main" branch is where any pull requests should be directed, and where anything low-impact should be cloned from. If you want to use the bleeding edge stuff, feel free to clone from an open PRs against dev instead. 
+
+#### 2.0-dev 
+
+Waterfall 2.0 is developed in this branch. Ignore this unless you're very sure you want to work on the overhaul.
