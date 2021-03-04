@@ -104,7 +104,9 @@ class Content(RavenManager.Raven):
         status = {'total': disk.total, 'used': disk.used, 'free': disk.free, 'percent': disk.percent}
         return status
      
-
+    # Processes an image. If it's a GIF, just stores the GIF as is, because Pillow doesn't really
+    # have a good way to process GIFs, and when using the seek() method, frames routinely got heavily
+    # artifacted. After spending a few weeks on it, I gave up and decided to just store GIFs as is.
     def processImage(self, size, imFile, isAvatar, imgData, baseDir, directory, datehash):
         image = Image.open(imFile)
         imgDat = {}
@@ -209,6 +211,9 @@ class Content(RavenManager.Raven):
     ################### VIDEOS ##########################
     #####################################################
         
+    # Marks a video as in progress in the database. This is done as a separate thing, since during high periods of load, there can be
+    # a wait. For example, on a system with four threads, only one video would process at a time - so the second, third, etc. that try to transcode 
+    # simultaneously have to wait until there's enough free cores. 
     def markVideoInProgress(self, videoID):
         link = psycopg2.connect(host=self.sqlHost, user=self.sqlUserName, password=self.sqlPassword, database=self.sqlDatabaseName)
         linkCursor = link.cursor()
@@ -228,6 +233,7 @@ class Content(RavenManager.Raven):
             # We can probably get away with it...
         self.transcodingCount = self.transcodingCount + 1
 
+    # Marks a video as failed in the database.
     def markVideoFailed(self, videoID, tempFile):
         link = psycopg2.connect(host=self.sqlHost, user=self.sqlUserName, password=self.sqlPassword, database=self.sqlDatabaseName)
         linkCursor = link.cursor()
@@ -248,9 +254,7 @@ class Content(RavenManager.Raven):
             self.transcodingCount = self.transcodingCount - 1
             os.remove('tmp/' + tempFile)
 
-
-
-
+    # Retrieves info on bitrate, dimensions, etc. 
     def probeVideo(self, tempFile):
         try:
             probe = ffmpeg.probe('tmp/' + tempFile)

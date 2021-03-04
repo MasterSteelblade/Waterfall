@@ -194,106 +194,12 @@ else:
     from flask import jsonify
     app = Flask(__name__)
 
-    # ==============================
-    # ==== RAVEN CORE FUNCTIONS ====
-    # ==============================
-    @app.route('/raven')
-    @app.route('/raven/test')
-    def index():
-        if allow(request):
-            return "yay"
-
-    @app.route('/health')
-    def health():
-        if allow(request):
-            return jsonify(
-                status='Alive'
-            )
-        else:
-            abort(404)
-
-    @app.route('/raven/status/map')
-    def serverMapStatus():
-        if request.headers['User-Agent'] == 'ModPanelRavenPingAgentAYYYY' and request.headers['Verify-Key'] == verifyKey:
-            return jsonify(
-                status=ravenObj.status,
-                role=serverRole,
-                name=serverName,
-                ID=serverID,
-                IP=serverIP,
-                port=serverPort,
-                hwScore=checkHardwareScore()
-            )
-        else:
-            abort(404)
-
-    @app.route('/raven/status/master')
-    def serverMasterStatus():
-        if request.headers['User-Agent'] == 'RavenMasterPingAgentAYYYY' and request.headers['Verify-Key'] == verifyKey:
-            return jsonify(
-                status=ravenObj.status,
-                role=serverRole,
-                name=serverName,
-                ID=serverID,
-                IP=serverIP,
-                port=serverPort,
-                hwScore=checkHardwareScore()
-            )
-        else:
-            abort(404)
-
-    @app.route('/raven/status')
-    def getStatus():
-        if (request.headers['User-Agent'] == 'ModPanelRavenPingAgentAYYYY' and request.headers['Verify-Key'] == verifyKey) or 1 == 1:
-            proc = psutil.Process()
-            return jsonify(
-                hwScore=checkHardwareScore(),
-                role = serverRole,
-                name = serverName,
-                ID=serverID,
-                IP=serverIP,
-                port=serverPort,
-                roleData = ravenObj.child.getStatus(),
-                openFiles = proc.open_files()
-            )
-        else:
-            abort(404)
-    
-    @app.route('/raven/reset')
-    def resetStatus():
-        if (request.headers['User-Agent'] == 'ModPanelRavenPingAgentAYYYY' and request.headers['Verify-Key'] == verifyKey) or 1 == 1:
-            if ravenObj.child.type == 'content':
-                ravenObj.child.resetTranscodeCount()
-                return jsonify(
-                    success=True
-                )
-        else:
-            abort(404)
-
-    @app.route('/raven/getrole')
-    def getRole():
-        if ravenObj.child is not None:
-            return jsonify(
-                role =ravenObj.child.type
-            )
-        elif ravenObj.master is not None:
-            return jsonify(
-                role = ravenObj.master.type
-            )
-        else:
-            return jsonify(
-                role = 'None'
-            )
-
-    # ==============================
-    # === RAVEN MASTER FUNCTIONS ===
-    # ==============================
-
-
-
     # ======================================
     # === RAVEN CONTENT SERVER FUNCTIONS ===
     # ======================================
+
+    # Adds an image. Doesn't interact with the database, 
+    # but returns JSON that the site then uses. 
     @app.route('/image/add', methods=['POST'])
     def addNewImage():
         start_time = time.time()
@@ -351,6 +257,9 @@ else:
                         elif isArt == '1':
                             artWidth, artHeight = imgSize
                             if artWidth > 8192 or artHeight > 8192:
+                                # WebP is used for modern browsers, but also has an upper limit of 16383px on any 
+                                # dimension. That's ludicrously large anyway, so we set it to 8k instead
+                                # since that's more than enough for even hyper detailed art. 
                                 artSize = (8192,8192)
                             else:
                                 artSize = (artWidth, artHeight)
@@ -361,6 +270,8 @@ else:
                                 widths.append((imgSize[0], imgSize[1]))
                             else:
                                 widths = []
+                        # The default sizes to pass through. 1280 is the maximum width, because for non-art stuff, 
+                        # that's really all you need.         
                         for widthTest in [(1280, 4096), (810, 4096), (540, 4096), (300, 4096)]:
                             if (imgSize[0] > widthTest[0] or len(widths) == 0) and isAvatar != '1' and isAudio != '1':
                                 widths.append(widthTest)
@@ -399,7 +310,7 @@ else:
 
 
 
-
+    # Adds a video. This one DOES interact with the datbase. 
     @app.route('/video/add', methods=['POST'])
     def addNewVideo():
         if ravenObj.child is not None:
@@ -435,6 +346,7 @@ else:
 
                 return response
     
+    # Adds audio. 
     @app.route('/audio/add', methods=['POST'])
     def addNewAudio():
         if ravenObj.child is not None:
