@@ -1,12 +1,10 @@
 name: PostgreSQL and PHP Tests
 
 on:
-  push:
-    branches:
-    - dev
   pull_request:
     branches:
     - main
+    - 2.0-dev
 
 jobs:
   # Label of the container job

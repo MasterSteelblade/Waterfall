@@ -7,7 +7,7 @@ header('Content-type: application/json');
 // Force this to be a JSON return for a laugh
 if (isset($_POST['g-recaptcha-response'])) {
     $captcha = $_POST['g-recaptcha-response'];
-    $secretKey = '6LfIF7MUAAAAAAU62mvAB9aRDHHh-GGQzDf3vf_R';
+    $secretKey = $ENV['CAPTCHA_SECRETKEY'];
     $captchaIP = $_SERVER['REMOTE_ADDR'];
     $url = 'https://www.google.com/recaptcha/api/siteverify?secret=' . urlencode($secretKey) .  '&response=' . urlencode($captcha);
     $response = file_get_contents($url);
