@@ -1,0 +1,105 @@
+Options +FollowSymLinks
+RewriteEngine On
+
+RewriteCond %{SCRIPT_FILENAME} !-d
+RewriteCond %{SCRIPT_FILENAME} !-f
+
+
+RewriteRule ^search/(.*)/(.*) ./search.php?search=$1&page=$2 [L]
+RewriteRule ^search/(.*)$ ./search.php?search=$1 [L]
+
+
+RewriteRule ^verify/email/(.*)/(.*) ./verify/email.php?email=$1&key=$2 [L]
+RewriteRule ^verify/password/(.*)/(.*) ./verify/password.php?email=$1&key=$2 [L]
+
+RewriteRule ^policy/privacy([^/.]*)$ ./policy/privacy.php [L]
+RewriteRule ^policy/terms([^/.]*)$ ./policy/terms-of-service.php [L]
+RewriteRule ^policy/guidelines([^/.]*)$ ./policy/guidelines.php [L]
+RewriteRule ^policy/bugbounty([^/.]*)$ ./policy/bugbounty.php [L]
+
+RewriteRule ^login([^/.]*)$ ./login.php [L]
+RewriteRule ^login/forgot([^/.]*)$ ./user/forgottenPassword.php [L]
+
+RewriteRule ^post/text([^/.]*)$ ./post/text.php [L]
+RewriteRule ^post/audio([^/.]*)$ ./post/audio.php [L]
+RewriteRule ^post/video([^/.]*)$ ./post/video.php [L]
+RewriteRule ^post/link([^/.]*)$ ./post/link.php [L]
+RewriteRule ^post/quote([^/.]*)$ ./post/quote.php [L]
+RewriteRule ^post/image([^/.]*)$ ./post/image.php [L]
+RewriteRule ^post/art([^/.]*)$ ./post/art.php [L]
+
+
+RewriteRule ^reblog/(.*)$ ./post/reblog.php?post=$1
+
+RewriteRule ^edit/(.*)$ ./post/edit.php?post=$1
+
+RewriteRule ^answer/(.*)$ ./post/answer.php?answer=$1
+
+RewriteRule ^follow/(.*)$ ./followToggle.php?blog=$1
+
+RewriteRule ^followers([^/.]*)$ ./followers.php [L]
+RewriteRule ^followers/(.*)$ ./followers.php?page=$1 [L]
+
+RewriteRule ^liked([^/.]*)$ ./liked.php [L]
+RewriteRule ^liked/(.*)$ ./liked.php?page=$1 [L]
+
+RewriteRule ^queue([^/.]*)$ ./queue.php [L]
+RewriteRule ^queue/(.*)$ ./queue.php?page=$1 [L]
+
+RewriteRule ^drafts([^/.]*)$ ./drafts.php [L]
+RewriteRule ^drafts/(.*)$ ./drafts.php?page=$1 [L]
+
+
+RewriteRule ^user/update([^/.]*)$ ./user/update.php [L]
+
+RewriteRule ^page/new([^/.]*)$ ./page/new.php [L]
+RewriteRule ^page/edit/(.*)$ ./page/edit.php?url=$1
+
+
+RewriteRule ^inbox([^/.]*)$ ./inbox.php [L]
+RewriteRule ^inbox/(.*)$ ./inbox.php?blogName=$1 [L]
+
+RewriteRule ^outbox([^/.]*)$ ./outbox.php [L]
+RewriteRule ^outbox/(.*)$ ./outbox.php?blogName=$1 [L]
+
+RewriteRule ^following([^/.]*)$ ./following.php [L]
+RewriteRule ^following/(.*)$ ./following.php?page=$1 [L]
+
+RewriteRule ^settings/blog/new([^/.]*)$ ./settings/newBlog.php [L]
+
+RewriteRule ^settings/group([^/.]*)$ ./settings/group_permissions.php [L]
+RewriteRule ^settings/group/(.*)$ ./settings/group_permissions.php?mainBlog=$1 [L]
+
+RewriteRule ^settings/totp([^/.]*)$ ./settings/twoFactor.php [L]
+RewriteRule ^settings/user([^/.]*)$ ./settings/user.php [L]
+RewriteRule ^settings/blog([^/.]*)$ ./settings/blog.php [L]
+
+RewriteRule ^dashboard([^/.]*)$ ./dashboard.php [L]
+RewriteRule ^dashboard/(.*)$ ./dashboard.php?prevPost=$1 [L]
+
+RewriteRule ^discovery([^/.]*)$ ./discovery.php [L]
+RewriteRule ^discovery/(.*)$ ./discovery.php?prevPost=$1 [L]
+
+RewriteRule ^message/(.*)$ ./message.php?recipient=$1
+RewriteRule ^register([^/.]*)$ ./register.php [L]
+RewriteRule ^register/(.*)$ ./register.php?invite=$1 [L]
+RewriteRule ^inv/(.*)$ ./index.php?invite=$1 [L]
+
+RewriteRule ^search/(.*)/(.*) ./search.php?search=$1&page=$2 [L]
+RewriteRule ^search/(.*)$ ./search.php?search=$1 [L]
+RewriteRule ^dashboardSearch/(.*)/(.*) ./dashboardSearch.php?search=$1&page=$2 [L]
+RewriteRule ^dashboardSearch/(.*)$ ./dashboardSearch.php?search=$1 [L]
+RewriteRule ^edit/(.*)$ ./postEdit.php?post=$1
+RewriteRule ^postEdit/(.*)$ ./postEdit.php?post=$1
+
+<FilesMatch ".(eot|otf|ttf|woff|woff2|png|jpg|gif|css|js)">
+  Header set Access-Control-Allow-Origin "*"
+</FilesMatch>
+
+<IfModule mod_headers.c>
+	SetEnvIf Origin "https?://(?:.+\.)?(waterfalldev.xyz|waterfall.social)$" AccessControlAllowOrigin=$0
+	Header add Access-Control-Allow-Origin %{AccessControlAllowOrigin}e env=AccessControlAllowOrigin
+	Header set Access-Control-Allow-Credentials "true"
+  Header merge Vary Origin
+</IfModule>
+

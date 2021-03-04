@@ -1,0 +1,30 @@
+Options +FollowSymLinks
+RewriteEngine On
+
+RewriteCond %{SCRIPT_FILENAME} !-d
+RewriteCond %{SCRIPT_FILENAME} !-f
+
+
+RewriteRule ^page/(.*)$ ./index.php?page=$1 [L]
+
+RewriteRule ^post/(.*)$ ./post.php?post=$1 [L]
+
+RewriteRule ^tagged/(.*)/(.*) ./tagged.php?tagged=$1&page=$2 [L]
+RewriteRule ^tagged/(.*) ./tagged.php?tagged=$1 [L]
+
+
+RewriteCond %{REQUEST_URI} !^/$
+RewriteRule ^([^/.]*)$ ./page.php?url=$1 [L]
+
+
+<FilesMatch ".(eot|otf|ttf|woff|woff2|png|jpg|gif|css|js)">
+  Header set Access-Control-Allow-Origin "*"
+</FilesMatch>
+
+<IfModule mod_headers.c>
+	SetEnvIf Origin "https?://(?:.+\.)?(waterfalldev.xyz|waterfall.social)$" AccessControlAllowOrigin=$0
+	Header add Access-Control-Allow-Origin %{AccessControlAllowOrigin}e env=AccessControlAllowOrigin
+	Header set Access-Control-Allow-Credentials "true"
+  Header merge Vary Origin
+</IfModule>
+

@@ -1,0 +1,17 @@
+*~
+/test/unit/File/big-generated-file
+
+/vendor
+defuse-crypto.phar
+defuse-crypto.phar.sig
+composer.phar
+composer.lock
+box.phar
+phpunit.phar
+phpunit.phar.asc
+test/unit/File/tmp
+src/database.php
+*.code-workspace
+src/.env
+script.sh
+/tests/prep/*.sql

@@ -1,0 +1,85 @@
+#quick-box {
+    width: 300px;
+      position: absolute;
+      z-index: 1000;
+      top:0; left:0;
+      display: none;
+      background-color: none;
+      border-radius: 4px;
+  }
+
+  #quick-text {
+    min-height: 90px;
+    max-height: 200px;
+    border-radius: 3px 3px 0px 0px;
+    background-color: #fff;
+    border: 1px solid #cccccc;
+  }
+  
+ 
+  #quick-tags {
+
+    border: 1px solid #cccccc;
+  }
+  
+
+  #quick-reblog-button {
+    width: 100px;
+    min-height: 25px;
+    padding: 0px 68px;
+    border-radius: 0px 0px 3px 3px;
+    background-repeat: no-repeat;
+    background-position: left 90px top 3px;
+  }
+
+  #quick-arrow {
+    width: 0; height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    margin-left: 91px;
+    z-index: auto;
+  }
+  
+  #quick-error {
+    background-color: #282c34;
+    margin: 1px 1px 0px 1px;
+    border: 1px solid rgba(155, 174, 200, 0.85) !important;
+    min-height: 80px;
+    max-height: 80px;
+    border-radius: 3px 3px 0px 0px;
+  }
+  
+  #quick-error-text {
+    border-width: 1px;
+    border-color: white;
+    color: #ff0000;
+  }
+  
+     .quick-mousedown {
+      
+       background-color: #2466b7 !important;
+     }
+  
+     .quick-mouseup {
+      
+       background-color: #2b90d9 !important;
+     }
+  
+  
+  .quick-arrowup {
+    border-top: 10px solid #2b90d9;
+  }
+  
+  .quick-arrowdown{
+    border-top: 10px solid #2466b7;
+  }
+  
+  #quick-box textarea, #quick-box input, #quick-reblog-button, #quick-error{
+    margin: 0;
+    
+    vertical-align: top !important;
+    width: 300px;
+    padding: 5px 10px;
+    resize: none !important;
+  }
+  

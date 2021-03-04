@@ -1,0 +1,9 @@
+raven.ini
+*.pyc
+__pycache__
+venv/
+ffmpeg.exe
+ffprobe.exe
+tmp/
+videos/
+images/

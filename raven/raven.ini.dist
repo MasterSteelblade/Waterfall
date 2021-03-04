@@ -1,0 +1,12 @@
+[SERVER]
+serverrole = content
+serverid = 1
+servername = content1
+
+[DATABASE]
+; This is the credentials for the WF database itself.
+
+username =
+password =
+hostname =
+database = 

@@ -1,0 +1,140 @@
+
+
+body {
+  color: #212529; /* The default text colour for text in posts. */
+  background-color: #132021; /* Background colour of the page. */
+}
+
+.navbar-dark .navbar-nav .nav-link {
+  /* Navbar links. */
+  color: #fff;
+}
+
+.navbar-dark .navbar-brand {
+  /* The Waterfall "branding" area/logo section on the navbar. */
+  color: #fff;
+}
+
+.card-header {
+  /* The header section of "card" areas; such as posts, settings pages, etc. */
+  background-color: #dfecec;
+}
+
+.card {
+  /* Base colour for card areas. */
+  background-color: #eff5f6;
+}
+
+.bg-dark {
+  /* Used primarily on the navbar. Will change its colour. */
+  background-color: #1c3031 !important; /* The important flag is... important, don't remove it or it'll be overridden. */
+}
+
+.img-fluid {
+  /* Should be set the same as background-color in the body section.
+     Allows uploaded images that are transparent to adopt the background colour
+     of the page, instead of being white. Images over a certain size are told
+     by the server to be full-width and adopt this class - you can see this most
+     easily on image posts with a single image. */
+  background-color: #132021;
+}
+
+.card-body .img-fluid {
+  /* As above, but for stuff included in an imageset. Should be set to the same
+     value as background-color for the card class above. */
+    background-color: #eff5f6;
+}
+
+a {
+  /* Links. If you want them to be underlined, remove the text-decoration line. */
+  color: #5f9ea0;
+  text-decoration: none;
+  background-color: transparent;
+}
+
+a:hover {
+  /* As above, but for when hovered over. You might prefer to remove the
+     text-decoration line here so that they're underlined when you mouse-over
+     them. */
+  color: #5d8b9a;
+  text-decoration: none;
+  background-color: transparent;
+}
+
+blockquote {
+  /* Mostly used for note displays on comments. It's recommended to leave this
+     alone, but provided for if you really, really want to change it. */
+  margin: 0 0 1rem;
+}
+
+.btn-light {
+  /* Used on notes. */
+  color: #fff;
+  background-color: #1c3031;
+  border-color: #1c3031;
+}
+
+.btn-light:hover {
+  /* Used on notes. */
+  color: #fff;
+  background-color: #132021;
+  border-color: #1c3031;
+}
+
+.dropdown-menu {
+  /* Dropdown menus, such as the Inbox/Outbox links, or the blog switch menu. */
+  background-color: #222;
+  border: 1px solid #444;
+}
+
+.dropdown-item {
+  /* Items in the dropdown list. */
+  color: #fff;
+}
+
+.dropdown-item:hover {
+  /* Hovering over the above. */
+  background-color: #444;
+  color: #fff;
+}
+
+.dropdown-divider {
+  /* The little divider in the dropdown menus. It's recommended not to make it
+     bigger, but changing the colour might be useful if you're adjusting other
+     stuff to do with these menus. */
+  border-top: 1px solid #444;
+}
+
+.btn-warning {
+  /* "Danger" buttons. Delete post, etc. */
+  color: #fff;
+  background-color: #F39C12;
+  border-color: #F39C12;
+}
+
+.btn-primary {
+  /* Most buttons on the site, such as the post button, use this. */
+  color: #fff;
+  background-color: #375a7f;
+  border-color: #375a7f;
+}
+
+.btn-secondary {
+  /* Currently unused, but presented here for if we find somewhere to use it
+     later. */
+  color: #fff;
+  background-color: #444;
+  border-color: #444;
+}
+
+.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+  color: #212529;
+  background-color: #a5d0c7;
+  border-color:  transparent;
+}
+
+.badge-danger {
+  /* The notification on the inbox.*/
+  color: #fff;
+  /* background-color: #dc3545; */
+}

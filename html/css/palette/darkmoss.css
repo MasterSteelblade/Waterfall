@@ -1,0 +1,144 @@
+body {
+  color: #ccdee1;
+  background-color: #132021;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+  color: #fff;
+}
+
+.navbar-dark .navbar-brand {
+  color: #fff;
+}
+
+.card-header {
+  background-color: #0e1617;
+}
+
+.card {
+  background-color: #121d1f;
+}
+
+.bg-dark {
+  background-color: #1c3031 !important;
+}
+
+.img-fluid {
+  background-color: #132021;
+}
+
+.card-body .img-fluid {
+    background-color: #121d1f;
+}
+
+.makepost {
+  background-color: #121d1f;
+  color: #5f9ea0;
+}
+
+a {
+  color: #5f9ea0;
+  text-decoration: none;
+  background-color: transparent;
+}
+.navbar-icon {
+  color: #5f9ea0;
+}
+
+.switch-blog {
+  color: #fff !important;
+  cursor: pointer;
+}
+
+a:hover {
+  color: #5d8b9a;
+  text-decoration: none;
+  background-color: transparent;
+}
+
+blockquote {
+  margin: 0 0 1rem;
+}
+
+.btn-light {
+  color: #fff;
+  background-color: #1c3031;
+  border-color: #1c3031;
+}
+
+.btn-light:hover {
+  color: #fff;
+  background-color: #132021;
+  border-color: #1c3031;
+}
+
+.dropdown-menu {
+  background-color: #222;
+  border: 1px solid #444;
+}
+
+.dropdown-item {
+  color: #fff;
+}
+
+.dropdown-item:hover {
+  background-color: #444;
+  color: #fff;
+}
+
+.dropdown-divider {
+  border-top: 1px solid #444;
+}
+
+.btn-warning {
+  color: #fff;
+  background-color: #F39C12;
+  border-color: #F39C12;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #375a7f;
+  border-color: #375a7f;
+}
+
+.btn-secondary {
+  color: #fff;
+  background-color: #444;
+  border-color: #444;
+}
+
+.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+  color: #212529;
+  background-color: #a5d0c7;
+  border-color:  transparent;
+}
+
+.badge-danger {
+  color: #fff;
+  /* background-color: #dc3545; */
+}
+
+.usereditable {
+  border: 1px dashed #999999;
+}
+
+.ql-editor {
+  color: #000;
+}
+
+.table {
+  color: #ccdee1;
+  background-color: #121d1f !important;
+}
+
+.table-secondary {
+  background-color:  #121d1f !important;
+}
+
+.switch-blog-blog-settings {
+  color: #ddd;
+  margin-bottom: 1rem;
+  cursor: pointer;
+
+}

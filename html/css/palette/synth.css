@@ -1,0 +1,143 @@
+body {
+  color: #ddd;
+  background: url('https://waterfall.social/frontimages/synthbg.png') no-repeat center center fixed;
+  -webkit-background-size: cover;
+-moz-background-size: cover;
+background-size: cover;
+-o-background-size: cover;
+}
+
+
+.navbar-dark .navbar-nav .nav-link {
+  color: #fff;
+}
+.table {
+  color: #ddd
+}
+
+.navbar-dark .navbar-brand {
+  color: #fff;
+}
+
+.card-header {
+  background-color: #0f1357;
+}
+
+.card {
+  background-color: #1f1234;
+}
+
+.bg-dark {
+  background-color: #3a1d3e !important;
+}
+
+.img-fluid {
+  background-color: #1f123400;
+}
+
+.card-body .img-fluid {
+    background-color: #1f1234;
+}
+
+a {
+  color: #6b90c3;
+  text-decoration: none;
+  background-color: transparent;
+}
+
+a:hover {
+  color: #6b90c3;
+  text-decoration: none;
+  background-color: transparent;
+}
+
+blockquote {
+  margin: 0 0 1rem;
+}
+
+.btn-light {
+  color: #fff;
+  background-color: #3a1d3e;
+  border-color: #3a1d3e;
+}
+
+.btn-light:hover {
+  color: #fff;
+  background-color: #3a1d3e;
+  border-color: #1f1234;
+}
+
+.dropdown-menu {
+  background-color: #3a1d3e;
+  border: 1px solid #444;
+}
+
+.dropdown-item {
+  color: #fff;
+}
+
+.dropdown-item:hover {
+  background-color: #4a1d4e;
+  color: #fff;
+}
+
+.dropdown-divider {
+  border-top: 1px solid #444;
+}
+
+.btn-warning {
+  color: #fff;
+  background-color: #F39C12;
+  border-color: #F39C12;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #375a7f;
+  border-color: #375a7f;
+}
+
+.btn-secondary {
+  color: #fff;
+  background-color: #3a1d3e;
+  border-color: #4a2d4e;
+}
+
+.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+  color: #ddd;
+  background-color: #a5d0c7;
+  border-color:  transparent;
+}
+
+.badge-danger {
+  color: #fff;
+  /* background-color: #dc3545; */
+}
+
+.makepost {
+  background-color: #0f1357;
+  color: #6b90c3;
+}
+
+.alert-success {
+  color: #fff;
+  background-color: #fd44d2;
+}
+
+.timestamp {
+  color: #eee;
+}
+
+.text-muted {
+  color: #aaa;
+}
+
+.table-secondary, .table-secondary > th, .table-secondary >td {
+  background-color: #59087e;
+}
+
+.blog-title {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+  background: rgba(0, 0, 0, 0.55);
+}

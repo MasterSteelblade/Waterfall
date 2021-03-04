@@ -1,0 +1,85 @@
+name: PostgreSQL and PHP Tests
+
+on: push
+
+jobs:
+  # Label of the container job
+  tests:
+    name: Run Tests
+  # You must use a Linux environment when using service containers or container jobs
+    runs-on: ubuntu-20.04
+
+    # Service containers to run with `runner-job`
+    services:
+      # Label used to access the service container
+      postgres:
+        # Docker Hub image
+        image: postgres
+        # Provide the password for postgres
+        env:
+          POSTGRES_PASSWORD: postgres # It exists only as long as the tests run so it's probably fine
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          # Maps tcp port 5432 on service container to the host
+          - 5432:5432
+      redis:
+        # Docker Hub image
+        image: redis
+        # Set health checks to wait until redis has started
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+        # Maps tcp port 5432 on service container to the host
+          - 6379:6379
+
+    steps:
+      # Downloads a copy of the code in the repository before running CI tests
+      - name: Check out repository code
+        uses: actions/checkout@v2
+
+      - name: Install PHP with extensions
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.0
+          tools: composer:v2, phpunit:9.5
+          extensions: mbstring, dom, fileinfo, pgsql, redis
+          coverage: pcov
+
+      - name: Install Composer Dependencies
+        run: composer install
+        
+      - name: Create Postgres users
+        run: PGPASSWORD="postgres" psql -h localhost -U postgres -p 5432 -c 'create user waterfall_user;' 
+      
+      - name: Create Database
+        run: PGPASSWORD="postgres" psql -h localhost -U postgres -p 5432 -c 'create database waterfall;'
+      
+      - name: Load schema
+        run: PGPASSWORD="postgres" psql -h localhost -U postgres -p 5432 -d waterfall -f ./tests/prep/wf.sql
+          
+          
+      - name: Prep environment and Schema
+        # Runs a script that creates a PostgreSQL client, populates
+        # the client with data, and retrieves data
+        run: php ./tests/prep/testPrep.php
+
+      - name: Run Tests
+        run: vendor/bin/phpunit -c phpunit.xml.dist --coverage-clover build/logs/clover.xml
+
+      - name: Send coverage to Codecov
+        if: always()
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: build/logs/clover.xml
+
+      - name: Check language files for missing translations
+        run: php lang/langCheck.php
