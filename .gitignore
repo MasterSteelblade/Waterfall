@@ -15,3 +15,4 @@ src/database.php
 src/.env
 script.sh
 /tests/prep/*.sql
+!/tests/prep/wf.sql
