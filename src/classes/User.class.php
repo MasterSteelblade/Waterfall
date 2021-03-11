@@ -136,6 +136,55 @@ class User{
         }
     }
 
+    public function enableTwoFactor($secretKey, $totpCode) {
+        /**
+         * Enables two-factor authentication for the user.
+         * 
+         * We assume that the `secretKey` parameter is an upper-case
+         * Base32-encoded secret, and verify the given `totpCode` using
+         * that secret. If the TOTP code is valid, we save the secret.
+         *
+         * @param secretKey The base32-encoded TOTP secret key
+         * @param totpCode A 6-digit TOTP code
+         */
+
+        // First, check the given TOTP code is currently valid for this secretKey.
+        // Return `false` if the TOTP code is invalid.
+        $ga = new \Steelblade\GoogleAuthenticator\GoogleAuthenticator();
+        if (!$ga->checkCode($secretKey, $totpCode)) {
+            return false;
+        }
+
+        // The code is valid, store the secretKey
+        $values = array($this->ID, $secretKey);
+        $result = $this->database->db_update("UPDATE users SET secret_key = $2 WHERE id = $1", $values);
+
+        // Return `true` if the database update worked
+        if ($result) {
+            return true;
+        } else {
+            return 0;
+        }
+    }
+
+    public function verifyTwoFactor($totpCode) {
+        /**
+         * Verifies the given TOTP code against this user, if they have
+         * two-factor authentication enabled. Returns `true` if the user
+         * does not have two-factor authentication enabled.
+         *
+         * @param totpCode A 6-digit TOTP code
+         */
+
+        if (!$this->hasTwoFactor()){
+            // return success if 2FA is not enabled
+            return true;
+        }
+
+        $ga = new \Steelblade\GoogleAuthenticator\GoogleAuthenticator();
+        return $ga->checkCode($this->secretKey, $totpCode);
+    }
+
     public function switchMainBlog($blogID) {
         /**
          * Switches a user's main blog. 
