@@ -415,18 +415,20 @@ $token = $easyCSRF->generate($sessionObj->sessionData['csrfName']);
                                         }
                                     }
                                 } ?>
-                                <hr>
-                            <!--<p>Two Factor Authentication (2FA) can add an extra layer of security to your account, by requiring a six digit code to be entered
-                            from a separate authenticator app in addition to your password. The downside is if you lose access to the app (usually on your phone), 
-                            you also lose access to your account, as support won't be able to recover it for you.</p>
-                            <p>2FA is good practice for all users, but is especially recommended if you use the Commission Marketplace.</p>
+                            </li>
+                            <li class="list-group-item">
+                                <h5 class="card-title"><i class="fas fa-key title-icon"></i>Two Factor Authentication</h5>
+                            <p>Two Factor Authentication (2FA) can add an extra layer of security to your account, by requiring a six digit code to be entered from a separate authenticator app in addition to your password. The downside is if you lose access to the app (usually on your phone),  you also lose access to your account, as support won't be able to recover it for you.</p>
+                            <!--<p>2FA is good practice for all users, but is especially recommended if you use the Commission Marketplace.</p>-->
                             <p>2FA Status for this account: 
                             <?php if ($user->hasTwoFactor()) {
-                                ?> <a href="https://<?php echo $_ENV['SITE_URL']; ?>/settings/totp" role="button" name="twoFactorButton" class="btn btn-success">ENABLED</a> <?php
+                                ?> <a href="https://<?php echo $_ENV['SITE_URL']; ?>/settings/totp" role="button" name="twoFactorButton" class="btn btn-success">Enabled</a> <?php
                             } else {
-                                ?> <a href="https://<?php echo $_ENV['SITE_URL']; ?>/settings/totp" role="button" name="twoFactorButton" class="btn btn-outline-danger">DISABLED</a>  <?php
+                                ?> <a href="https://<?php echo $_ENV['SITE_URL']; ?>/settings/totp" role="button" name="twoFactorButton" class="btn btn-outline-danger">Disabled</a>  <?php
                             }?></p>
-                            <p>Use the button above to toggle it on or off.</p> Another last minute bug. Be back soon.-->
+                            <p>Use the button above to toggle it on or off.</p>
+                            </li>
+                            <li class="list-group-item">
                             <div class="row"><div class="col"><button type="button" role="button" class="float-right btn btn-outline-danger" data-toggle="collapse" data-target="#deleteCollapse" aria-expanded="false" aria-controls="deleteCollapse">Delete Account</button></div></div>
                             <div class="collapse" id="deleteCollapse">
                                 <p>If you no longer wish to use the site for any reason, please enter your password below to confirm.</p>
