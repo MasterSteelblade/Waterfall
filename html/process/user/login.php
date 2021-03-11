@@ -49,21 +49,19 @@ if ($session !== false) {
             echo $json;
             exit();
         } 
-        if ($user->secretKey != null && $user->secretKey != '' && (!isset($twoFactor) || $twoFactor == '')) {
+        if ($user->hasTwoFactor() && (!isset($twoFactor) || $twoFactor == '')) {
             // 2FA is there, but not in the form. 
             $data['code'] = 'ERR_2FA_NEEDED';
         } else {
-            if (isset($twoFactor) && $user->secretKey != null && $user->secretKey != '') {
+            if ($user->hasTwoFactor() && isset($twoFactor)) {
                 // Check the 2FA code. 
-                $ga = new \Steelblade\GoogleAuthenticator\GoogleAuthenticator();      
-                if ($ga->checkCode($user->secretKey, $twoFactor) == false) {
+                if (!$user->verifyTwoFactor($twoFactor)) {
                     $data['code'] = 'ERR_INVALID_2FA';
-                    $json = json_encode($data);
-                    echo $json;
-                    exit();
-                    // Exit early to make things cleaner. 
+                    echo json_encode($data);
+                    exit(); // Exit early to make things cleaner. 
                 }
             }
+
             // If we get here, there's no 2FA, or it passed. 
             // Note: 0 is distinct from false for the login command and means
             // something different. 
