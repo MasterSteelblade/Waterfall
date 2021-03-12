@@ -20,6 +20,8 @@ RewriteRule ^policy/bugbounty([^/.]*)$ ./policy/bugbounty.php [L]
 RewriteRule ^login([^/.]*)$ ./login.php [L]
 RewriteRule ^login/forgot([^/.]*)$ ./user/forgottenPassword.php [L]
 
+RewriteRule ^logout([^/.]*)$ ./logout.php [L]
+
 RewriteRule ^post/text([^/.]*)$ ./post/text.php [L]
 RewriteRule ^post/audio([^/.]*)$ ./post/audio.php [L]
 RewriteRule ^post/video([^/.]*)$ ./post/video.php [L]
