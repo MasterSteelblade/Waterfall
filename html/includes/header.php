@@ -169,7 +169,8 @@ if ($session !== false && isset($sessionObj->user->theme)) {
                         <div class="dropdown-menu w-auto" aria-labelledby="messageDropdown">
                         <a class="dropdown-item" href="https://<?php echo $_ENV['SITE_URL']; ?>/settings/user">User Settings</a>
                         <a class="dropdown-item" href="https://<?php echo $_ENV['SITE_URL']; ?>/settings/blog">Blog Settings</a>
-
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="https://<?php echo $_ENV['SITE_URL']; ?>/logout">Log Out</a>
                         </div>
                     </li>
                     <li class="nav-item dropdown d-flex align-items-center">
