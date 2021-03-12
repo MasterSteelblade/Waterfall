@@ -8,7 +8,7 @@ $easyCSRF = new EasyCSRF\EasyCSRF($sessionObj);
 header('Content-type: application/json');
 
 $data = array();
-if ($session !== false || !isset($_POST['deletePassword'])) {
+if ($session === false || !isset($_POST['deletePassword'])) {
     $data['code'] = 'ERR_GENERIC_FAILURE';
     echo json_encode($data);
     $size = ob_get_length();
