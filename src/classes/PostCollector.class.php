@@ -81,7 +81,7 @@ class PostCollector {
                 $nsfwTags[] = $res['id'];
             }
         }
-        $tagVal = array($tag);
+        $tagVal = array(strtolower($tag));
         $tags = $this->database->db_select("SELECT * FROM tags WHERE lowercased = $1", $tagVal);
         $tagList = array();
         if ($tags) {
@@ -119,7 +119,7 @@ class PostCollector {
                 $nsfwTags[] = $res['id'];
             }
         }
-        $tagVal = array($tag);
+        $tagVal = array(strtolower($tag));
         $tags = $this->database->db_select("SELECT * FROM tags WHERE lowercased = $1", $tagVal);
         $tagList = array();
         if ($tags) {
