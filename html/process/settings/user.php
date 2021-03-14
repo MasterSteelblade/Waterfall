@@ -19,7 +19,7 @@ if ($session !== false) {
         $passwordConfirmed = $user->confirmPassword($_POST['currentPassword']);
     }
     if (isset($_POST['pronouns'])) {
-        $user->updatePronoun($_POST['pronouns']);
+        $user->updatePronoun(substr($_POST['pronouns'], 0, 20));
     }
     if (isset($_POST['dashTheme'])) {
         $user->setTheme($_POST['dashTheme']);

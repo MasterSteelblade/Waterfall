@@ -329,27 +329,8 @@ class User{
     }
 
     public function updatePronoun($option) {
-        if ($option == 'none') {
-            $values = array($this->ID);
-            $this->database->db_update("UPDATE users SET pronouns = null where id = $1", $values);
-        } else {
-            $pronoun = '';
-            switch ($option) {
-                case 0: // they
-                    $pronoun = 'they/them';
-                    break;
-                case 1: // she
-                    $pronoun = 'she/her';
-                    break;
-                case 2: //he 
-                    $pronoun = 'he/him';
-                    break;
-                default:
-                    $pronoun = 'they/them';
-            }
-            $values = array($this->ID, $pronoun);
-            $this->database->db_update("UPDATE users SET pronouns = $2 where id = $1", $values);
-        }
+        $values = array($this->ID, $option);
+        $this->database->db_update("UPDATE users SET pronouns = $2 where id = $1", $values);
     }
 
     public function updateMissing($array) {

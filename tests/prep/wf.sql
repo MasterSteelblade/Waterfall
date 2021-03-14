@@ -1369,7 +1369,7 @@ CREATE TABLE public.users (
     account_type public.account_types,
     restrictions public.account_restrictions[] DEFAULT '{}'::public.account_restrictions[],
     flags public.account_flags[] DEFAULT '{}'::public.account_flags[],
-    pronouns public.pronoun_sets
+    pronouns text
 );
 
 
