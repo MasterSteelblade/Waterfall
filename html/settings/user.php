@@ -195,6 +195,7 @@ $token = $easyCSRF->generate($sessionObj->sessionData['csrfName']);
                             <div class="form-group row">
                                 <div class="col">
                                     <p>If you like, you can select pronouns to display next to your blog name on the dashboard. Set them here, then turn them on in blog settings for each blog you want them on.</p>
+                                    <p>This field is for pronouns only. For example, she/her, they/them, etc.</p>
                                     <label class="control-label" for="pronouns">Pronouns:</label>
                             <input id="pronouns" maxlength="20" class="form-control" name="pronouns" type="text" value="<?php echo $user->pronouns; ?>">
                                 </div>
