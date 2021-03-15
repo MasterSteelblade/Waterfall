@@ -692,7 +692,7 @@ class Post {
                             ?>
                             <br>
                             <?php if ($this->postStatus != 'draft') { ?>
-                            <span>posted this</span>
+                            <span><?php echo L::string_posted; ?></span>
                             <br>
                             <?php } ?><?php } ?>
                             <?php if ($this->postStatus != 'draft') { ?>
