@@ -73,7 +73,7 @@ $token = $easyCSRF->generate($sessionObj->sessionData['csrfName']);
                 function(response) {
                     if (response.status !== 200) {
                         console.log('Error logged, status code: ' + response.status);
-                        document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("There was an error trying to update your settings. Please contact support."); ?>'
+                        document.getElementById("DisplayDiv").innerHTML = renderBox('error', 'There was an unknown error.');
                         return false;
                     }
                     response.json().then(function(data) {
@@ -87,7 +87,7 @@ $token = $easyCSRF->generate($sessionObj->sessionData['csrfName']);
                     })
                 }
             ).catch(function(err) {
-                document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("There was an error trying to update. It\'s most likely temporary, so try again - but if it persists, please contact support so we can look into it."); ?>'
+                document.getElementById("DisplayDiv").innerHTML = renderBox('error', 'There was an unknown error.');
             })
         return false; // cancel original event to prevent form submitting
         });
@@ -475,7 +475,7 @@ $token = $easyCSRF->generate($sessionObj->sessionData['csrfName']);
                     })
                 }
             ).catch(function(err) {
-                document.getElementById("DisplayDivBlock").innerHTML = '<?php UIUtils::errorBox("There was an error trying to block. It\'s most likely temporary, so try again - but if it persists, please contact support so we can look into it."); ?>'
+                document.getElementById("DisplayDivBlock").innerHTML = renderBox('error', "There was an unknown error.")
             })
         return false; // cancel original event to prevent form submitting
         });
@@ -497,28 +497,25 @@ $token = $easyCSRF->generate($sessionObj->sessionData['csrfName']);
                 body: formData
             }
         )
-            .then(
+        .then(
                 function(response) {
                     if (response.status !== 200) {
                         console.log('Error logged, status code: ' + response.status);
-                        document.getElementById("DisplayDivDelete").innerHTML = '<?php UIUtils::errorBox("There was an error trying to delete. Please contact support."); ?>'
+                        document.getElementById("DisplayDiv").innerHTML = renderBox('error', 'There was an unknown error.');
                         return false;
                     }
                     response.json().then(function(data) {
                         if (data.code == "SUCCESS") {
-                            window.location.href = siteURL;
-                        } else if (data.code == "ERR_CSRF_FAILURE") {
-                            document.getElementById("DisplayDivDelete").innerHTML = '<?php UIUtils::errorBox("CSRF failure. Please refresh the page and try again."); ?>'
-                        } else if (data.code == "ERR_WRONG_PASS") {
-                            document.getElementById("DisplayDivDelete").innerHTML = '<?php UIUtils::errorBox("Incorrect password."); ?>'
+                            document.getElementById("DisplayDiv").innerHTML = renderBox('success', data.message);
+                            return false;
                         } else {
-                            document.getElementById("DisplayDivDelete").innerHTML = '<?php UIUtils::errorBox("There was an error trying to delete. Please contact support so we can look into it."); ?>'
+                            document.getElementById("DisplayDiv").innerHTML = renderBox('error', data.message);
 
                         }
                     })
                 }
             ).catch(function(err) {
-                document.getElementById("DisplayDivBlock").innerHTML = '<?php UIUtils::errorBox("There was an error trying to block. It\'s most likely temporary, so try again - but if it persists, please contact support so we can look into it."); ?>'
+                document.getElementById("DisplayDiv").innerHTML = renderBox('error', "There was an unknown error.");
             })
         return false; // cancel original event to prevent form submitting
         });
