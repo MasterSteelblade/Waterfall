@@ -36,6 +36,7 @@ if (isset($activeBlog->ownerID) && ($activeBlog->ownerID != $sessionObj->user->I
         $('#MessageForm').submit(function(event) { // catch the form's submit event
         event.preventDefault();
         var formData = new FormData();
+        document.getElementById('postButton').innerHTML = "<?php echo L::string_posting; ?>";
         formData.append('messageText', document.querySelector('#feather-editor').children[0].innerHTML);
         formData.append('recipient', document.getElementById("recipient").value);
         if (document.getElementById("sendAnon") != null) {
@@ -120,7 +121,7 @@ if (isset($activeBlog->ownerID) && ($activeBlog->ownerID != $sessionObj->user->I
                             </div>
                             <?php } ?>
 <div class="btn-group">
-		    <button type="submit" name="post" class="btn btn-primary" value="post" id="post" form="MessageForm">Send</button>
+		    <button type="submit" name="post" class="btn btn-primary" value="post" id="postButton" form="MessageForm">Send</button>
 
 </div>
 </form>

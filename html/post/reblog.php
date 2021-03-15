@@ -15,6 +15,7 @@ if (!$reblogging->failed) { ?>
     $(document).ready(function() {
         $('#PostForm').submit(function(event) { // catch the form's submit event
         event.preventDefault();
+        document.getElementById('postButton').innerHTML = "<?php echo L::string_posting; ?>";
         var formData = new FormData();
 		formData.append('submitType', document.activeElement.value);
 
