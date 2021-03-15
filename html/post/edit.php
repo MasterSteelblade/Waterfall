@@ -71,7 +71,7 @@ var imagePost = false;
                 function(response) {
                     if (response.status !== 200) {
                         console.log('Error logged, status code: ' + response.status);
-                        document.getElementById("DisplayDiv").innerHTML = renderBox('error', 'There was an unknown error.');
+                        document.getElementById("DisplayDiv").innerHTML = renderBox('error', "<?php echo L::error_unknown; ?>");
                         return false;
                     }
                     response.json().then(function(data) {
@@ -86,7 +86,7 @@ var imagePost = false;
                     })
                 }
             ).catch(function(err) {
-                document.getElementById("DisplayDiv").innerHTML = renderBox('error', 'There was an unknown error.');
+                document.getElementById("DisplayDiv").innerHTML = renderBox('error', "<?php echo L::error_unknown; ?>");
             })
         return false; // cancel original event to prevent form submitting
         });

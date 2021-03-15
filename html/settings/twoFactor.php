@@ -106,7 +106,7 @@ $(document).ready(function() {
         }).then(function(response) {
             if (response.status !== 200) {
                 console.log('Error logged, status code: ' + response.status);
-                $("#DisplayDiv").html(renderBox('error', <?php echo L::error_unknown; ?>));
+                $("#DisplayDiv").html(renderBox('error', "<?php echo L::error_unknown; ?>"));
                 return false;
             }
 
@@ -120,7 +120,7 @@ $(document).ready(function() {
                 }
             })
         }).catch(function(err) {
-            $("#DisplayDiv").html(renderBox('error', <?php echo L::error_unknown; ?>));
+            $("#DisplayDiv").html(renderBox('error', "<?php echo L::error_unknown; ?>"));
         });
 
         return false; // cancel original event to prevent form submitting
@@ -146,7 +146,7 @@ $(document).ready(function() {
         }).then(function(response) {
             if (response.status !== 200) {
                 console.log('Error logged, status code: ' + response.status);
-                $("#DisplayDiv").html(renderBox('error', <?php echo L::error_unknown; ?>));
+                $("#DisplayDiv").html(renderBox('error', "<?php echo L::error_unknown; ?>"));
                 return false;
             }
 
@@ -160,7 +160,7 @@ $(document).ready(function() {
                 }
             })
         }).catch(function(err) {
-            $("#DisplayDiv").html(renderBox('error', <?php echo L::error_unknown; ?>));
+            $("#DisplayDiv").html(renderBox('error', "<?php echo L::error_unknown; ?>"));
         });
 
         return false; // cancel original event to prevent form submitting

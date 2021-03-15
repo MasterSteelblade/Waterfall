@@ -111,7 +111,7 @@ badgesChanged = false;
                 function(response) {
                     if (response.status !== 200) {
                         console.log('Error logged, status code: ' + response.status);
-                        document.getElementById("DisplayDiv").innerHTML = renderBox('error', <?php echo L::error_unknown; ?>);
+                        document.getElementById("DisplayDiv").innerHTML = renderBox('error', "<?php echo L::error_unknown; ?>");
                         return false;
                     }
                     response.json().then(function(data) {
@@ -125,7 +125,7 @@ badgesChanged = false;
                     })
                 }
             ).catch(function(err) {
-                document.getElementById("DisplayDiv").innerHTML = renderBox('error', <?php echo L::error_unknown; ?>);
+                document.getElementById("DisplayDiv").innerHTML = renderBox('error', "<?php echo L::error_unknown; ?>");
             })
         return false; // cancel original event to prevent form submitting
         });
@@ -200,7 +200,7 @@ badgesChanged = false;
                 function(response) {
                     if (response.status !== 200) {
                         console.log('Error logged, status code: ' + response.status);
-                        document.getElementById("DisplayDivInviteCreate").innerHTML = renderBox('error', <?php echo L::error_unknown; ?>);
+                        document.getElementById("DisplayDivInviteCreate").innerHTML = renderBox('error', "<?php echo L::error_unknown; ?>");
                         return false;
                     }
                     response.json().then(function(data) {
@@ -212,7 +212,7 @@ badgesChanged = false;
                     })
                 }
             ).catch(function(err) {
-                document.getElementById("DisplayDivInviteCreate").innerHTML = renderBox('error', <?php echo L::error_unknown; ?>);
+                document.getElementById("DisplayDivInviteCreate").innerHTML = renderBox('error', "<?php echo L::error_unknown; ?>");
             })
         return false; // cancel original event to prevent form submitting
         });
@@ -913,7 +913,7 @@ const avatarUploadField = document.getElementById('file-input');
                 function(response) {
                     if (response.status !== 200) {
                         console.log('Error logged, status code: ' + response.status);
-                        document.getElementById("DisplayDivDelete").innerHTML = renderBox('error', <?php echo L::error_unknown; ?>);
+                        document.getElementById("DisplayDivDelete").innerHTML = renderBox('error', "<?php echo L::error_unknown; ?>");
                         return false;
                     }
                     response.json().then(function(data) {
@@ -927,7 +927,7 @@ const avatarUploadField = document.getElementById('file-input');
                     })
                 }
             ).catch(function(err) {
-                document.getElementById("DisplayDivDelete").innerHTML = renderBox('error', <?php echo L::error_unknown; ?>);
+                document.getElementById("DisplayDivDelete").innerHTML = renderBox('error', "<?php echo L::error_unknown; ?>");
             })
         }
 </script>

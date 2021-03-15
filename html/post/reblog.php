@@ -36,7 +36,7 @@ if (!$reblogging->failed) { ?>
                 function(response) {
                     if (response.status !== 200) {
                         console.log('Error logged, status code: ' + response.status);
-                        document.getElementById("DisplayDiv").innerHTML = renderBox('error', 'There was an unknown error.');
+                        document.getElementById("DisplayDiv").innerHTML = renderBox('error', "<?php echo L::error_unknown; ?>");
                         return false;
                     }
                     response.json().then(function(data) {
@@ -51,7 +51,7 @@ if (!$reblogging->failed) { ?>
                     })
                 }
             ).catch(function(err) {
-                document.getElementById("DisplayDiv").innerHTML = renderBox('error', 'There was an unknown error.');
+                document.getElementById("DisplayDiv").innerHTML = renderBox('error', "<?php echo L::error_unknown; ?>");
             })
         return false; // cancel original event to prevent form submitting
         });
@@ -89,7 +89,7 @@ if (!$reblogging->failed) { ?>
         <div class="card">
         <div class="card-body">
         <div class="btn-group">
-                <button type="submit" name="post" class="btn btn-primary" value="post" id="post" form="PostForm">Post</button>
+        <button type="submit" name="post" class="btn btn-primary" value="post" id="postButton" form="PostForm">Post</button>
 
                 <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <span class="sr-only">Post</span>
