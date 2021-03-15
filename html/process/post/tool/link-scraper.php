@@ -51,6 +51,7 @@ if (isset($_POST['url'])) {
             }
           }
           $data['code'] = 'SUCCESS';
+          $data['message'] = "Success";
           $data['title'] = $pageTitle;
           $data['description'] = $description; 
           $data['imageURL'] = $image;
@@ -58,11 +59,13 @@ if (isset($_POST['url'])) {
 
     } else {
         $data['code'] = 'INVALID_URL';
+        $data['message'] = "Invalid URL";
         echo json_encode($data);
         exit();
     }
 } else {
     $data['code'] = 'NO_URL';
+    $data['message'] = "No URL";
     echo json_encode($data);
 
 }

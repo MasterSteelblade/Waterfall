@@ -107,30 +107,25 @@ badgesChanged = false;
                 body: formData
             }
         )
-            .then(
+        .then(
                 function(response) {
                     if (response.status !== 200) {
                         console.log('Error logged, status code: ' + response.status);
-                        document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("There was an error trying to update. Please contact support."); ?>'
+                        document.getElementById("DisplayDiv").innerHTML = renderBox('error', <?php echo L::error_unknown; ?>);
                         return false;
                     }
                     response.json().then(function(data) {
                         if (data.code == "SUCCESS") {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::successBox("Updated!"); ?>'
-                        } else if (data.code == "ERR_BLOG_TAKEN") {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("The blog URL you want is already taken."); ?>'
-                        } else if (data.code == "ERR_NOT_IMAGE") {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("The avatar you tried to set isn\'t an image."); ?>'
-                        } else if (data.code == "ERR_CSRF_FAILURE") {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("CSRF failure. Please refresh the page and try again."); ?>'
+                            document.getElementById("DisplayDiv").innerHTML = renderBox('success', data.message);
+                            return false;
                         } else {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("There was an error trying to update. Please contact support so we can look into it."); ?>'
+                            document.getElementById("DisplayDiv").innerHTML = renderBox('error', data.message);
 
                         }
                     })
                 }
             ).catch(function(err) {
-                document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("There was an error trying to update. It\'s most likely temporary, so try again - but if it persists, please contact support so we can look into it."); ?>'
+                document.getElementById("DisplayDiv").innerHTML = renderBox('error', <?php echo L::error_unknown; ?>);
             })
         return false; // cancel original event to prevent form submitting
         });
@@ -205,22 +200,19 @@ badgesChanged = false;
                 function(response) {
                     if (response.status !== 200) {
                         console.log('Error logged, status code: ' + response.status);
-                        document.getElementById("DisplayDivInviteCreate").innerHTML = '<?php UIUtils::errorBox("There was an error trying to create your invite. Please contact support."); ?>'
+                        document.getElementById("DisplayDivInviteCreate").innerHTML = renderBox('error', <?php echo L::error_unknown; ?>);
                         return false;
                     }
                     response.json().then(function(data) {
                         if (data.code == "SUCCESS") {
-                            document.getElementById("DisplayDivInviteCreate").innerHTML = '<?php UIUtils::successBox("Invite Created! Copy this link or send the code to your friends: <a href=\"' + data.inviteURL + '\">'+ data.inviteURL + '</a>"); ?>'
-                        } else if (data.code == "ERR_CSRF_FAILURE") {
-                            document.getElementById("DisplayDivInviteCreate").innerHTML = '<?php UIUtils::errorBox("CSRF failure. Please refresh the page and try again."); ?>'
+                            document.getElementById("DisplayDivInviteCreate").innerHTML = renderBox('success', data.message + '<a href=\"' + data.inviteURL + '\">'+ data.inviteURL + '</a>');
                         } else {
-                            document.getElementById("DisplayDivInviteCreate").innerHTML = '<?php UIUtils::errorBox("There was an error trying to create your invite. Contact support so we can look into it."); ?>'
-
+                            document.getElementById("DisplayDivInviteCreate").innerHTML = renderBox('error', data.message);
                         }
                     })
                 }
             ).catch(function(err) {
-                document.getElementById("DisplayDivInvite").innerHTML = '<?php UIUtils::errorBox("There was an error trying to create your invite. It\'s most likely temporary, so try again - but if it persists, please contact support so we can look into it."); ?>'
+                document.getElementById("DisplayDivInviteCreate").innerHTML = renderBox('error', <?php echo L::error_unknown; ?>);
             })
         return false; // cancel original event to prevent form submitting
         });
@@ -921,28 +913,24 @@ const avatarUploadField = document.getElementById('file-input');
                 function(response) {
                     if (response.status !== 200) {
                         console.log('Error logged, status code: ' + response.status);
-                        document.getElementById("DisplayDivDelete").innerHTML = '<?php UIUtils::errorBox("There was an error trying to delete the blog. Please contact support."); ?>'
+                        document.getElementById("DisplayDivDelete").innerHTML = renderBox('error', <?php echo L::error_unknown; ?>);
                         return false;
                     }
                     response.json().then(function(data) {
                         if (data.code == "SUCCESS") {
-                            document.getElementById("DisplayDivDelete").innerHTML = '<?php UIUtils::successBox("Deleted! redirecting to dashboard..."); ?>'
-                            window.location.href = siteURL + '/dashboard';
-                        } else if (data.code == "ERR_PERMISSIONS") {
-                            document.getElementById("DisplayDivDelete").innerHTML = '<?php UIUtils::errorBox("This isn\'t your blog."); ?>'
-                        } else if (data.code == "ERR_MAIN_BLOG") {
-                            document.getElementById("DisplayDivDelete").innerHTML = '<?php UIUtils::errorBox("You can\'t delete your main blog!"); ?>'
-
+                            document.getElementById("DisplayDivDelete").innerHTML = renderBox('success', data.message);
+                            return false;
                         } else {
-                            document.getElementById("DisplayDivDelete").innerHTML = '<?php UIUtils::errorBox("There was an error.. Please contact support so we can look into it."); ?>'
+                            document.getElementById("DisplayDivDelete").innerHTML = renderBox('error', data.message);
 
                         }
                     })
                 }
             ).catch(function(err) {
-                console.log(err);
+                document.getElementById("DisplayDivDelete").innerHTML = renderBox('error', <?php echo L::error_unknown; ?>);
             })
         }
 </script>
+<script src="https://<?php echo $_ENV['SITE_URL']; ?>/js/ui.js"></script>
 
 <?php require_once(__DIR__.'/../includes/footer.php'); ?>

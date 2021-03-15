@@ -100,30 +100,25 @@ if ($permissions == false) {
                 body: formData
             }
         )
-            .then(
+        .then(
                 function(response) {
                     if (response.status !== 200) {
                         console.log('Error logged, status code: ' + response.status);
-                        document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("There was an error trying to update. Please contact support."); ?>'
+                        document.getElementById("DisplayDiv").innerHTML = renderBox('error', 'There was an unknown error.');
                         return false;
                     }
                     response.json().then(function(data) {
                         if (data.code == "SUCCESS") {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::successBox("Updated!"); ?>'
-                        } else if (data.code == "ERR_NOT_MEMBER") {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("This user is not a member of the blog."); ?>'
-                        } else if (data.code == "ERR_PERMISSIONS") {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("You don\'t have permission to do that."); ?>'
-                        } else if (data.code == "ERR_PERMISSION_OBJECT_NOT_LOADED") {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("There was a problem - are you sure this use is a member of the blog?"); ?>'
+                            document.getElementById("DisplayDiv").innerHTML = renderBox('success', data.message);
+                            return false;
                         } else {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("There was an error trying to update. Please contact support so we can look into it."); ?>'
+                            document.getElementById("DisplayDiv").innerHTML = renderBox('error', data.message);
 
                         }
                     })
                 }
             ).catch(function(err) {
-                document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("There was an error trying to update. It\'s most likely temporary, so try again - but if it persists, please contact support so we can look into it."); ?>'
+                document.getElementById("DisplayDiv").innerHTML = renderBox('error', 'There was an unknown error.');
             })
         return false; // cancel original event to prevent form submitting
         });
@@ -275,5 +270,6 @@ if ($permissions == false) {
         </div>
     </div>
 </div>
+<script src="https://<?php echo $_ENV['SITE_URL']; ?>/js/ui.js"></script>
 
 <?php require_once(__DIR__.'/../includes/footer.php'); ?>

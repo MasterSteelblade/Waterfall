@@ -69,11 +69,11 @@ $token = $easyCSRF->generate($sessionObj->sessionData['csrfName']);
                 body: formData
             }
         )
-            .then(
+        .then(
                 function(response) {
                     if (response.status !== 200) {
                         console.log('Error logged, status code: ' + response.status);
-                        document.getElementById("DisplayDiv").innerHTML = renderBox('error', 'There was an unknown error.');
+                        document.getElementById("DisplayDiv").innerHTML = renderBox('error', <?php echo L::error_unknown; ?>);
                         return false;
                     }
                     response.json().then(function(data) {
@@ -87,7 +87,7 @@ $token = $easyCSRF->generate($sessionObj->sessionData['csrfName']);
                     })
                 }
             ).catch(function(err) {
-                document.getElementById("DisplayDiv").innerHTML = renderBox('error', 'There was an unknown error.');
+                document.getElementById("DisplayDiv").innerHTML = renderBox('error', <?php echo L::error_unknown; ?>);
             })
         return false; // cancel original event to prevent form submitting
         });
@@ -457,25 +457,25 @@ $token = $easyCSRF->generate($sessionObj->sessionData['csrfName']);
                 body: formData
             }
         )
-            .then(
+        .then(
                 function(response) {
                     if (response.status !== 200) {
                         console.log('Error logged, status code: ' + response.status);
-                        document.getElementById("DisplayDivBlock").innerHTML = renderBox('error', "There was an unknown error.")
+                        document.getElementById("DisplayDivBlock").innerHTML = renderBox('error', <?php echo L::error_unknown; ?>);
                         return false;
                     }
                     response.json().then(function(data) {
                         if (data.code == "SUCCESS") {
-                            document.getElementById("DisplayDiv").innerHTML = renderBox('success', data.message);
+                            document.getElementById("DisplayDivBlock").innerHTML = renderBox('success', data.message);
                             return false;
                         } else {
-                            document.getElementById("DisplayDiv").innerHTML = renderBox('error', data.message);
+                            document.getElementById("DisplayDivBlock").innerHTML = renderBox('error', data.message);
 
                         }
                     })
                 }
             ).catch(function(err) {
-                document.getElementById("DisplayDivBlock").innerHTML = renderBox('error', "There was an unknown error.")
+                document.getElementById("DisplayDivBlock").innerHTML = renderBox('error', <?php echo L::error_unknown; ?>);
             })
         return false; // cancel original event to prevent form submitting
         });
@@ -501,21 +501,22 @@ $token = $easyCSRF->generate($sessionObj->sessionData['csrfName']);
                 function(response) {
                     if (response.status !== 200) {
                         console.log('Error logged, status code: ' + response.status);
-                        document.getElementById("DisplayDiv").innerHTML = renderBox('error', 'There was an unknown error.');
+                        document.getElementById("DisplayDivDelete").innerHTML = renderBox('error', <?php echo L::error_unknown; ?>);
                         return false;
                     }
                     response.json().then(function(data) {
                         if (data.code == "SUCCESS") {
-                            document.getElementById("DisplayDiv").innerHTML = renderBox('success', data.message);
+                            document.getElementById("DisplayDivDelete").innerHTML = renderBox('success', data.message);
+                            window.location.href = 'https://' + siteURL;
                             return false;
                         } else {
-                            document.getElementById("DisplayDiv").innerHTML = renderBox('error', data.message);
+                            document.getElementById("DisplayDivDelete").innerHTML = renderBox('error', data.message);
 
                         }
                     })
                 }
             ).catch(function(err) {
-                document.getElementById("DisplayDiv").innerHTML = renderBox('error', "There was an unknown error.");
+                document.getElementById("DisplayDivDelete").innerHTML = renderBox('error', <?php echo L::error_unknown; ?>);
             })
         return false; // cancel original event to prevent form submitting
         });

@@ -18,20 +18,25 @@ require_once(__DIR__.'/../includes/header.php');
                 body: formData
             }
         )
-            .then(
+        .then(
                 function(response) {
                     if (response.status !== 200) {
                         console.log('Error logged, status code: ' + response.status);
-                        document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("There was an error trying to submit the form. Please contact support."); ?>'
+                        document.getElementById("DisplayDiv").innerHTML = renderBox('error', <?php echo L::error_unknown; ?>);
                         return false;
                     }
                     response.json().then(function(data) {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::infoBox("Thank you. If an account with this email address exists, it will recieve an email shortly with instructions."); ?>'
+                        if (data.code == "SUCCESS") {
+                            document.getElementById("DisplayDiv").innerHTML = renderBox('success', data.message);
                             return false;
+                        } else {
+                            document.getElementById("DisplayDiv").innerHTML = renderBox('error', data.message);
+
+                        }
                     })
                 }
             ).catch(function(err) {
-                document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("There was an error trying to submit the form. It\'s most likely temporary, so try again - but if it persists, please contact support so we can look into it."); ?>'
+                document.getElementById("DisplayDiv").innerHTML = renderBox('error', <?php echo L::error_unknown; ?>);
             })
         return false; // cancel original event to prevent form submitting
         });
@@ -77,6 +82,7 @@ require_once(__DIR__.'/../includes/header.php');
 
 
 
+<script src="https://<?php echo $_ENV['SITE_URL']; ?>/js/ui.js"></script>
 
 <?php 
 require_once(__DIR__.'/../includes/footer.php'); ?>

@@ -36,41 +36,26 @@ if ($session == false) {
                 body: formData
             }
         )
-            .then(
+        .then(
                 function(response) {
                     if (response.status !== 200) {
                         console.log('Error logged, status code: ' + response.status);
-                        document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("There was an error trying to register. Please contact support."); ?>'
+                        document.getElementById("DisplayDivDelete").innerHTML = renderBox('error', <?php echo L::error_unknown; ?>);
                         return false;
                     }
                     response.json().then(function(data) {
-                        if (data.code == "ERR_ALREADY_LOGGED_IN" || data.code == "REGISTER_SUCCESS") {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::successBox("Successfully registered! Please wait while we redirect you to the dashboard."); ?>'
-                            window.location.href = "https://<?php echo $_ENV['SITE_URL']; ?>/dashboard";
+                        if (data.code == "SUCCESS") {
+                            document.getElementById("DisplayDivDelete").innerHTML = renderBox('success', data.message);
+                            window.location.href = "https://<?php echo $_ENV['SITE_URL']; ?>/dashboard"
                             return false;
-                        } else if (data.code == "ERR_TOO_YOUNG") {
-                            // Show 2FA input. 
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("Sorry - Under UK law, you need to be at least 13 years old to use Waterfall."); ?>'
-                        } else if (data.code == "ERR_PASSWORD_SHORT") {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("Your password needs to be at least 6 characters long."); ?>'
-
-                        } else if (data.code == "ERR_PASSWORD_MISMATCH") {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("Your password and confirmation password were different."); ?>'
-                        } else if (data.code == "ERR_BLOG_TAKEN") {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("This blog name was taken. Pick another."); ?>'
-                        } else if (data.code == "ERR_USER_EXISTS") {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("You seem to already have an account. Try logging in instead."); ?>'
-                        } else if (data.code == "ERR_WRONG_CAPTCHA") {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("Your captcha was wrong."); ?>'
                         } else {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("There was an error trying to register. Please contact support so we can look into it."); ?>'
+                            document.getElementById("DisplayDivDelete").innerHTML = renderBox('error', data.message);
 
-                        } 
-                        
+                        }
                     })
                 }
             ).catch(function(err) {
-                document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("There was an error trying to register. It\'s most likely temporary, so try again - but if it persists, please contact support so we can look into it."); ?>'
+                document.getElementById("DisplayDivDelete").innerHTML = renderBox('error', <?php echo L::error_unknown; ?>);
             })
         return false; // cancel original event to prevent form submitting
         });
@@ -139,6 +124,8 @@ if ($session == false) {
             </div>
         </div>
     </div>
+    <script src="https://<?php echo $_ENV['SITE_URL']; ?>/js/ui.js"></script>
+
 <?php
 require_once(__DIR__.'/includes/footer.php');
 } else {

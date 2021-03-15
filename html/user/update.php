@@ -24,28 +24,26 @@ $missing = $sessionObj->userMissing;
                 body: formData
             }
         )
-            .then(
+        .then(
                 function(response) {
                     if (response.status !== 200) {
                         console.log('Error logged, status code: ' + response.status);
-                        document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("There was an error trying to update. Please contact support."); ?>'
+                        document.getElementById("DisplayDiv").innerHTML = renderBox('error', 'There was an unknown error.');
                         return false;
                     }
                     response.json().then(function(data) {
-                        if (data.code == "ERR_ALREADY_LOGGED_IN" || data.code == "SUCCESS") {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::successBox("Updated! Redirecting to dashboard..."); ?>'
-                            window.location.href = "https://<?php echo $_ENV['SITE_URL']; ?>/dashboard";
+                        if (data.code == "SUCCESS") {
+                            document.getElementById("DisplayDiv").innerHTML = renderBox('success', data.message);
+                            window.location.href = "<?php echo $_ENV['SITE_URL']; ?>/dashboard";
                             return false;
-                        } else if (data.code == "ERR_NOT_VALID_DATE") {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("Something was wrong with the date you entered."); ?>'
                         } else {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("Unspecified error. Please contact support."); ?>'
+                            document.getElementById("DisplayDiv").innerHTML = renderBox('error', data.message);
 
                         }
                     })
                 }
             ).catch(function(err) {
-                document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("There was an error trying to log in. It\'s most likely temporary, so try again - but if it persists, please contact support so we can look into it."); ?>'
+                document.getElementById("DisplayDiv").innerHTML = renderBox('error', "There was an unknown error.");
             })
         return false; // cancel original event to prevent form submitting
         });
@@ -92,6 +90,7 @@ $missing = $sessionObj->userMissing;
         </div>
     </div>
 </div>
+<script src="https://<?php echo $_ENV['SITE_URL']; ?>/js/ui.js"></script>
 
 <?php 
 

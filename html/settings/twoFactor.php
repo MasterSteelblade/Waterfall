@@ -106,26 +106,21 @@ $(document).ready(function() {
         }).then(function(response) {
             if (response.status !== 200) {
                 console.log('Error logged, status code: ' + response.status);
-                $("#DisplayDiv").html('<?php UIUtils::errorBox("There was an error trying to disable two-factor authentication. Please contact support."); ?>');
+                $("#DisplayDiv").html(renderBox('error', <?php echo L::error_unknown; ?>));
                 return false;
             }
 
             response.json().then(function(data) {
                 if (data.code == "SUCCESS") {
-                    $("#DisplayDiv").html('<?php UIUtils::successBox("Successfully disabled two-factor authentication. Redirecting you to User Settings..."); ?>');
+                    $("#DisplayDiv").html(renderBox('success', data.message));
                     window.location.href = "https://<?php echo $_ENV['SITE_URL']; ?>/settings/user";
                     return false;
-
-                } else if (data.code == "ERR_CSRF_FAILURE") {
-                    $("#DisplayDiv").html('<?php UIUtils::errorBox("CSRF failure. Please refresh the page and try again."); ?>');
-                } else if (data.code == "ERR_INVALID_CREDS") {
-                    $("#DisplayDiv").html('<?php UIUtils::errorBox("Your password was incorrect. Please try again."); ?>');
                 } else {
-                    $("#DisplayDiv").html('<?php UIUtils::errorBox("There was an error trying to disable two-factor authentication. Please contact support."); ?>');
+                    $("#DisplayDiv").html(renderBox('error', data.message));
                 }
             })
         }).catch(function(err) {
-            $("#DisplayDiv").html('<?php UIUtils::errorBox("There was an error trying to disable two-factor authentication. It\'s most likely temporary, so try again - but if it persists, please contact support so we can look into it."); ?>');
+            $("#DisplayDiv").html(renderBox('error', <?php echo L::error_unknown; ?>));
         });
 
         return false; // cancel original event to prevent form submitting
@@ -151,26 +146,21 @@ $(document).ready(function() {
         }).then(function(response) {
             if (response.status !== 200) {
                 console.log('Error logged, status code: ' + response.status);
-                $("#DisplayDiv").html('<?php UIUtils::errorBox("There was an error trying to enable two-factor authentication. Please contact support."); ?>');
+                $("#DisplayDiv").html(renderBox('error', <?php echo L::error_unknown; ?>));
                 return false;
             }
 
             response.json().then(function(data) {
                 if (data.code == "SUCCESS") {
-                    $("#DisplayDiv").html('<?php UIUtils::successBox("Successfully enabled two-factor authentication! Redirecting you to User Settings..."); ?>');
+                    $("#DisplayDiv").html(renderBox('success', data.message));
                     window.location.href = "https://<?php echo $_ENV['SITE_URL']; ?>/settings/user";
                     return false;
-
-                } else if (data.code == "ERR_CSRF_FAILURE") {
-                    $("#DisplayDiv").html('<?php UIUtils::errorBox("CSRF failure. Please refresh the page and try again."); ?>');
-                } else if (data.code == "ERR_INVALID_2FA") {
-                    $("#DisplayDiv").html('<?php UIUtils::errorBox("The provided authentication code was incorrect. Please try again."); ?>');
                 } else {
-                    $("#DisplayDiv").html('<?php UIUtils::errorBox("There was an error trying to enable two-factor authentication. Please contact support."); ?>');
+                    $("#DisplayDiv").html(renderBox('error', data.message));
                 }
             })
         }).catch(function(err) {
-            $("#DisplayDiv").html('<?php UIUtils::errorBox("There was an error trying to enable two-factor authentication. It\'s most likely temporary, so try again - but if it persists, please contact support so we can look into it."); ?>');
+            $("#DisplayDiv").html(renderBox('error', <?php echo L::error_unknown; ?>));
         });
 
         return false; // cancel original event to prevent form submitting

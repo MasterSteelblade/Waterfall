@@ -9,12 +9,14 @@ header('Content-type: application/json');
 $data = array();
 if ($session == false) {
     $data['code'] = 'ERR_GENERIC_FAILURE';
+    $data['message'] = "Generic backend failure";
 } else {
     if (isset($_POST['birthday'])) {
         try {
             $date = new DateTime($_POST['birthday']);
         } catch (Exception $e) {
             $data['code'] = 'ERR_INVALID_DATE';
+            $data['message'] = "Invalid date.";
             echo json_encode($data);
             exit();
         }
@@ -23,17 +25,20 @@ if ($session == false) {
         $y = $age->y;
         if ($y < 13) {
             $data['code'] = 'ERR_INVALID_DATE';
+            $data['message'] = "Invalid date. You seem to be too young for here.";
             echo json_encode($data);
             exit();
         }
         $dForm = $date->format('Y-m-d');
         if ($sessionObj->user->updateBirthday($dForm)) {
             $data['code'] = 'ERR_INVALID_DATE';
+            $data['message'] = "Invalid date.";
             echo json_encode($data);
             exit();
         }
     }
     $data['code'] = 'SUCCESS';
+    $data['message'] = 'Success!';
 }
     echo json_encode($data);
     exit();

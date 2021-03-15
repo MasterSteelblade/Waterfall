@@ -18,6 +18,7 @@ try {
 } catch(\EasyCSRF\Exceptions\InvalidCsrfTokenException $e) {
     // csrf error! exit early
     $data['code'] = 'ERR_CSRF_FAILURE';
+    $data['message'] = "CSRF failure! Refresh and try again.";
     echo json_encode($data);
     exit();
 }
@@ -27,6 +28,7 @@ $secretKey = $sessionObj->sessionData['totpsecret'];
 if ($secretKey == null || $secretKey == '') {
     // oh no! we don't have a secret key, so we can't really do anything
     $data['code'] = 'ERR_NO_SECRET';
+    $data['message'] = "No secret key found! Try again."; 
     echo json_encode($data);
     exit();
 }
@@ -36,11 +38,13 @@ $result = $user->enableTwoFactor($secretKey, trim($_POST['totpcode']));
 if ($result == false) {
     // invalid TOTP code or an error occurred, exit early
     $data['code'] = 'ERR_INVALID_2FA';
+    $data['message'] = "Invalid 2FA code!";
     echo json_encode($data);
     exit();
 } else if ($result == 0) {
     // result == 0 is a special case - the database update failed
     $data['code'] = 'ERR_BACKEND_FAILURE';
+    $data['message'] = "Unknown failure";
     echo json_encode($data);
     exit();
 }
@@ -52,4 +56,5 @@ $sessionObj->updateSession();
 
 // and return success
 $data['code'] = 'SUCCESS';
+$data['message'] = "Successfully enabled two-factor authentication! Redirecting...";
 echo json_encode($data);

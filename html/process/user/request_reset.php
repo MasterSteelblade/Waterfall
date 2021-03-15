@@ -9,6 +9,6 @@ if (isset($_POST['email'])) {
     if (!$user->failed) {
         $user->requestPasswordReset();
     }
-    $data = array('code' => 'SUCCESS');
+    $data = array('code' => 'SUCCESS', 'message' => "Thank you - if an account with this email exists, you'll recieve an email shortly with instructions.");
     echo json_encode($data);
 }

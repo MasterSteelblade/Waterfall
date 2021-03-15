@@ -56,36 +56,25 @@ if (isset($activeBlog->ownerID) && ($activeBlog->ownerID != $sessionObj->user->I
                 body: formData
             }
         )
-            .then(
+        .then(
                 function(response) {
                     if (response.status !== 200) {
                         console.log('Error logged, status code: ' + response.status);
-                        document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("There was an error trying to post. Please contact support."); ?>'
+                        document.getElementById("DisplayDiv").innerHTML = renderBox('error', 'There was an unknown error.');
                         return false;
                     }
                     response.json().then(function(data) {
                         if (data.code == "SUCCESS") {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::successBox("Sent!"); ?>'
-                        } else if (data.code == "ERR_NOT_YOUR_BLOG") {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("You don\'t have permission to message the blog you selected."); ?>'
-						} else if (data.code == "ERR_EMPTY_TEXT") {
-							document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("You didn\'t put anything to send."); ?>'
-                        } else if (data.code == "ERR_RECIPIENT_BLOG_NOT_FOUND") {
-							document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("The recipient doesn\'t exist, according to the server."); ?>'
-                        } else if (data.code == "ERR_ASK_LEVEL_NOT_ACCEPTING") {
-							document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("This blog isn\'t accepting messages right now."); ?>'
-                        } else if (data.code == "ERR_ASK_LEVEL_NO_LOGGED_OUT") {
-							document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("You need to be logged in to message this blog."); ?>'
-                        } else if (data.code == "ERR_ASK_LEVEL_NO_ANON") {
-							document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("This blog doesn\'t accept anonymous asks."); ?>'
+                            document.getElementById("DisplayDiv").innerHTML = renderBox('success', data.message);
+                            return false;
                         } else {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("There was an error trying to post. Please contact support so we can look into it."); ?>'
+                            document.getElementById("DisplayDiv").innerHTML = renderBox('error', data.message);
 
                         }
                     })
                 }
             ).catch(function(err) {
-                document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("There was an error trying to post. It\'s most likely temporary, so try again - but if it persists, please contact support so we can look into it."); ?>'
+                document.getElementById("DisplayDiv").innerHTML = renderBox('error', "There was an unknown error.");
             })
         return false; // cancel original event to prevent form submitting
         });
@@ -152,6 +141,8 @@ if (isset($activeBlog->ownerID) && ($activeBlog->ownerID != $sessionObj->user->I
 	<script src="https://<?php echo $_ENV['SITE_URL']; ?>/js/like-post.js"></script>
 	<script src="https://<?php echo $_ENV['SITE_URL']; ?>/js/quick-reblog.js"></script>
     <script src="https://<?php echo $_ENV['SITE_URL']; ?>/js/poll.js"></script>
+    <script src="https://<?php echo $_ENV['SITE_URL']; ?>/js/ui.js"></script>
+
     <script>
         const toolbarOptions = {
     container: [
