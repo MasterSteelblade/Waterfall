@@ -78,23 +78,10 @@ $token = $easyCSRF->generate($sessionObj->sessionData['csrfName']);
                     }
                     response.json().then(function(data) {
                         if (data.code == "SUCCESS") {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::successBox("Updated!"); ?>'
+                            document.getElementById("DisplayDiv").innerHTML = renderBox('success', data.message);
                             return false;
-                        } else if (data.code == "ERR_PASSWORD_SHORT") {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("The password was too short. Pick a longer one."); ?>'
-                        } else if (data.code == "ERR_PASSWORD_MISMATCH") {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("The passwords didn\'t match."); ?>'
-                        } else if (data.code == "ERR_INVALID_EMAIL") {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("This isn\'t a real email address, according to the computer."); ?>'
-
-                        } else if (data.code == "ERR_EMAIL_TAKEN") {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("This email already has an account."); ?>'
-                        } else if (data.code == "ERR_LOGIN_BAN") {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("You\'ve made too many failed login attempts. Try again later."); ?>'
-                        } else if (data.code == "ERR_CSRF_FAILURE") {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("CSRF failure. Please refresh the page and try again."); ?>'
                         } else {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("There was an error trying to update. Please contact support so we can look into it."); ?>'
+                            document.getElementById("DisplayDiv").innerHTML = renderBox('error', data.message);
 
                         }
                     })
@@ -513,7 +500,7 @@ $token = $easyCSRF->generate($sessionObj->sessionData['csrfName']);
                 function(response) {
                     if (response.status !== 200) {
                         console.log('Error logged, status code: ' + response.status);
-                        document.getElementById("DisplayDivDelete").innerHTML = '<?php UIUtils::errorBox("There was an error trying todelete. Please contact support."); ?>'
+                        document.getElementById("DisplayDivDelete").innerHTML = '<?php UIUtils::errorBox("There was an error trying to delete. Please contact support."); ?>'
                         return false;
                     }
                     response.json().then(function(data) {
@@ -536,5 +523,5 @@ $token = $easyCSRF->generate($sessionObj->sessionData['csrfName']);
         });
     });
     </script>
-
+	<script src="https://<?php echo $_ENV['SITE_URL']; ?>/js/ui.js"></script>
     <?php require_once(__DIR__.'/../includes/footer.php'); ?>
