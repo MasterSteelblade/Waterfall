@@ -84,6 +84,3 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: build/logs/clover.xml
-
-      - name: Check language files for missing translations
-        run: php lang/langCheck.php

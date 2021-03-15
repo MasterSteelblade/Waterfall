@@ -1,0 +1,27 @@
+name: Language File Checks
+
+on:
+  pull_request:
+    branches:
+    - main
+    - 2.0-dev
+
+jobs:
+  # Label of the container job
+  tests:
+    name: Check language files
+  # You must use a Linux environment when using service containers or container jobs
+    runs-on: ubuntu-20.04
+
+    steps:
+      # Downloads a copy of the code in the repository before running CI tests
+      - name: Check out repository code
+        uses: actions/checkout@v2
+
+      - name: Install PHP with extensions
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.0
+
+      - name: Check language files for missing translations
+        run: php lang/langCheck.php
