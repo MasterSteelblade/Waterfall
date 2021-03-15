@@ -461,14 +461,15 @@ $token = $easyCSRF->generate($sessionObj->sessionData['csrfName']);
                 function(response) {
                     if (response.status !== 200) {
                         console.log('Error logged, status code: ' + response.status);
-                        document.getElementById("DisplayDivBlock").innerHTML = '<?php UIUtils::errorBox("There was an error trying to block. Please contact support."); ?>'
+                        document.getElementById("DisplayDivBlock").innerHTML = renderBox('error', "There was an unknown error.")
                         return false;
                     }
                     response.json().then(function(data) {
                         if (data.code == "SUCCESS") {
-                            document.getElementById("DisplayDivBlock").innerHTML = '<?php UIUtils::warnBox("This user has now been blocked."); ?>'
+                            document.getElementById("DisplayDiv").innerHTML = renderBox('success', data.message);
+                            return false;
                         } else {
-                            document.getElementById("DisplayDivBlock").innerHTML = '<?php UIUtils::errorBox("There was an error trying to block. Please contact support so we can look into it."); ?>'
+                            document.getElementById("DisplayDiv").innerHTML = renderBox('error', data.message);
 
                         }
                     })
