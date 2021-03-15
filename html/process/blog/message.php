@@ -15,6 +15,7 @@ if ($session == false) {
     $myBlog = new Blog($sessionObj->sessionData['activeBlog']);
     if ($myBlog->failed) {
         $data['code'] = 'ERR_YOUR_BLOG_NOT_FOUND';
+        $data['message'] = "Couldn't find the blog you're trying to send from. Try logging in again.";
         echo json_encode($data);
         exit();
     } else {
@@ -24,6 +25,7 @@ if ($session == false) {
         $recipientBlog->getByBlogName($_POST['recipient']);
         if ($recipientBlog->failed) {
             $data['code'] = 'ERR_RECIPIENT_BLOG_NOT_FOUND';
+            $data['message'] = "Couldn't find the recipient blog. Maybe they deleted?";
             echo json_encode($data);
             exit();
         } else {
@@ -37,11 +39,13 @@ if ($session == false) {
             $senderBlog->getByBlogName($senderName);
             if ($senderBlog->failed) {
                 $data['code'] = 'ERR_YOUR_BLOG_NOT_FOUND';
+                $data['message'] = "Couldn't find the blog you're trying to send from. Try logging in again.";
                 echo json_encode($data);
                 exit();
             } else {
                 if ($senderBlog->ownerID != $sessionObj->user->ID && !$senderBlog->checkMemberPermission($sessionObj->user->ID, 'send_asks')) {
                     $data['code'] = 'ERR_NOT_YOUR_BLOG';
+                    $data['message'] = "You don't have permission to send messages from this blog.";
                     echo json_encode($data);
                     exit();
                 }
@@ -67,22 +71,26 @@ if ($session == false) {
         $myBlogCheck = new BlockManager($senderBlog->ownerID);
         if ($blogOwnerBlockCheck->hasBlockedUser($senderBlog->ownerID) || $myBlogCheck->hasBlockedUser($recipientBlog->ownerID)) {
             $data['code'] = 'ERR_RECIPIENT_BLOG_NOT_FOUND'; // Lie and say it doesn't exist. 
+            $data['message'] = "Couldn't find the recipient blog. Maybe they deleted?";
             echo json_encode($data);
             exit();  
         }
 
         if ($recipientBlog->askLevel == 0) {
             $data['code'] = 'ERR_ASK_LEVEL_NOT_ACCEPTING';
+            $data['message'] = "Sorry, this blog isn't accepting messages right now.";
             echo json_encode($data);
             exit();  
         }
         if ($levelThreeAsk && $recipientBlog->askLevel != 3) {
             $data['code'] = 'ERR_ASK_LEVEL_NO_LOGGED_OUT';
+            $data['message'] = "Sorry, this blog doesn't accept messages from logged out users.";
             echo json_encode($data);
             exit();
         }
         if ($isAnon && $recipientBlog->askLevel == 1) {
             $data['code'] = 'ERR_ASK_LEVEL_NO_ANON';
+            $data['message'] = "Sorry, this blog doesn't accept anonymous messages.";
             echo json_encode($data);
             exit();
         }
@@ -97,8 +105,10 @@ if ($session == false) {
         $message->type = 'ask';
         if ($message->saveToDatabase()) {
             $data['code'] = 'SUCCESS';
+            $data['message'] = "Success!";
         } else {
             $data['code'] = 'ERR_COULD_NOT_SAVE';
+            $data['message'] = "Couldn't save the message to the database. If you're seeing this the code is in what I thought was an unreachable state. I could give you advice for what to do. But honestly, why should you trust me? I clearly screwed this up. I'm writing a message that should never appear, yet I know it will probably appear someday. On a deep level, I know I'm not up to this task. I'm so sorry.";
         }
     } 
 }

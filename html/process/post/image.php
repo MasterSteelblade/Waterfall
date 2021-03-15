@@ -20,6 +20,7 @@ function reArrayFiles(&$file_post) {
 
 if ($session == false) {
     $data['code'] = 'NO_SESSION';
+    $data['message'] = "No session found. Try logging in again.";
     echo json_encode($data);
     exit();
 }
@@ -29,6 +30,8 @@ $blog = new Blog();
 $blog->getByBlogName($_POST['onBlog']);
 if ($blog->failed || ($blog->ownerID != $sessionObj->user->ID && !$blog->checkMemberPermission($sessionObj->user->ID, 'write_post'))) {
     $data['code'] = 'ERR_NOT_YOUR_BLOG';
+    $data['message'] = "Not your blog, or you don't have permission to do that.";
+
     echo json_encode($data);
     exit();
 }
@@ -42,6 +45,7 @@ $files = reArrayFiles($_FILES['image']);
 
 if (count($files) == 0) {
     $data['code'] = 'ERR_NO_IMAGES';
+    $data['message'] = "No images detected!";
     echo json_encode($data);
     exit();
 }
@@ -82,7 +86,7 @@ foreach($outputJSONs as $image) {
 }
 
 if ($failed == true) {
-    $array = array('code' => 'ERR_IMAGE_CONVERSION_FAILURE');
+    $array = array('code' => 'ERR_IMAGE_CONVERSION_FAILURE', 'message' => "Something failed on the backend, and the images couldn't be converted. Try again in a minute, and if it persists, please let staff know.");
     echo json_encode($array);
     exit();
 }
@@ -105,7 +109,7 @@ foreach ($outputJSONs as $json) {
 }
 
 if ($failed == true) {
-    $array = array('code' => 'ERR_IMAGE_INSERT_FAILURE');
+    $array = array('code' => 'ERR_IMAGE_INSERT_FAILURE', 'message' => "Failed to insert the image into the database. Please let staff know something is seriously wrong.");
     echo json_encode($array);
     exit();
 }
@@ -147,8 +151,10 @@ if (isset($_POST['pollQuestion']) && trim($_POST['pollQuestion']) != '' && trim(
     $post = new ImagePost();
     if ($post->createNew($_POST['postText'], substr($_POST['postTitle'],0,255), $_POST['postTags'], $blog->ID, $additions, $type, $imageIDs)) {
         $data['code'] = 'SUCCESS';
+        $data['message'] = "Success!";
     } else {
         $data['code'] = 'ERR_MISC_FAILURE';
+        $data['message'] = "Success!";
     }
 
 

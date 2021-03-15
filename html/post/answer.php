@@ -38,31 +38,26 @@ if (!$answering->failed && $answering->answerable == true) {
                 body: formData
             }
         )
-            .then(
+        .then(
                 function(response) {
                     if (response.status !== 200) {
                         console.log('Error logged, status code: ' + response.status);
-                        document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("There was an error trying to post. Please contact support."); ?>'
+                        document.getElementById("DisplayDiv").innerHTML = renderBox('error', "<?php echo L::error_unknown; ?>");
                         return false;
                     }
                     response.json().then(function(data) {
                         if (data.code == "SUCCESS") {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::successBox("Posted!"); ?>'
+                            document.getElementById("DisplayDiv").innerHTML = renderBox('success', data.message);
                             window.location.href = siteURL + '/dashboard';
-                        } else if (data.code == "ERR_NOT_YOUR_BLOG") {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("This isn\'t your blog."); ?>'
-                        } else if (data.code == "ERR_PERMISSION_FAILURE") {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("You don\'t have permission to post to the blog you selected."); ?>'
-						} else if (data.code == "ERR_EMPTY_TEXT") {
-							document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("You didn\'t put anything to post."); ?>'
+                            return false;
                         } else {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("There was an error trying to post. Please contact support so we can look into it."); ?>'
+                            document.getElementById("DisplayDiv").innerHTML = renderBox('error', data.message);
 
                         }
                     })
                 }
             ).catch(function(err) {
-                document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("There was an error trying to post. It\'s most likely temporary, so try again - but if it persists, please contact support so we can look into it."); ?>'
+                document.getElementById("DisplayDiv").innerHTML = renderBox('error', "<?php echo L::error_unknown; ?>");
             })
         return false; // cancel original event to prevent form submitting
         });
@@ -105,7 +100,7 @@ if (!$answering->failed && $answering->answerable == true) {
                             </div>
        
         <div class="btn-group">
-                <button type="submit" name="post" class="btn btn-primary" value="post" id="post" form="PostForm">Post</button>
+		    <button type="submit" name="post" class="btn btn-primary" value="post" id="postButton" form="PostForm">Post</button>
 
                 <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <span class="sr-only">Post</span>

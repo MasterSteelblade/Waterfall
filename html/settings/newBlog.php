@@ -18,26 +18,25 @@ $user = $sessionObj->user;
                 body: formData
             }
         )
-            .then(
+        .then(
                 function(response) {
                     if (response.status !== 200) {
                         console.log('Error logged, status code: ' + response.status);
-                        document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("There was an error trying to create a new blog. Please contact support."); ?>'
+                        document.getElementById("DisplayDiv").innerHTML = renderBox('error', "<?php echo L::error_unknown; ?>");
                         return false;
                     }
                     response.json().then(function(data) {
                         if (data.code == "SUCCESS") {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::successBox("Created! You can now fiddle with the settings for it."); ?>'
-                        } else if (data.code == "ERR_BLOG_EXISTS") {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("The blog URL you tried either already exists, or is restricted from use."); ?>'
+                            document.getElementById("DisplayDiv").innerHTML = renderBox('success', data.message);
+                            return false;
                         } else {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("There was an error trying to create a new blog. Please contact support so we can look into it."); ?>'
+                            document.getElementById("DisplayDiv").innerHTML = renderBox('error', data.message);
 
                         }
                     })
                 }
             ).catch(function(err) {
-                document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("There was an error trying to create a new blog. It\'s most likely temporary, so try again - but if it persists, please contact support so we can look into it."); ?>'
+                document.getElementById("DisplayDiv").innerHTML = renderBox('error', "<?php echo L::error_unknown; ?>");
             })
         return false; // cancel original event to prevent form submitting
         });
@@ -64,5 +63,6 @@ $user = $sessionObj->user;
         </div>
     </div>
 </div>
+<script src="https://<?php echo $_ENV['SITE_URL']; ?>/js/ui.js"></script>
 
 <?php require_once(__DIR__.'/../includes/footer.php'); ?>

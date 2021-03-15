@@ -18,6 +18,7 @@ try {
 } catch(\EasyCSRF\Exceptions\InvalidCsrfTokenException $e) {
     // csrf error! exit early
     $data['code'] = 'ERR_CSRF_FAILURE';
+    $data['message'] = "CSRF failure! Refresh the page and try again.";
     echo json_encode($data);
     exit();
 }
@@ -28,6 +29,7 @@ $user = $sessionObj->user;
 if (!$user->confirmPassword($_POST['password'])) {
     // nu-uh! exit early
     $data['code'] = 'ERR_INVALID_CREDS';
+    $data['message'] = "Invalid credentials.";
     echo json_encode($data);
     exit();
 }
@@ -35,8 +37,10 @@ if (!$user->confirmPassword($_POST['password'])) {
 // if we get here, password is correct, we can go ahead and disable 2FA
 if ($user->disableTwoFactor()) {
     $data['code'] = 'SUCCESS';
+    $data['message'] = "Successfully disabled two-factor authentication! Redirecting...";
 } else {
     $data['code'] = 'ERR_BACKEND_FAILURE';
+    $data['message'] = "Unknown failure";
 }
 
 echo json_encode($data);

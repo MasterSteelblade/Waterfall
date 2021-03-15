@@ -40,37 +40,26 @@ if ($session == false) {
                 function(response) {
                     if (response.status !== 200) {
                         console.log('Error logged, status code: ' + response.status);
-                        document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("There was an error trying to log in. Please contact support."); ?>'
+                        document.getElementById("DisplayDiv").innerHTML = renderBox('error', "<?php echo L::error_unknown; ?>");
                         return false;
                     }
                     response.json().then(function(data) {
                         if (data.code == "ERR_ALREADY_LOGGED_IN" || data.code == "SUCCESSFUL_LOGIN") {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::successBox("Logged in! Redirecting to dashboard..."); ?>'
+                            document.getElementById("DisplayDiv").innerHTML = renderBox('success', data.message);
                             window.location.href = "https://<?php echo $_ENV['SITE_URL']; ?>/dashboard";
                             return false;
                         } else if (data.code == "ERR_2FA_NEEDED") {
                             // Show 2FA input. 
                             document.getElementById("twofa-holder").innerHTML = '<div class="form-group"><label class="control-label col-sm-8" for="login-twofactor">Two Factor Code:</label><div class="col-sm-8"><input id="login-twofactor" maxlength="100" name="twoFactorCode"  class="form-control" type="password" /></div> </div>';
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::infoBox("This account requires two-factor authentication. Please enter your authenticator code to log in."); ?>'
-                        } else if (data.code == "ERR_INVALID_2FA") {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("Your 2FA code was wrong."); ?>'
-
-                        } else if (data.code == "ERR_INVALID_CREDS") {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("This account either does not exist, or you used the wrong password."); ?>'
-                        } else if (data.code == "ERR_LOGIN_BAN") {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("You\'ve made too many failed login attempts. Try again later."); ?>'
-                        } else if (data.code == "ERR_BACKEND_FAILURE") {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("There was an error trying to log in. Please contact support so we can look into it. Error code: SESS_F"); ?>'
-                        } else if (data.code == "ERR_CSRF_FAILURE") {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("CSRF failure. Please refresh the page and try again."); ?>'
+                            document.getElementById("DisplayDiv").innerHTML = renderBox('info', data.message);
                         } else {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("There was an error trying to log in. Please contact support so we can look into it. Error code: RMA"); ?>'
+                            document.getElementById("DisplayDiv").innerHTML = renderBox('error', data.message);
 
                         }
                     })
                 }
             ).catch(function(err) {
-                document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("There was an error trying to log in. It\'s most likely temporary, so try again - but if it persists, please contact support so we can look into it."); ?>'
+                document.getElementById("DisplayDiv").innerHTML = renderBox('error', "<?php echo L::error_unknown; ?>");
             })
         return false; // cancel original event to prevent form submitting
         });
@@ -111,6 +100,8 @@ if ($session == false) {
             </div>
         </div>
     </div>
+    <script src="https://<?php echo $_ENV['SITE_URL']; ?>/js/ui.js"></script>
+
 <?php
 require_once(__DIR__.'/includes/footer.php');
 } else {

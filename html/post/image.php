@@ -68,33 +68,26 @@ $activeBlog = $blog->blogName;
                 body: formData
             }
         )
-            .then(
+        .then(
                 function(response) {
                     if (response.status !== 200) {
                         console.log('Error logged, status code: ' + response.status);
-                        document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("There was an error trying to post. Please contact support."); ?>'
+                        document.getElementById("DisplayDiv").innerHTML = renderBox('error', "<?php echo L::error_unknown; ?>");
                         return false;
                     }
                     response.json().then(function(data) {
                         if (data.code == "SUCCESS") {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::successBox("Posted!"); ?>'
+                            document.getElementById("DisplayDiv").innerHTML = renderBox('success', data.message);
                             window.location.href = siteURL + '/dashboard';
-                        } else if (data.code == "ERR_NO_IMAGES") {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("No images! You can\'t make an art post without them."); ?>'
-                        } else if (data.code == "ERR_IMAGE_CONVERSION_FAILURE") {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("One or more of the images you uploaded failed to convert properly. Check the <a href=\"https://waterfallsocial.zendesk.com/hc/en-gb/articles/360017073337-Image-and-Art-Conversion-Errors\">help article</a> to see what could be wrong."); ?>'
-                        } else if (data.code == "ERR_NOT_YOUR_BLOG") {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("You don\'t have permission to post to the blog you selected."); ?>'
-						} else if (data.code == "ERR_EMPTY_TEXT") {
-							document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("You didn\'t put anything to post."); ?>'
+                            return false;
                         } else {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("There was an error trying to post. Please contact support so we can look into it."); ?>'
+                            document.getElementById("DisplayDiv").innerHTML = renderBox('error', data.message);
 
                         }
                     })
                 }
             ).catch(function(err) {
-                document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("There was an error trying to post. It\'s most likely temporary, so try again - but if it persists, please contact support so we can look into it."); ?>'
+                document.getElementById("DisplayDiv").innerHTML = renderBox('error', "<?php echo L::error_unknown; ?>");
             })
         return false; // cancel original event to prevent form submitting
         });
@@ -122,7 +115,7 @@ $activeBlog = $blog->blogName;
 <div class="card-body">
 <input id="file-input" type="file" name="name" onchange="selectedHandler(event);" style="display: none;" />
 
-<form id="PostForm" name="PostForm" action="https://<?php echo $_ENV['SITE_URL']; ?>/process/post/text.php" method="POST">
+<form id="PostForm" name="PostForm" action="https://<?php echo $_ENV['SITE_URL']; ?>/process/post/image.php" method="POST">
     <div id="droparea" class="droparea" onclick="document.getElementById('file-input').click();" ondrop="dropHandler(event);" ondragover="dragOverHandler(event);">
 <h1><i class="fas fa-images"></i></h1>
 <h3> Drag files here, or click to upload.</h3>
@@ -139,7 +132,7 @@ $activeBlog = $blog->blogName;
 <div class="card"> 
     <div class="card-body">
 <div class="btn-group">
-		    <button type="submit" name="post" class="btn btn-primary" value="post" id="post" form="PostForm">Post</button>
+<button type="submit" name="post" class="btn btn-primary" value="post" id="postButton" form="PostForm">Post</button>
 
 			<button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       <span class="sr-only">Post</span>

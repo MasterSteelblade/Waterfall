@@ -20,6 +20,7 @@ function reArrayFiles(&$file_post) {
 
 if ($session == false) {
     $data['code'] = 'NO_SESSION';
+    $data['message'] = "No session. Try logging in again.";
     echo json_encode($data);
     exit();
 }
@@ -29,6 +30,8 @@ $blog = new Blog();
 $blog->getByBlogName($_POST['onBlog']);
 if ($blog->failed || ($blog->ownerID != $sessionObj->user->ID && !$blog->checkMemberPermission($sessionObj->user->ID, 'write_post'))) {
     $data['code'] = 'ERR_NOT_YOUR_BLOG';
+    $data['message'] = "Not your blog, or you don't have permission to do that.";
+
     echo json_encode($data);
     exit();
 }
@@ -42,6 +45,7 @@ $files = reArrayFiles($_FILES['image']);
 
 if (count($files) == 0) {
     $data['code'] = 'ERR_NO_IMAGES';
+    $data['message'] = "No images detected.";
     echo json_encode($data);
     exit();
 }
@@ -94,7 +98,7 @@ foreach($outputJSONs as $image) {
 }
 
 if ($failed == true) {
-    $array = array('code' => 'ERR_IMAGE_CONVERSION_FAILURE');
+    $array = array('code' => 'ERR_IMAGE_CONVERSION_FAILURE', 'message' => "Something failed on the backend, and the images couldn't be converted. Try again in a minute, and if it persists, please let staff know.");
     echo json_encode($array);
     exit();
 }
@@ -138,6 +142,7 @@ if (sizeof($confirmedStolen) != 0) {
     }
 
     $data['code'] = 'ERR_STOLEN';
+    $data['message'] = "This art was uploaded by someone else, and your post has been converted into a reblog.";
     echo json_encode($data);
     exit();
 }
@@ -162,7 +167,7 @@ foreach ($outputJSONs as $json) {
 // MD5s can be batch checked. If there's a match, reblog instead. If there's multiple, reblog them all. 
 
 if ($failed == true) {
-    $array = array('code' => 'ERR_IMAGE_INSERT_FAILURE');
+    $array = array('code' => 'ERR_IMAGE_INSERT_FAILURE', 'message' => "Failed to insert the image into the database. Please let staff know something is seriously wrong.");
     echo json_encode($array);
     exit();
 }
@@ -209,8 +214,10 @@ if (isset($_POST['pollQuestion']) && trim($_POST['pollQuestion']) != '' && trim(
             $database->db_insert("INSERT INTO art_data (post_id, on_blog, image_md5, image_id) VALUES ($1, $2, $3, $4)", $values);
         }
         $data['code'] = 'SUCCESS';
+        $data['message'] = "Success!";
     } else {
         $data['code'] = 'ERR_MISC_FAILURE';
+        $data['message'] = "Unknown failure";
     }
 
 
