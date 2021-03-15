@@ -14,6 +14,7 @@ $activeBlog = $blog->blogName;
     $(document).ready(function() {
         $('#PostForm').submit(function(event) { // catch the form's submit event
         event.preventDefault();
+        document.getElementById('postButton').innerHTML = "<?php echo L::string_posting; ?>";
         images = document.getElementsByClassName('sortable-image-file');
         captions = document.getElementsByClassName('image-caption');
         descriptions = document.getElementsByClassName('image-description');
