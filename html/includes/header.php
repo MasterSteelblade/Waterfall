@@ -149,45 +149,45 @@ if ($session !== false && isset($sessionObj->user->theme)) {
             <div class="collapse navbar-collapse" id="WFNav">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item d-flex align-items-center">
-                        <a class="nav-link" href="https://<?php echo $_ENV['SITE_URL']; ?>/dashboard"><span class="d-none d-md-block"><i class="fas fa-home navbar-icon"></i></span><span class="d-md-none">Dashboard</span></a>
+                        <a class="nav-link" href="https://<?php echo $_ENV['SITE_URL']; ?>/dashboard"><span class="d-none d-md-block"><i class="fas fa-home navbar-icon"></i></span><span class="d-md-none"><?php echo L::header_dashboard; ?></span></a>
                     </li>
                     <li class="nav-item dropdown d-flex align-items-center">
                         <?php $inboxCount = $sessionObj->user->getUnreadInboxCount(); ?>
-                        <a class="nav-link" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="d-none d-md-block"><i class="fas fa-envelope navbar-icon"></i><?php if ($inboxCount != 0) { ?> <span class="badge badge-light mail-badge"><?php echo $inboxCount; ?></span> <?php } ?></span><span class="d-md-none">Inbox <?php if ($inboxCount != 0) { ?> <span class="badge badge-light"><?php echo $inboxCount; ?></span> <?php } ?></span></a>
+                        <a class="nav-link" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="d-none d-md-block"><i class="fas fa-envelope navbar-icon"></i><?php if ($inboxCount != 0) { ?> <span class="badge badge-light mail-badge"><?php echo $inboxCount; ?></span> <?php } ?></span><span class="d-md-none"><?php echo L::header_inbox; ?> <?php if ($inboxCount != 0) { ?> <span class="badge badge-light"><?php echo $inboxCount; ?></span> <?php } ?></span></a>
                         <div class="dropdown-menu w-auto" aria-labelledby="messageDropdown">
-                        <a class="dropdown-item" href="https://<?php echo $_ENV['SITE_URL']; ?>/inbox">Inbox</a>
-                        <a class="dropdown-item" href="https://<?php echo $_ENV['SITE_URL']; ?>/outbox">Outbox</a>
+                        <a class="dropdown-item" href="https://<?php echo $_ENV['SITE_URL']; ?>/inbox"><?php echo L::header_inbox; ?></a>
+                        <a class="dropdown-item" href="https://<?php echo $_ENV['SITE_URL']; ?>/outbox"><?php echo L::header_outbox; ?></a>
 
                         </div>
                     </li>
                     <li class="nav-item d-flex align-items-center">
-                        <a class="nav-link" href="https://<?php echo $_ENV['SITE_URL']; ?>/discovery"><span class="d-none d-md-block"><i class="fas fa-compass navbar-icon"></i></span><span class="d-md-none">Art Discovery</span></a>
+                        <a class="nav-link" href="https://<?php echo $_ENV['SITE_URL']; ?>/discovery"><span class="d-none d-md-block"><i class="fas fa-compass navbar-icon"></i></span><span class="d-md-none"><?php echo L::header_discovery; ?></span></a>
                     </li>
                     <li class="nav-item dropdown d-flex align-items-center">
                         <?php $inboxCount = $sessionObj->user->getUnreadInboxCount(); ?>
-                        <a class="nav-link" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="d-none d-md-block"><i class="fas fa-cog navbar-icon"></i></span><span class="d-md-none">Settings</span></a>
+                        <a class="nav-link" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="d-none d-md-block"><i class="fas fa-cog navbar-icon"></i></span><span class="d-md-none"><?php echo L::header_settings; ?></span></a>
                         <div class="dropdown-menu w-auto" aria-labelledby="messageDropdown">
-                        <a class="dropdown-item" href="https://<?php echo $_ENV['SITE_URL']; ?>/settings/user">User Settings</a>
-                        <a class="dropdown-item" href="https://<?php echo $_ENV['SITE_URL']; ?>/settings/blog">Blog Settings</a>
+                        <a class="dropdown-item" href="https://<?php echo $_ENV['SITE_URL']; ?>/settings/user"><?php echo L::header_user_settings; ?></a>
+                        <a class="dropdown-item" href="https://<?php echo $_ENV['SITE_URL']; ?>/settings/blog"><?php echo L::header_blog_settings; ?></a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="https://<?php echo $_ENV['SITE_URL']; ?>/logout">Log Out</a>
+                        <a class="dropdown-item" href="https://<?php echo $_ENV['SITE_URL']; ?>/logout"><?php echo L::header_logout; ?></a>
                         </div>
                     </li>
                     <li class="nav-item dropdown d-flex align-items-center">
                     <a class="blog-dropdown nav-link dropdown-toggle" href="#" id="blogsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="avatar avatar-32" src="<?php echo $avatar->data['paths'][32]; ?>"> <?php echo $thisBlogsName; ?></a>
                     <div class="dropdown-menu w-auto" aria-labelledby="blogsDropdown">
-                        <div class="dropdown-item"><a href="https://<?php echo $thisBlogsName; ?>.<?php echo $_ENV['SITE_URL']; ?>/"><div class="text-center"><img class="img-fluid avatar avatar-128" src="<?php echo $avatar->data['paths'][128];; ?>"></div> <h5 class="text-center">Stats for <?php echo $thisBlogsName; ?></h5></a></div>
+                        <div class="dropdown-item"><a href="https://<?php echo $thisBlogsName; ?>.<?php echo $_ENV['SITE_URL']; ?>/"><div class="text-center"><img class="img-fluid avatar avatar-128" src="<?php echo $avatar->data['paths'][128];; ?>"></div> <h5 class="text-center"><?php echo L::header_stats; ?> <?php echo $thisBlogsName; ?></h5></a></div>
 
-                        <a class="dropdown-item" href="https://<?php echo $thisBlogsName; ?>.<?php echo $_ENV['SITE_URL']; ?>/">Posts: <span class="float-right"><?php echo $activeBlog->getPostCount(); ?></span></a>
-                        <a class="dropdown-item" href="https://<?php echo $_ENV['SITE_URL']; ?>/following">Following: <span class="float-right"><?php echo $activeBlog->getFollowingCount(); ?> </span></a>
-                        <a class="dropdown-item" href="https://<?php echo $_ENV['SITE_URL']; ?>/followers">Followers: <span class="float-right"><?php echo $activeBlog->getFollowerCount(); ?>  </span></a>
-                        <a class="dropdown-item" href="https://<?php echo $_ENV['SITE_URL']; ?>/liked">Likes: <span class="float-right"><?php echo $activeBlog->getLikesCount(); ?></span></a>
+                        <a class="dropdown-item" href="https://<?php echo $thisBlogsName; ?>.<?php echo $_ENV['SITE_URL']; ?>/"><?php echo L::header_stats_posts; ?> <span class="float-right"><?php echo $activeBlog->getPostCount(); ?></span></a>
+                        <a class="dropdown-item" href="https://<?php echo $_ENV['SITE_URL']; ?>/following"><?php echo L::header_stats_following; ?> <span class="float-right"><?php echo $activeBlog->getFollowingCount(); ?> </span></a>
+                        <a class="dropdown-item" href="https://<?php echo $_ENV['SITE_URL']; ?>/followers"><?php echo L::header_stats_followers; ?> <span class="float-right"><?php echo $activeBlog->getFollowerCount(); ?>  </span></a>
+                        <a class="dropdown-item" href="https://<?php echo $_ENV['SITE_URL']; ?>/liked"><?php echo L::header_stats_likes; ?> <span class="float-right"><?php echo $activeBlog->getLikesCount(); ?></span></a>
                         <!-- <a class="dropdown-item" href="https://<?php echo $_ENV['SITE_URL']; ?>/activity.php">Activity <span class="float-right"><?php  // Activity image here ?></span></a> I found a last minute bug, this'll be back soon -->
-                        <a class="dropdown-item" href="https://<?php echo $_ENV['SITE_URL']; ?>/queue">Queue <span class="float-right"><?php  echo $activeBlog->getCountInQueue(); ?></span></a>
-                        <a class="dropdown-item" href="https://<?php echo $_ENV['SITE_URL']; ?>/drafts">Drafts <span class="float-right"><?php  echo $activeBlog->getDraftPostCount(); ?></span></a>
+                        <a class="dropdown-item" href="https://<?php echo $_ENV['SITE_URL']; ?>/queue"><?php echo L::header_stats_queue; ?> <span class="float-right"><?php  echo $activeBlog->getCountInQueue(); ?></span></a>
+                        <a class="dropdown-item" href="https://<?php echo $_ENV['SITE_URL']; ?>/drafts"><?php echo L::header_stats_drafts; ?> <span class="float-right"><?php  echo $activeBlog->getDraftPostCount(); ?></span></a>
 
                         <div class="dropdown-divider"></div>
-                        <h6 class="dropdown-header">Switch blog to...</h6>
+                        <h6 class="dropdown-header"><?php echo L::header_switch_blog; ?></h6>
                         <ul class="list-group bloglist">
                         <?php
                         $blogs = $sessionObj->user->blogs;
@@ -207,7 +207,7 @@ if ($session !== false && isset($sessionObj->user->theme)) {
                 </ul>
                 <form id="SearchForm" name="SearchForm" class="form-inline my-2 my-md-0" method="post" action="https://<?php echo $_ENV['SITE_URL'];?>/search/">
                         <div class="input-group">
-                            <input class="form-control" type="text" name="search" id="searchInput" placeholder="Search" aria-label="Search" disabled="disabled">
+                            <input class="form-control" type="text" name="search" id="searchInput" placeholder="<?php echo L::header_search; ?>" aria-label="Search" disabled="disabled">
                             <div class="input-group-append">
                             <button class="btn btn-outline-secondary" type="submit"><i class="fas fa-search"></i></button>
                             </div>
