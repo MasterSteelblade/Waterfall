@@ -78,20 +78,20 @@ $posts = $postCollector->getBlogTaggedPosts($thisBlog->ID, $tagged, 25, $pageNo)
 	<?php
 	if (!isset($failed) || $failed == false) {
 		if (strtolower($tagged) == 'dni' || strtolower($tagged) == 'dnr' || strtolower($tagged) == 'do not reblog' || strtolower($tagged) == 'do not interact') {
-		UIUtils::errorBox("You cannot, and should not, search DNR or DNI posts.");
+		UIUtils::errorBox(L::error_dnr_search);
 		} else {
 			foreach ($posts as $post) {
 				$post->dashboardRender($activeBlogID, true);
 			} 
 		}
 	} else {
-		UIUtils::errorBox("No search term set!");
+		UIUtils::errorBox(L::error_empty_search);
 	}?>
      <?php
 if ($prevPage != 0) {
-	echo '<a class="btn btn-primary" href="'.$thisBlog->getBlogURL().'/tagged/'.$tagged.'/'.$prevPage.'">Prev</a>';
+	echo '<a class="btn btn-primary" href="'.$thisBlog->getBlogURL().'/tagged/'.$tagged.'/'.$prevPage.'">'.L::string_previous.'</a>';
 }
-echo  '<a class="btn btn-primary float-right" href="'.$thisBlog->getBlogURL().'/tagged/'.$tagged.'/'.$nextPage.'">Next</a>'; ?>
+echo  '<a class="btn btn-primary float-right" href="'.$thisBlog->getBlogURL().'/tagged/'.$tagged.'/'.$nextPage.'">'.L::string_next.'</a>'; ?>
 </div>
 
 </div>

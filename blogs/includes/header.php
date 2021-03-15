@@ -166,7 +166,7 @@ date_default_timezone_set('Etc/UTC'); // We just want everything in UTC.
                   if (!$failed && $thisBlog->askLevel != 0) {
                     if (($session == false && $thisBlog->askLevel == 3) || $session !== false) { ?>
                 <li class="nav-item">
-                  <a class="nav-link" href="https://<?php echo $_ENV['SITE_URL']; ?>/message/<?php echo $thisBlog->blogName; ?>">Message</a>
+                  <a class="nav-link" href="https://<?php echo $_ENV['SITE_URL']; ?>/message/<?php echo $thisBlog->blogName; ?>"><?php echo L::string_message; ?></a>
                 </li>
                 <?php }
                   } ?>
@@ -192,7 +192,7 @@ date_default_timezone_set('Etc/UTC'); // We just want everything in UTC.
 <?php 
 
 if ($failed == true) {
-  UIUtils::errorBox("This blog does not exist.");
+  UIUtils::errorBox(L::string_blog_not_found);
 }
 if ($thisBlog->nsfwBlog == true) {
   if ($session == false || $sessionObj->user->calculateAge() < 18) {

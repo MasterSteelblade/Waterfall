@@ -73,7 +73,7 @@ if (isset($sessionObj->sessionData['activeBlog'])) {
 			$post->dashboardRender($activeBlogID, true);
 			?>
 			<p></p>
-			<div class="card" id="notes"><div class="card-header"><h5>Notes</h5></div><div class="card-body"> <?php
+			<div class="card" id="notes"><div class="card-header"><h5><?php echo L::string_notes; ?></h5></div><div class="card-body"> <?php
 			if (isset($sessionObj->sessionData['userID'])) {
 				$activeUserID = $sessionObj->sessionData['userID'];
 			}
@@ -89,11 +89,11 @@ if (isset($sessionObj->sessionData['activeBlog'])) {
 			$opBlog = new Blog($opPost->onBlog);
 			$opAv = new WFAvatar($opBlog->avatar);
 			?>
-			<a href="<?php echo $opBlog->getBlogURL(); ?>"><img class="avatar avatar-32" src="<?php echo $opAv->data['paths'][32]; ?>"> <?php echo $opBlog->blogName;?></a> posted this.
+			<a href="<?php echo $opBlog->getBlogURL(); ?>"><img class="avatar avatar-32" src="<?php echo $opAv->data['paths'][32]; ?>"> <?php echo $opBlog->blogName;?></a><?php echo L::string_posted_this; ?>
 			</div></div>
 			<?php
 		} else {
-			 UIUtils::errorBox("This post doesn't exist on this blog.", "Not found");
+			 UIUtils::errorBox(L::string_post_not_on_blog, L::string_not_found);
 		}
      ?>
      <?php

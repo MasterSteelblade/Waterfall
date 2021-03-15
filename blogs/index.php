@@ -77,9 +77,9 @@ $posts = $postCollector->getBlogPosts($thisBlog->ID, 25, $pageNo); ?>
     } ?>
      <?php
 if ($prevPage != 0) {
-	echo '<a class="btn btn-primary" href="'.$thisBlog->getBlogURL().'/page/'.$prevPage.'">Prev</a>';
+	echo '<a class="btn btn-primary" href="'.$thisBlog->getBlogURL().'/page/'.$prevPage.'">'.L::string_previous.'</a>';
 }
-echo  '<a class="btn btn-primary float-right" href="'.$thisBlog->getBlogURL().'/page/'.$nextPage.'">Next</a>'; ?>
+echo  '<a class="btn btn-primary float-right" href="'.$thisBlog->getBlogURL().'/page/'.$nextPage.'">'.L::string_next.'</a>'; ?>
 </div>
 
 </div>

@@ -43,23 +43,20 @@ $thisBlog->getByBlogName($subdomain);
                 function(response) {
                     if (response.status !== 200) {
                         console.log('Error logged, status code: ' + response.status);
-                        document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("There was an error trying to log in. Please contact support."); ?>'
+                        document.getElementById("DisplayDiv").innerHTML = renderBox('error', "<?php echo L::error_unknown; ?>");
                         return false;
                     }
                     response.json().then(function(data) {
                         if (data.code == "SUCCESS") {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::successBox("Logged in!"); ?>'
-                        } else if (data.code == "ERR_PASSWORD_WRONG") {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("Invalid Password."); ?>'
-
+                            document.getElementById("DisplayDiv").innerHTML = renderBox('success', data.message);
                         } else {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("There was an error trying to log in. Please contact support so we can look into it."); ?>'
+                            document.getElementById("DisplayDiv").innerHTML = renderBox('error', data.message);
 
                         }
                     })
                 }
             ).catch(function(err) {
-                document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("There was an error trying to log in. It\'s most likely temporary, so try again - but if it persists, please contact support so we can look into it."); ?>'
+                document.getElementById("DisplayDiv").innerHTML = renderBox('error', "<?php echo L::error_unknown; ?>")
             })
             return false; // cancel original event to prevent form submitting
         });
@@ -68,7 +65,7 @@ $thisBlog->getByBlogName($subdomain);
       <div class="container h-100 mx-auto" style="padding-top:100px;">
       <div class="card text-center mx-auto align-middle my-auto" style="width: 600px;height: 200px;margin: auto;">
       <div class="card-body">
-        <p class="text-center">The owner of this blog has elected to require a password to access it. If you have this, enter it below.</p>
+        <p class="text-center"><?php echo L::string_private_blog; ?></p>
 	<form role="form" class="form-horizontal" id="PrivateBlogForm" action="processes/blogPassword.php" method="post">
 	<div class="form-group">
 	    <input id="password" maxlength="100" class="form-control" name="password" type="password" />
@@ -76,9 +73,10 @@ $thisBlog->getByBlogName($subdomain);
   <input type="hidden" id="blogName" name="blogName" value="<?php echo $subdomain; ?>">
 	<div class="form-group">
       <div class="col-sm-offset-2">
-	    <button name="submit" type="submit" class="btn btn-primary" id="submit" form="PrivateBlogForm">Submit</button>
+	    <button name="submit" type="submit" class="btn btn-primary" id="submit" form="PrivateBlogForm"><?php echo L::string_submit; ?></button>
 	  </div>
     <div id="DisplayDiv" name="DisplayDiv"></div>
 
 	</div>
 	</form>
+	<script src="https://<?php echo $_ENV['SITE_URL']; ?>/js/ui.js"></script>
