@@ -95,20 +95,20 @@ if (!$answering->failed && $answering->answerable == true) {
                                 <div class="col">
                                     <div class="custom-control custom-switch">
                                         <input id="answerPrivately" name="answerPrivately" class="custom-control-input" value="true" type="checkbox"?> 
-                                        <label class="custom-control-label" for="answerPrivately">Answer privately</label>
+                                        <label class="custom-control-label" for="answerPrivately"><?php echo L::post_answer_privately; ?></label>
                                     </div>
                                 </div>
                             </div>
        
         <div class="btn-group">
-		    <button type="submit" name="post" class="btn btn-primary" value="post" id="postButton" form="PostForm">Post</button>
+		    <button type="submit" name="post" class="btn btn-primary" value="post" id="postButton" form="PostForm"><?php echo L::post_post; ?></button>
 
                 <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <span class="sr-only">Post</span>
+        <span class="sr-only"><?php echo L::post_post; ?></span>
         </button>
             <div class="dropdown-menu">
-                <button  name="post" type="submit" class="dropdown-item" id="post" value="post" form="PostForm">Post</button>
-                <button  name="queue" type="submit" class="dropdown-item" id="queue" value="queue" form="PostForm">Queue</button>
+                <button  name="post" type="submit" class="dropdown-item" id="post" value="post" form="PostForm"><?php echo L::post_post; ?></button>
+                <button  name="queue" type="submit" class="dropdown-item" id="queue" value="queue" form="PostForm"><?php echo L::post_queue; ?></button>
 
         </div>
         </div>
@@ -136,10 +136,11 @@ if (!$answering->failed && $answering->answerable == true) {
 	<script src="https://<?php echo $_ENV['SITE_URL']; ?>/js/quick-reblog.js"></script>
     <script src="https://<?php echo $_ENV['SITE_URL']; ?>/js/poll.js"></script>
     <script src="https://<?php echo $_ENV['SITE_URL']; ?>/js/feather.js"></script>
+    <script src="https://<?php echo $_ENV['SITE_URL']; ?>/js/ui.js"></script>
 
 
     <script src='https://<?php echo $_ENV['SITE_URL']; ?>/js/jquery.caret.min.js'></script>
 <script src='https://<?php echo $_ENV['SITE_URL']; ?>/js/jquery.tag-editor.js'></script>
 <script>
-$('#postTags').tagEditor({maxLength: 255, clickDelete: false, removeDuplicates: false,  forceLowercase: false, sortable: true, delimiter: ',;#', placeholder: "Tags (separate by comma)"});
+$('#postTags').tagEditor({maxLength: 255, clickDelete: false, removeDuplicates: false,  forceLowercase: false, sortable: true, delimiter: ',;#', placeholder: "<?php echo L::post_tag_placeholder; ?>"});
 </script>

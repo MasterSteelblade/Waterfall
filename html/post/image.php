@@ -127,22 +127,22 @@ $activeBlog = $blog->blogName;
 </div>
 </div>
 <input type="hidden" id="onBlog" name="onBlog" value="<?php echo $activeBlog; ?>">
-<input type="text" name="postTitle" id="postTitle" class="form-control" placeholder="Title... ">
+<input type="text" name="postTitle" id="postTitle" class="form-control" placeholder="<?php echo L::post_title_placeholder; ?>">
 <div id="feather-editor" name="feather-editor"></div>
-<input class="form-control" name="postTags" id="postTags" placeholder="Tags (separate by comma)">
+<input class="form-control" name="postTags" id="postTags" placeholder="<?php echo L::post_tag_placeholder; ?>">
 <div class="card"> 
     <div class="card-body">
 <div class="btn-group">
-<button type="submit" name="post" class="btn btn-primary" value="post" id="postButton" form="PostForm">Post</button>
+<button type="submit" name="post" class="btn btn-primary" value="post" id="postButton" form="PostForm"><?php echo L::post_post; ?></button>
 
 			<button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      <span class="sr-only">Post</span>
+      <span class="sr-only"><?php echo L::post_post; ?></span>
     </button>
 		<div class="dropdown-menu">
-			<button  name="post" type="submit" class="dropdown-item" id="post" value="post" form="PostForm">Post</button>
-			<button  name="queue" type="submit" class="dropdown-item" id="queue" value="queue" form="PostForm">Queue</button>
-			<button  name="draft" type="submit" class="dropdown-item" id="draft" value="draft" form="PostForm">Draft</button>
-			<button  name="private" type="submit" class="dropdown-item" id="private" value="private" form="PostForm">Post Privately</button>
+			<button  name="post" type="submit" class="dropdown-item" id="post" value="post" form="PostForm"><?php echo L::post_post; ?></button>
+			<button  name="queue" type="submit" class="dropdown-item" id="queue" value="queue" form="PostForm"><?php echo L::post_queue; ?></button>
+			<button  name="draft" type="submit" class="dropdown-item" id="draft" value="draft" form="PostForm"><?php echo L::post_draft; ?></button>
+			<button  name="private" type="submit" class="dropdown-item" id="private" value="private" form="PostForm"><?php echo L::post_post_privately; ?></button>
 
     </div>
 </div>
@@ -153,15 +153,15 @@ $activeBlog = $blog->blogName;
 </div>
  <div class="d-none d-lg-block" style="width:300px;"> <!-- This stuff is too big for mobile -->
 		<div id="post-additions">
-<div class="card">
+        <div class="card">
 	<div class="card-header">
-        Post add-ons
+    <?php echo L::post_add_ons; ?>
 	</div>
 	<div class="card-body">
-        <p>Post add-ons are optional. Leave the below blank if you don't want to use them.</p>
+        <p><?php echo L::post_add_on_description; ?></p>
         <div class="form-group row">
             <div class="col">
-                <label class="control-label" for="pollQuestion">Poll Question:</label>
+                <label class="control-label" for="pollQuestion"><?php echo L::post_poll_question; ?></label>
                 <input id="pollQuestion" maxlength="100" class="form-control" name="pollQuestion" type="text">
             </div>
         </div>
@@ -169,29 +169,29 @@ $activeBlog = $blog->blogName;
             <div class="col">
                 <div class="custom-control custom-switch">
                     <input id="multipleChoice" name="multipleChoice" class="custom-control-input" value="true" type="checkbox">
-                    <label class="custom-control-label" for="multipleChoice">Multiple Choice</label>
+                    <label class="custom-control-label" for="multipleChoice"><?php echo L::post_multiple_choice; ?></label>
                 </div>
                 </div>
             </div>
         <div class="form-group row">
             <div class="col" id="pollOptions">
-                <label class="control-label" for="pollOptions">Options:</label>
+                <label class="control-label" for="pollOptions"><?php echo L::post_options; ?></label>
                 <input id="pollOption1" class="pollOption form-control" maxlength="100"  name="pollOptions[]" type="text">
             </div>
         </div>
         
         <div class="form-group row">
             <div class="col">
-                <button class="btn btn-sm btn-primary" onclick="moreFields()">Add options</button>
+                <button class="btn btn-sm btn-primary" onclick="moreFields()"><?php echo L::post_add_options; ?></button>
             </div>
         </div>
         <div class="form-group row">
             <div class="col">
-            <label class="control-label" for="pollDeadline">Run poll for...</label>
+            <label class="control-label" for="pollDeadline"><?php echo L::post_run_time; ?></label>
                 <select class="form-control" id="pollDeadline" name="pollDeadline">
-                <option value="1 day">24 Hours</option>
-                <option value="3 days">3 Days</option>
-                <option selected value="1 week">1 Week</option>
+                <option value="1 day"><?php echo L::time_one_day; ?></option>
+                <option value="3 days"><?php echo L::time_three_days; ?></option>
+                <option selected value="1 week"><?php echo L::time_one_week; ?></option>
 
                 </select>
             </div>
@@ -228,7 +228,7 @@ $activeBlog = $blog->blogName;
     <script src="https://<?php echo $_ENV['SITE_URL']; ?>/js/poll.js"></script>
     <script src="https://<?php echo $_ENV['SITE_URL']; ?>/js/feather.js"></script>
     <script src="https://<?php echo $_ENV['SITE_URL']; ?>/js/Sortable.min.js"></script>
-
+    <script src="https://<?php echo $_ENV['SITE_URL']; ?>/js/ui.js"></script>
     <script src="https://<?php echo $_ENV['SITE_URL']; ?>/js/images.js"></script>
 
     <script>
@@ -240,5 +240,5 @@ Sortable.create(files, {
 <script src='https://<?php echo $_ENV['SITE_URL']; ?>/js/jquery.caret.min.js'></script>
 <script src='https://<?php echo $_ENV['SITE_URL']; ?>/js/jquery.tag-editor.js'></script>
 <script>
-$('#postTags').tagEditor({maxLength: 255, clickDelete: false, removeDuplicates: false,  forceLowercase: false, sortable: true, delimiter: ',;#', placeholder: "Tags (separate by comma)"});
+$('#postTags').tagEditor({maxLength: 255, clickDelete: false, removeDuplicates: false,  forceLowercase: false, sortable: true, delimiter: ',;#', placeholder: "<?php echo L::post_tag_placeholder; ?>"});
 </script>
