@@ -35,32 +35,25 @@ $activeBlog = $blog->blogName;
                 body: formData
             }
         )
-            .then(
+        .then(
                 function(response) {
                     if (response.status !== 200) {
                         console.log('Error logged, status code: ' + response.status);
-                        document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("There was an error trying to post. Please contact support."); ?>'
+                        document.getElementById("DisplayDiv").innerHTML = renderBox('error', "<?php echo L::error_unknown; ?>");
                         return false;
                     }
                     response.json().then(function(data) {
                         if (data.code == "SUCCESS") {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::successBox("Posted!"); ?>'
+                            document.getElementById("DisplayDiv").innerHTML = renderBox('success', data.message);
                             window.location.href = siteURL + '/dashboard';
-                        } else if (data.code == "ERR_NOT_YOUR_BLOG") {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("You don\'t have permission to post to the blog you selected."); ?>'
-						} else if (data.code == "ERR_EMPTY_TEXT") {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("There was either no text, or no title set."); ?>'
-                        } else if (data.code == "ERR_PAGE_EXISTS") {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("You already have a page with that URL!"); ?>'
-
                         } else {
-                            document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("There was an error trying to post. Please contact support so we can look into it."); ?>'
+                            document.getElementById("DisplayDiv").innerHTML = renderBox('error', data.message);
 
                         }
                     })
                 }
             ).catch(function(err) {
-                document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("There was an error trying to post. It\'s most likely temporary, so try again - but if it persists, please contact support so we can look into it."); ?>'
+                document.getElementById("DisplayDiv").innerHTML = renderBox('error', "<?php echo L::error_unknown; ?>")
             })
         return false; // cancel original event to prevent form submitting
         });
@@ -91,15 +84,15 @@ $activeBlog = $blog->blogName;
 
 <div class="row">
 <div class="form-group col">
-	<label class="control-label" for="pageURL">URL of page (i.e. "about"):</label>
+	<label class="control-label" for="pageURL"><?php echo L::pages_edit_page_url; ?></label>
 	<input type="text" name="pageURL" id="pageURL" class="form-control">
 </div>
 <div class="form-group col">
-	<label class="control-label" for="pageName">Page Name (shows on nav bar):</label>
+	<label class="control-label" for="pageName"><?php echo L::pages_edit_page_name; ?></label>
 	<input type="text" name="pageName" id="pageName" class="form-control">
 </div>
 </div>
-<input type="text" name="pageTitle" id="pageTitle" class="form-control" placeholder="Title... ">
+<input type="text" name="pageTitle" id="pageTitle" class="form-control" placeholder="<?php echo L::post_title_placeholder; ?>">
 
 </div></div>
 
@@ -108,14 +101,14 @@ $activeBlog = $blog->blogName;
 <div class="card-body">
 <div class="row">
 <div class="col">
-<button type="submit" name="post" class="btn btn-primary" value="post" id="post" form="PostForm">Post</button>
+<button type="submit" name="post" class="btn btn-primary" value="post" id="post" form="PostForm"><?php echo L::post_post; ?></button>
 
 </div>
 <div class="col float-right">
 <div class="custom-control custom-switch">
 
  <input type="checkbox" class="custom-control-input" id="showNav" value="true" name="showNav">
- <label class="custom-control-label" for="showNav">Show in nav</label>
+ <label class="custom-control-label" for="showNav"><?php echo L::pages_show_in_nav;?></label>
 </div>
 </div>
 </div>

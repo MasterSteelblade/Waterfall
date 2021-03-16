@@ -38,7 +38,7 @@ $posts = $postCollector->getBlogQueuePosts($sessionObj->sessionData['activeBlog'
 
 <?php
 if (sizeof($posts) == 0) {
-    UIUtils::infoBox("No posts to show. Have you not queued anything?", "Nothing found");
+    UIUtils::infoBox(L::dashboard_no_queue, L::string_nothing_found);
 } else {
     foreach($posts as $post) {
         $post->dashboardRender($activeBlog->ID);
@@ -47,7 +47,7 @@ if (sizeof($posts) == 0) {
 ?>
     <?php 		
     if (sizeof($posts) == 25) {
-        echo  '<a class="btn btn-primary float-right" href="https://'.$_ENV['SITE_URL'].'/queue/' . $nextPage . '">Next</a>'; 
+        echo  '<a class="btn btn-primary float-right" href="https://'.$_ENV['SITE_URL'].'/queue/' . $nextPage . '">'.L::string_next.'</a>'; 
     }
     ?>
 </div>

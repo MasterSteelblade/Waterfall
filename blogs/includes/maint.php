@@ -55,22 +55,15 @@ html {
 <?php
     if ($_ENV['MAINTENANCE'] == 'on') {
         // Nobody can access if maintenance mode is set toa hard on. 
-        $mode = 'Maintenance Mode';
+        $mode = L::maintenance_mode_maintenance;
         if ($_ENV['MAINTENANCE_TYPE'] == 'planned') {
-            $tagline = 'The site is temporarily down for planned upgrades.';
+            $tagline = L::maintenance_tagline_planned;
         } else {
-            $tagline = 'We hope to be back shortly.';
-        }
-    } elseif ($_ENV['MAINTENANCE'] == 'staff') {
-        $mode = 'Maintenance Mode';
-        if ($_ENV['MAINTENANCE_TYPE'] == 'planned') {
-            $tagline = 'The site is in maintenance mode for planned upgrades. Staff are doing final checks now.';
-        } else {
-            $tagline = 'Staff are doing final checks now.';
+            $tagline = L::maintenance_tagline;
         }
     } else {
-        $mode = 'VIP Mode';
-        $tagline = 'The site is currently in VIP mode. Staff or VIP members are able to access the site by logging in.';
+        $mode = L::maintenance_mode_vip;
+        $tagline = L::maintenance_tagline_vip;
     }
 
 

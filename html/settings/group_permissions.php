@@ -6,12 +6,12 @@ $permittedBlog = new Blog();
 $permittedBlog->getByBlogName($_GET['mainBlog']);
 if (!isset($_GET['mainBlog'])) {
     $failed = true;
-    UIUtils::errorBox('You don\'t have permission to do that or this blog doesn\'t exist.', 'Invalid Permissions');
+    UIUtils::errorBox(L::error_invalid_permissions, L::error_invalid_permissions_title);
     exit();
 }
 if ($permittedBlog->failed) {
     $failed = true;
-    UIUtils::errorBox('You don\'t have permission to do that or this blog doesn\'t exist.', 'Invalid Permissions');
+    UIUtils::errorBox(L::error_invalid_permissions, L::error_invalid_permissions_title);
     exit();
 } elseif ($blog->checkMemberPermission($sessionObj->user->ID, 'blog_settings') == false && $blog->ownerID != $sessionObj->user->ID) {
     $failed = true;
@@ -21,7 +21,7 @@ if ($permittedBlog->failed) {
 $permissions = $blog->getMemberPermissions($permittedBlog->ownerID);
 if ($permissions == false) {
     $failed = true;
-    UIUtils::errorBox('This blog is not a member of your blog!', 'Invalid Blog');
+    UIUtils::errorBox(L::error_not_member, L::error_invalid_blog_title);
     exit();
 }
 ?>

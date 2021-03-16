@@ -110,25 +110,25 @@ class Note {
             <?php 
             switch ($this->noteType) {
                 case 'like': 
-                    echo ' liked your <a href="'.$recieveBlog->getBlogURL().'/post/'.$this->postID.'">post</a>';
+                    echo L::notes_like('<a href="'.$recieveBlog->getBlogURL().'/post/'.$this->postID.'">');
                     break;
                 case 'reblog': 
-                    echo ' reblogged your <a href="'.$blog->getBlogURL().'/post/'.$this->postID.'">post</a>';
+                    echo L::notes_reblog('<a href="'.$blog->getBlogURL().'/post/'.$this->postID.'">');
                     if ($this->comment != '' && $this->comment != null) {
                         echo '<br><blockquote class="comment-blockquote">'. WFText::makeTextRenderable($this->comment) .'</blockquote>';
                     }
                     break;
                 case 'answer':
-                    echo ' answered your question';
+                    echo L::notes_answer;
                     break;
                 case 'follow':
-                    echo ' followed you!';
+                    echo L::notes_follow;
                     break;
                 case 'mention':
-                    echo ' mentioned you in a <a href="'.$blog->getBlogURL().'/post/'.$this->postID.'">post</a>';
+                    echo L::notes_mention('<a href="'.$blog->getBlogURL().'/post/'.$this->postID.'">');
                     break;
                 case 'comment':
-                    echo ' commented on your <a href="'.$recieveBlog->getBlogURL().'/post/'.$this->postID.'">post</a>:';
+                    echo L::notes_comment('<a href="'.$recieveBlog->getBlogURL().'/post/'.$this->postID.'">');
                     echo '<br><blockquote class="comment-blockquote">'. WFText::makeTextRenderable($this->comment) .'</blockquote>';
                     break;
 
@@ -148,16 +148,16 @@ class Note {
                 <?php
                 switch ($this->noteType) {
                     case 'like': 
-                        echo ' liked this post</a>';
+                        echo L::notes_blog_like;
                         break;
                     case 'reblog': 
-                        echo ' reblogged this <a href="'.$blog->getBlogURL().'/post/'.$this->postID.'">post</a>';
+                        echo L::notes_blog_reblog('<a href="'.$blog->getBlogURL().'/post/'.$this->postID.'">');
                         if ($this->comment != '' && $this->comment != null) {
                             echo '<br><blockquote class="comment-blockquote">'. WFText::makeTextRenderable($this->comment) .'</blockquote>';
                         }
                         break;
                     case 'comment':
-                        echo ' commented on this <a href="'.$recieveBlog->getBlogURL().'/post/'.$this->postID.'">post</a>:';
+                        echo L::notes_blog_comment('<a href="'.$recieveBlog->getBlogURL().'/post/'.$this->postID.'">');
                         echo '<br><blockquote class="comment-blockquote">'. WFText::makeTextRenderable($this->comment) .'</blockquote>';
                         break;
                 }

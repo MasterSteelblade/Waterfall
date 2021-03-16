@@ -148,7 +148,7 @@ if ($blog->failed || ($blog->ownerID != $sessionObj->user->ID && !$blog->checkMe
 <input id="file-input" type="file" name="name" onchange="selectedHandler(event);" style="display: none;" />
 <div id="droparea" class="droparea" onclick="document.getElementById('file-input').click();" ondrop="dropHandler(event);" ondragover="dragOverHandler(event);">
 <h1><i class="fas fa-images"></i></h1>
-<h3> Drag files here, or click to upload.</h3>
+<h3><?php echo L::post_drag_here; ?></h3>
 </div>
 <div id="files">
 <?php foreach ($editing->imageIDs as $ID) {
@@ -158,7 +158,7 @@ if ($blog->failed || ($blog->ownerID != $sessionObj->user->ID && !$blog->checkMe
 </div>
 </div></div>
     <?php } ?>
-    <input type="text" name="postTitle" id="postTitle" class="form-control" placeholder="Title... " value="<?php echo $editing->postTitle; ?>">
+    <input type="text" name="postTitle" id="postTitle" class="form-control" placeholder="<?php echo L::post_title_placeholder; ?>" value="<?php echo $editing->postTitle; ?>">
     <div id="feather-editor" name="feather-editor">
         <?php echo WFText::makeTextRenderableForEdit($editing->content); ?>
     </div>
@@ -172,7 +172,7 @@ if ($blog->failed || ($blog->ownerID != $sessionObj->user->ID && !$blog->checkMe
         $tags = implode(', ', $tagArr);
     }
     ?>
-    <input class="form-control" name="postTags" id="postTags" placeholder="Tags (separate by comma)" <?php if ($tags != '') { echo 'value="'.$tags.'"';} ?>>
+    <input class="form-control" name="postTags" id="postTags" placeholder="<?php echo L::post_tag_placeholder; ?>" <?php if ($tags != '') { echo 'value="'.$tags.'"';} ?>>
 
         
         <div class="card">
@@ -180,17 +180,17 @@ if ($blog->failed || ($blog->ownerID != $sessionObj->user->ID && !$blog->checkMe
         <div class="row"> 
             <div class="col">
         <?php if ($editing->postStatus != 'draft') { ?>
-	        <button name="submit" type="submit" class="btn btn-primary submitbutton" id="submit" form="PostForm" value="post">Save</button>
+	        <button name="submit" type="submit" class="btn btn-primary submitbutton" id="submit" form="PostForm" value="post"><?php echo L::string_save; ?></button>
         <?php   } else { ?>
             <div class="btn-group">
 
-                <button type="submit" name="post" class="btn btn-primary submitbutton" value="post" id="post" form="PostForm">Post Now</button>
+                <button type="submit" name="post" class="btn btn-primary submitbutton" value="post" id="post" form="PostForm"><?php echo L::post_post_now; ?></button>
                 <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="sr-only">Post Now</span>
+                    <span class="sr-only"><?php echo L::post_post_now; ?></span>
                 </button>
                 <div class="dropdown-menu">
-                    <button name="post" type="submit" class="dropdown-item submitbutton" id="post" value="post" form="PostForm">Post Now</button>
-                    <button name="draft" type="submit" class="dropdown-item submitbutton" id="draft" value="draft" form="PostForm">Update Draft</button>
+                    <button name="post" type="submit" class="dropdown-item submitbutton" id="post" value="post" form="PostForm"><?php echo L::post_post_now; ?></button>
+                    <button name="draft" type="submit" class="dropdown-item submitbutton" id="draft" value="draft" form="PostForm"><?php echo L::post_update_draft; ?></button>
 
                 </div></div>
                 <?php } ?>
@@ -209,7 +209,7 @@ if ($blog->failed || ($blog->ownerID != $sessionObj->user->ID && !$blog->checkMe
 </div>
 <div class="col">
 
-                <button type="button" onclick="deletePost(this)" name="post" class="btn btn-danger float-right" data-post-id="<?php echo $editing->ID; ?>" id="delete">Delete</button>
+                <button type="button" onclick="deletePost(this)" name="post" class="btn btn-danger float-right" data-post-id="<?php echo $editing->ID; ?>" id="delete"><?php echo L::string_delete; ?></button>
 
                 
         </div></div>
@@ -238,7 +238,7 @@ if ($blog->failed || ($blog->ownerID != $sessionObj->user->ID && !$blog->checkMe
     <script src="https://<?php echo $_ENV['SITE_URL']; ?>/js/poll.js"></script>
     <script src="https://<?php echo $_ENV['SITE_URL']; ?>/js/feather.js"></script>
     <script src="https://<?php echo $_ENV['SITE_URL']; ?>/js/Sortable.min.js"></script>
-
+    <script src="https://<?php echo $_ENV['SITE_URL']; ?>/js/ui.js"></script>
 <script src="https://<?php echo $_ENV['SITE_URL']; ?>/js/images.js"></script>
 
 <script>
@@ -263,33 +263,32 @@ animation: 100, group: 'list-1', draggable: '.sortable-image', handle: '.sortabl
                 redirect: 'follow',
                 body: formData
             }
-        ).then(
-            function(response) {
-                if (response.status !== 200) {
-                    console.log('Error logged, status code: ' + response.status);
-                    document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("There was an error trying to delete the post. Please contact support."); ?>'
-                    return false;
-                }
-                response.json().then(function(data) {
-                    if (data.code == "SUCCESS") {
-                        document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::successBox("Deleted! redirecting to dashboard..."); ?>'
-                        window.location.href = siteURL + '/dashboard';
-                    } else if (data.code == "ERR_PERMISSIONS") {
-                        document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("This isn\'t your post."); ?>'
-                    } else {
-                        document.getElementById("DisplayDiv").innerHTML = '<?php UIUtils::errorBox("There was an error trying to post. Please contact support so we can look into it."); ?>'
-
+        )        .then(
+                function(response) {
+                    if (response.status !== 200) {
+                        console.log('Error logged, status code: ' + response.status);
+                        document.getElementById("DisplayDiv").innerHTML = renderBox('error', "<?php echo L::error_unknown; ?>");
+                        return false;
                     }
-                })
-            }
-        ).catch(function(err) {
-            console.log(err);
-        })
+                    response.json().then(function(data) {
+                        if (data.code == "SUCCESS") {
+                            document.getElementById("DisplayDiv").innerHTML = renderBox('success', data.message);
+                            window.location.href = siteURL + '/dashboard';
+                            return false;
+                        } else {
+                            document.getElementById("DisplayDiv").innerHTML = renderBox('error', data.message);
+
+                        }
+                    })
+                }
+            ).catch(function(err) {
+                document.getElementById("DisplayDiv").innerHTML = renderBox('error', "<?php echo L::error_unknown; ?>");
+            })
     }
 
 </script>
 <script src='https://<?php echo $_ENV['SITE_URL']; ?>/js/jquery.caret.min.js'></script>
 <script src='https://<?php echo $_ENV['SITE_URL']; ?>/js/jquery.tag-editor.js'></script>
 <script>
-$('#postTags').tagEditor({maxLength: 255, clickDelete: false, removeDuplicates: false,  forceLowercase: false, sortable: true, delimiter: ',;#', placeholder: "Tags (separate by comma)"});
+$('#postTags').tagEditor({maxLength: 255, clickDelete: false, removeDuplicates: false,  forceLowercase: false, sortable: true, delimiter: ',;#', placeholder: "<?php echo L::post_tag_placeholder; ?>"});
 </script>

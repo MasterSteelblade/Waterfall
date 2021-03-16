@@ -87,7 +87,7 @@ if (isset($sessionObj->sessionData['activeBlog'])) {
 			
 			<?php
 		} else {
-			 UIUtils::errorBox("This page doesn't exist on this blog.", "Not found");
+			UIUtils::errorBox(L::string_page_not_on_blog, L::string_not_found);
 		}
      ?>
      <?php

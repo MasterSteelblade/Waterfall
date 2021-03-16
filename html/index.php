@@ -78,9 +78,9 @@ require_once(__DIR__.'/../src/loader.php'); ?>
 					<section id="banner">
 						<div class="inner">
 							<div class="logo"><div class="row"><div class="col-sm-2"><img class="icon" src="https://<?php echo $_ENV['SITE_URL']; ?>/front/wf.png"></div><div class="col"><h2>Waterfall</h2></div></div></div>
-							<p>Let your creativity flow.</p>
+							<p><?php echo L::front_tagline; ?></p>
 
-							<p><a href="https://<?php echo $_ENV['SITE_URL']; ?>/login" class="btn-lg btn-info">Log in</a></p> <p><a class="btn-lg btn-primary" href="https://<?php echo $_ENV['SITE_URL']; ?>/register<?php if (isset($_GET['invite'])) {echo '/'.htmlspecialchars($_GET['invite']); } ?>">Register</a></p>
+							<p><a href="https://<?php echo $_ENV['SITE_URL']; ?>/login" class="btn-lg btn-info"><?php echo L::front_login; ?></a></p> <p><a class="btn-lg btn-primary" href="https://<?php echo $_ENV['SITE_URL']; ?>/register<?php if (isset($_GET['invite'])) {echo '/'.htmlspecialchars($_GET['invite']); } ?>"><?php echo L::front_register; ?></a></p>
 
 
 					</section>
@@ -92,8 +92,8 @@ require_once(__DIR__.'/../src/loader.php'); ?>
 							<section id="one" class="wrapper spotlight style1">
 								<div class="inner">
 									<div class="content">
-										<h2 class="major">For the community</h2>
-										<p>Waterfall is being built from the ground up by the people it's intended for. A familiar, simple design meets an intelligent, evolving anti-theft system for art to create a platform to let creativity get the credit it deserves and to let fandoms flourish.</p>
+										<h2 class="major"><?php echo L::front_header_one; ?></h2>
+										<p><?php echo L::front_sales_pitch_one; ?></p>
 									</div>
 								</div>
 							</section>
@@ -103,8 +103,8 @@ require_once(__DIR__.'/../src/loader.php'); ?>
 								<div class="inner">
 									<!-- <a href="#" class="image"><img src="https://<?php echo $_ENV['SITE_URL']; ?>/front/pic02.jpg" alt="" /></a> -->
 									<div class="content">
-										<h2 class="major">Evolution</h2>
-										<p>Receiving constant updates, Waterfall invites users to suggest features with a direct line to the developer, keeping us one step ahead and making sure our users can do what they want to do. Users are free to submit suggestions, ideas, and complaints, and mobile apps are in development.</p>
+										<h2 class="major"><?php echo L::front_header_two; ?></h2>
+										<p><?php echo L::front_sales_pitch_two; ?></p>
 									</div>
 								</div>
 							</section>
@@ -126,8 +126,8 @@ require_once(__DIR__.'/../src/loader.php'); ?>
 				<!-- Footer -->
 					<section id="footer">
 						<div class="inner">
-							<h2 class="major">Join now</h2>
-							<p>Waterfall is free to use, and has no waiting lists. <a href="https://<?php echo $_ENV['SITE_URL']; ?>/register">Give it a shot.</a></p>
+							<h2 class="major"><?php echo L::front_join_header; ?></h2>
+							<p><?php echo L::front_join_text; ?> <a href="https://<?php echo $_ENV['SITE_URL']; ?>/register"><?php echo L::front_join_cta; ?></a></p>
 
 							<ul class="copyright">
 								<li>&copy; Chaos Ideal Ltd. All rights reserved.</li>

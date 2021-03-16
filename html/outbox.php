@@ -43,7 +43,7 @@ if (!$blog->failed && ($blog->ownerID == $sessionObj->user->ID || $blog->checkMe
     </div>
     <div class="d-none d-lg-block" style="width:300px;"> <!-- This stuff is too big for mobile -->
 		        <div id="outboxList">
-                    <h6>Outbox</h6>
+                    <h6><?php echo L::header_outbox; ?></h6>
                     <ul class="nav flex-column">
                     <?php 
                             $blogList = $sessionObj->user->blogs;
