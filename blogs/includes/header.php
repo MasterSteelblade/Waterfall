@@ -193,6 +193,7 @@ date_default_timezone_set('Etc/UTC'); // We just want everything in UTC.
 
 if ($failed == true) {
   UIUtils::errorBox(L::string_blog_not_found);
+  exit();
 }
 if ($thisBlog->nsfwBlog == true) {
   if ($session == false || $sessionObj->user->calculateAge() < 18) {
