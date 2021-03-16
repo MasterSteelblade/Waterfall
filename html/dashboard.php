@@ -52,22 +52,22 @@ if (sizeof($posts) != 0) {
 				<!-- This section for mobile -->
 				<div class="btn-group btn-block">
 					<button type="button" class="btn btn-secondary btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-Make a New Post
+<?php echo L::string_new_post; ?>
 </button>
   				<div class="dropdown-menu">
-    				<a class="dropdown-item" href="https://<?php echo $_ENV['SITE_URL']; ?>/post/text"><i class="fas fa-text" title="New Text Post"></i>Text</a>
+    				<a class="dropdown-item" href="https://<?php echo $_ENV['SITE_URL']; ?>/post/text"><i class="fas fa-text" title="<?php echo L::post_types_text_new; ?>"></i><?php echo L::post_types_text; ?></a>
     <div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="https://<?php echo $_ENV['SITE_URL']; ?>/post/image"><i class="fas fa-image" title="New Image Post"></i>Image</a>
+						<a class="dropdown-item" href="https://<?php echo $_ENV['SITE_URL']; ?>/post/image"><i class="fas fa-image" title="<?php echo L::post_types_image_new; ?>"></i><?php echo L::post_types_image; ?></a>
     <div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="https://<?php echo $_ENV['SITE_URL']; ?>/post/art"><i class="fas fa-paint-brush" title="New Art Post"></i>Art</a>
+						<a class="dropdown-item" href="https://<?php echo $_ENV['SITE_URL']; ?>/post/art"><i class="fas fa-paint-brush" title="<?php echo L::post_types_art_new; ?>"></i><?php echo L::post_types_art; ?></a>
     <div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="https://<?php echo $_ENV['SITE_URL']; ?>/post/video"><i class="fas fa-video" title="New Video Post"></i></span>Video</a>
+						<a class="dropdown-item" href="https://<?php echo $_ENV['SITE_URL']; ?>/post/video"><i class="fas fa-video" title="<?php echo L::post_types_video_new; ?>"></i></span><?php echo L::post_types_video; ?></a>
     <div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="https://<?php echo $_ENV['SITE_URL']; ?>/post/audio"><i class="fas fa-volume" title="New Audio Post"></i>Audio</a>
+						<a class="dropdown-item" href="https://<?php echo $_ENV['SITE_URL']; ?>/post/audio"><i class="fas fa-volume" title="<?php echo L::post_types_audio_new; ?>"></i><?php echo L::post_types_audio; ?></a>
 		<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="https://<?php echo $_ENV['SITE_URL']; ?>/post/quote"><i class="fas fa-quote-right" title="New Quote Post"></i>Quote</a>
+						<a class="dropdown-item" href="https://<?php echo $_ENV['SITE_URL']; ?>/post/quote"><i class="fas fa-quote-right" title="<?php echo L::post_types_quote_new; ?>"></i><?php echo L::post_types_quote; ?></a>
 		<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="https://<?php echo $_ENV['SITE_URL']; ?>/post/link"><i class="fas fa-link" title="New Link Post"></i>Link</a>
+						<a class="dropdown-item" href="https://<?php echo $_ENV['SITE_URL']; ?>/post/link"><i class="fas fa-link" title="<?php echo L::post_types_link_new; ?>"></i><?php echo L::post_types_link; ?></a>
 
   				</div>
 				</div>
@@ -76,25 +76,25 @@ Make a New Post
 					<div class="container make-post-container">
 						<div class="row">
 			<div class="col card text-center make-post-button make-text">
-					<h2 class="card-title"><a href="https://<?php echo $_ENV['SITE_URL']; ?>/post/text"><i class="fas fa-text" title="New Text Post"></i></h2><h6>Text</a></h1>
+					<h2 class="card-title"><a href="https://<?php echo $_ENV['SITE_URL']; ?>/post/text"><i class="fas fa-text" title="<?php echo L::post_types_text_new; ?>"></i></h2><h6><?php echo L::post_types_text; ?></a></h1>
 			</div>
 			<div class="col card text-center make-post-button make-image">
-					<h2 class="card-title"><a href="https://<?php echo $_ENV['SITE_URL']; ?>/post/image"><i class="fas fa-image" title="New Image Post"></i></h2><h6>Image</a></h6>
+					<h2 class="card-title"><a href="https://<?php echo $_ENV['SITE_URL']; ?>/post/image"><i class="fas fa-image" title="<?php echo L::post_types_image_new; ?>"></i></h2><h6><?php echo L::post_types_image; ?></a></h6>
 			</div>
 			<div class="col card text-center make-post-button make-art">
-					<h2 class="card-title"><a href="https://<?php echo $_ENV['SITE_URL']; ?>/post/art"><i class="fas fa-paint-brush" title="New Art Post"></i></h2><h6>Art</a></h6>
+					<h2 class="card-title"><a href="https://<?php echo $_ENV['SITE_URL']; ?>/post/art"><i class="fas fa-paint-brush" title="<?php echo L::post_types_art_new; ?>"></i></h2><h6><?php echo L::post_types_art; ?></a></h6>
 			</div>
 			<div class="col card text-center make-post-button make-video">
-					<h2 class="card-title"><a href="https://<?php echo $_ENV['SITE_URL']; ?>/post/video"><i class="fas fa-video" title="New Video Post"></i></h2><h6>Video</a></h6>
+					<h2 class="card-title"><a href="https://<?php echo $_ENV['SITE_URL']; ?>/post/video"><i class="fas fa-video" title="<?php echo L::post_types_video_new; ?>"></i></h2><h6><?php echo L::post_types_video; ?></a></h6>
 			</div>
 			<div class="col card text-center make-post-button make-audio">
-					<h2 class="card-title"><a href="https://<?php echo $_ENV['SITE_URL']; ?>/post/audio"><i class="fas fa-volume" title="New Audio Post"></i></h2><h6>Audio</a></h6>
+					<h2 class="card-title"><a href="https://<?php echo $_ENV['SITE_URL']; ?>/post/audio"><i class="fas fa-volume" title="<?php echo L::post_types_audio_new; ?>"></i></h2><h6><?php echo L::post_types_audio; ?></a></h6>
 			</div>
 			<div class="col card text-center make-post-button make-quote">
-					<h2 class="card-title"><a href="https://<?php echo $_ENV['SITE_URL']; ?>/post/quote"><i class="fas fa-quote-right" title="New Quote Post"></i></h2><h6>Quote</a></h6>
+					<h2 class="card-title"><a href="https://<?php echo $_ENV['SITE_URL']; ?>/post/quote"><i class="fas fa-quote-right" title="<?php echo L::post_types_quote_new; ?>"></i></h2><h6><?php echo L::post_types_quote; ?></a></h6>
 			</div>
 			<div class="col card text-center make-post-button make-link">
-					<h2 class="card-title"><a href="https://<?php echo $_ENV['SITE_URL']; ?>/post/link"><i class="fas fa-link" title="New Link Post"></i></h2><h6>Link</a></h6>
+					<h2 class="card-title"><a href="https://<?php echo $_ENV['SITE_URL']; ?>/post/link"><i class="fas fa-link" title="<?php echo L::post_types_link_new; ?>"></i></h2><h6><?php echo L::post_types_link; ?></a></h6>
 			</div>
 			</div>
 	</div>
@@ -107,7 +107,7 @@ function combinedSort($a, $b) {
 usort($combinedArray, 'combinedSort');
 
 if (sizeof($posts) == 0) {
-    UIUtils::infoBox("No posts to show. Are you following anyone?", "Nothing found");
+    UIUtils::infoBox(L::dashboard_no_posts, L::string_nothing_found);
 } else {
     foreach($combinedArray as $item) {
 		$item->dashboardRender($activeBlog->ID);
@@ -116,7 +116,7 @@ if (sizeof($posts) == 0) {
 ?>
     <?php 		
     if (sizeof($posts) == 25) {
-        echo  '<a class="btn btn-primary float-right" href="https://'.$_ENV['SITE_URL'].'/dashboard/' . end($posts)->ID . '">Next</a>'; 
+        echo  '<a class="btn btn-primary float-right" href="https://'.$_ENV['SITE_URL'].'/dashboard/' . end($posts)->ID . '">'.L::string_next.'</a>'; 
     }
     ?>
 </div>

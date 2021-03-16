@@ -63,7 +63,7 @@ $(document).ready(function() {
 
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
-                                <button name="submit" type="submit" class="btn btn-outline-danger" id="submit" form="LogoutForm">Click here to log out of Waterfall.</button>
+                                <button name="submit" type="submit" class="btn btn-outline-danger" id="submit" form="LogoutForm"><?php echo L::logout_click_to_logout; ?></button>
                             </div>
                         </div>
                     </form>

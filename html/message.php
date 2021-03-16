@@ -115,13 +115,13 @@ if (isset($activeBlog->ownerID) && ($activeBlog->ownerID != $sessionObj->user->I
                                 <div class="col">
                                     <div class="custom-control custom-switch">
                                         <input id="sendAnon" name="sendAnon" class="custom-control-input" value="true" type="checkbox" >
-                                        <label class="custom-control-label" for="sendAnon">Send anonymously</label>
+                                        <label class="custom-control-label" for="sendAnon"><?php echo L::message_send_anonymously; ?></label>
                                     </div>
                                 </div>
                             </div>
                             <?php } ?>
 <div class="btn-group">
-		    <button type="submit" name="post" class="btn btn-primary" value="post" id="postButton" form="MessageForm">Send</button>
+		    <button type="submit" name="post" class="btn btn-primary" value="post" id="postButton" form="MessageForm"><?php echo L::string_send; ?></button>
 
 </div>
 </form>
@@ -130,7 +130,7 @@ if (isset($activeBlog->ownerID) && ($activeBlog->ownerID != $sessionObj->user->I
  <div class="d-none d-lg-block" style="width:300px;"> <!-- This stuff is too big for mobile -->
 </div>
 <?php } else {
-    UIUtils::errorBox("This blog doesn't exist, or you can't send messages to it.");
+    UIUtils::errorBox(L::message_blog_not_found);
 } ?>
 </div>
 </div>

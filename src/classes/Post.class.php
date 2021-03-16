@@ -138,7 +138,7 @@ class Post {
         if ($this->isReblog == false) {
             $this->database->db_delete("DELETE FROM posts WHERE source_post = $1", array($this->ID));
         }
-        // Find all posts that chain off this one. 
+        // Find all posts that chain off this one. Very slow, but what we have to do for mid-chain stuff right now.
         $posts = $this->database->db_select("SELECT * FROM posts WHERE last_in_chain = $1", array($this->ID));
         if ($posts) {
             foreach ($posts as $p) {

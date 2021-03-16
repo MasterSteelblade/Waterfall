@@ -61,13 +61,13 @@ $missing = $sessionObj->userMissing;
                     <div class="card-body">
                     <form id="UserUpdateForm" action="../process/user/update.php" method="post">
 
-                        <p><strong>Some stuff has been changed around since you were last here, so we need to reconfirm some info.</strong></p> 
+                        <p><strong><?php echo L::account_update_intro; ?></strong></p> 
                         
                         <?php if (in_array('birthday', $missing)) { ?>
 
 
-                            <h5 class="card-title">Birthday</h5>
-                            <p>We need this to verify your age so we can help protect you from content that you may find disturbing, as well as to restrict access to content the law deems illegal for the site to let you see. Additionally, it determines which kinds of filtering options are available to you to help protect yourself. </p>
+                            <h5 class="card-title"><?php echo L::account_update_birthday; ?></h5>
+                            <p><?php echo L::account_update_birthday_explainer; ?></p>
                             <div class="form-group row">
 
                                 <div class="col-6">
@@ -78,7 +78,7 @@ $missing = $sessionObj->userMissing;
                         <?php } ?>
                         <div class="form-group row">
                             <div class="col-sm-offset-2 col-sm-10">
-                                <button name="submit" type="submit" class="btn btn-primary" id="submit" form="UserUpdateForm">Submit</button>
+                                <button name="submit" type="submit" class="btn btn-primary" id="submit" form="UserUpdateForm"><?php echo L::string_submit; ?></button>
                             </div>
                         </div>
                         <div id="DisplayDiv"></div>

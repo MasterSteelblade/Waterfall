@@ -76,7 +76,7 @@ require_once(__DIR__.'/../includes/header.php');
                 <?php UIUtils::infoBox("tl;dr You keep ownership of any intellectual property you upload. I'm not interested in owning it.");?>
 
                 <p>You agree that, in the case of Art posts, Waterfall may create data based on the uploaded file. This data is used to ensure that any future uploads to
-                    the site are not duplicated of your art (either with or without credit), and grant permission to Waterfall to automatically convert the attempted post
+                    the site are not duplicates of your art (either with or without credit), and grant permission to Waterfall to automatically convert the attempted post
                     into a reblog of your original post, enforcing credit of your work. </p>
 
                 <p>Artists may mark art as able to be included in posts without forcing a reblog, such as for mood boards or other image sets. In these cases, the content

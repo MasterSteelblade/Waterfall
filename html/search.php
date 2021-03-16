@@ -49,9 +49,9 @@ $posts = $postCollector->getSearchPosts($sessionObj->sessionData['activeBlog'], 
 <?php
 
 if (sizeof($posts) == 0) {
-    UIUtils::infoBox("No posts to show. Are you following anyone?", "Nothing found");
+    UIUtils::infoBox(L::dashboard_no_search);
 } else if (strtolower($tagged) == 'dni' || strtolower($tagged) == 'dnr' || strtolower($tagged) == 'do not reblog' || strtolower($tagged) == 'do not interact') {
-	UIUtils::errorBox("You cannot, and should not, search DNR or DNI posts.");
+	UIUtils::errorBox(L::error_dnr_search);
 } else {
     foreach($posts as $item) {
 		$item->dashboardRender($activeBlog->ID);
@@ -60,7 +60,7 @@ if (sizeof($posts) == 0) {
 ?>
     <?php 		
     if (sizeof($posts) == 25) {
-        echo  '<a class="btn btn-primary float-right" href="https://'.$_ENV['SITE_URL'].'/search/'.$tagged.'/'.$nextPage.'">Next</a>'; 
+        echo  '<a class="btn btn-primary float-right" href="https://'.$_ENV['SITE_URL'].'/search/'.$tagged.'/'.$nextPage.'">'.L::string_next.'</a>'; 
     }
     ?>
 </div>

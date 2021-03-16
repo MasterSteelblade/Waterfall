@@ -54,7 +54,7 @@ require_once(__DIR__.'/../includes/header.php');
                     <div class="card-body">
                     <form id="UserUpdateForm" action="../process/user/request_reset.php" method="post">
 
-                        <p>If you've forgotten your password, enter your email address below.</p>
+                        <p><?php echo L::forgot_password_explainer; ?></p>
 
 
                             <div class="form-group row">
@@ -66,7 +66,7 @@ require_once(__DIR__.'/../includes/header.php');
                         
                         <div class="form-group row">
                             <div class="col-sm-offset-2 col-sm-10">
-                                <button name="submit" type="submit" class="btn btn-primary" id="submit" form="UserUpdateForm">Submit</button>
+                                <button name="submit" type="submit" class="btn btn-primary" id="submit" form="UserUpdateForm"><?php echo L::string_submit; ?></button>
                             </div>
                         </div>
                         <div id="DisplayDiv"></div>

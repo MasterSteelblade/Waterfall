@@ -34,7 +34,7 @@ $followers = $activeBlog->getFollowingBlogs(25, $pageNo); // Really need better 
         <div class="row justify-content-center">
             <div class="col">
                 <div class="card"><div class="card-body">
-                <h1>Followers for <?php echo $activeBlog->blogName; ?></h1>
+                <h1><?php echo L::dashboard_followers_header($activeBlog->blogName); ?></h1>
                     <?php foreach ($followers as $follower) {
                     ?>      
                         <hr>           
@@ -70,11 +70,11 @@ $followers = $activeBlog->getFollowingBlogs(25, $pageNo); // Really need better 
                     </div></div>
                     <?php 
                         if ($prevPage != 0) {
-                echo '<a class="btn btn-primary float-left" href="https://'.$_ENV['SITE_URL'].'/followers/'.$prevPage.'">Prev</a>';
+                echo '<a class="btn btn-primary float-left" href="https://'.$_ENV['SITE_URL'].'/followers/'.$prevPage.'">'.L::string_previous.'</a>';
             }
-            echo '<a class="btn btn-primary float-right" href="https://'.$_ENV['SITE_URL'].'/followers/'.$nextPage.'">Next</a>'; ?>
+            echo '<a class="btn btn-primary float-right" href="https://'.$_ENV['SITE_URL'].'/followers/'.$nextPage.'">'.L::string_next.'</a>'; ?>
 </div>
-            <div class="d-none d-lg-block" style="width: 400px;"> <!-- This stuff is too big for mobile -->
+            <div class="d-none d-lg-block" style="width:400px;"> <!-- This stuff is too big for mobile -->
 
             </div>
         </div>

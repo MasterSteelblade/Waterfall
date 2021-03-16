@@ -72,25 +72,25 @@ if ($session == false) {
                 <div class="card-body">
                     <form role="form" class="form-horizontal" id="LoginForm" action="process/user/login.php" method="post">
                         <div class="form-group">
-                            <label class="control-label col-sm-8" for="login-email">Email:</label>
+                            <label class="control-label col-sm-8" for="login-email"><?php echo L::login_email; ?></label>
                             <div class="col-sm-8">
                                 <input id="login-email" maxlength="100" class="form-control" name="emailAddress" type="email" />
                             </div>
                         </div>
                         <input type="hidden" id="token" name="token" value="<?php echo $token; ?>">
                         <div class="form-group">
-                            <label class="control-label col-sm-8" for="login-password">Password:</label>
+                            <label class="control-label col-sm-8" for="login-password"><?php echo L::login_password; ?></label>
                             <div class="col-sm-8">
                                 <input id="login-password" maxlength="100" name="password"  class="form-control" type="password" />
                             </div>
-                            <a href="https://<?php echo $_ENV['SITE_URL']; ?>/login/forgot">Forgot your password?</a>
+                            <a href="https://<?php echo $_ENV['SITE_URL']; ?>/login/forgot"><?php echo L::login_forgot_password_question; ?></a>
                         </div>
                         <div id="twofa-holder">
 
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
-                                <button name="submit" type="submit" class="btn btn-primary" id="submit" form="LoginForm">Submit</button>
+                                <button name="submit" type="submit" class="btn btn-primary" id="submit" form="LoginForm"><?php echo L::string_submit; ?></button>
                             </div>
                         </div>
                     </form>

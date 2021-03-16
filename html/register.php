@@ -40,22 +40,22 @@ if ($session == false) {
                 function(response) {
                     if (response.status !== 200) {
                         console.log('Error logged, status code: ' + response.status);
-                        document.getElementById("DisplayDivDelete").innerHTML = renderBox('error', "<?php echo L::error_unknown; ?>");
+                        document.getElementById("DisplayDiv").innerHTML = renderBox('error', "<?php echo L::error_unknown; ?>");
                         return false;
                     }
                     response.json().then(function(data) {
                         if (data.code == "SUCCESS") {
-                            document.getElementById("DisplayDivDelete").innerHTML = renderBox('success', data.message);
+                            document.getElementById("DisplayDiv").innerHTML = renderBox('success', data.message);
                             window.location.href = "https://<?php echo $_ENV['SITE_URL']; ?>/dashboard"
                             return false;
                         } else {
-                            document.getElementById("DisplayDivDelete").innerHTML = renderBox('error', data.message);
+                            document.getElementById("DisplayDiv").innerHTML = renderBox('error', data.message);
 
                         }
                     })
                 }
             ).catch(function(err) {
-                document.getElementById("DisplayDivDelete").innerHTML = renderBox('error', "<?php echo L::error_unknown; ?>");
+                document.getElementById("DisplayDiv").innerHTML = renderBox('error', "<?php echo L::error_unknown; ?>");
             })
         return false; // cancel original event to prevent form submitting
         });
@@ -78,38 +78,38 @@ if ($session == false) {
                     
     
                         <div class="form-group">
-                            <label class="control-label col-sm-8" for="register-email">Email:</label>
+                            <label class="control-label col-sm-8" for="register-email"><?php echo L::login_email; ?></label>
                             <div class="col-sm-8">
                                 <input id="register-email" maxlength="100" class="form-control" name="emailAddress" type="email" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-8" for="blogName">Blog Name:</label>
+                            <label class="control-label col-sm-8" for="blogName"><?php echo L::login_blog_name; ?></label>
                             <div class="col-sm-8">
                                 <input id="blogName" maxlength="50" class="form-control" name="blogName" type="text" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-8" for="register-password">Password:</label>
+                            <label class="control-label col-sm-8" for="register-password"><?php echo L::login_password; ?></label>
                             <div class="col-sm-8">
                                 <input id="register-password" maxlength="100" name="password"  class="form-control" type="password" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-8" for="confirm-password">Confirm Password:</label>
+                            <label class="control-label col-sm-8" for="confirm-password"><?php echo L::login_confirm_password; ?></label>
                             <div class="col-sm-8">
                                 <input id="confirm-password" maxlength="100" name="confirmPassword"  class="form-control" type="password" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-8" for="birthday">Date of Birth:</label>
+                            <label class="control-label col-sm-8" for="birthday"><?php echo L::login_date_of_birth; ?></label>
                             <div class="col-sm-8">
                                 <input id="birthday" maxlength="100" name="birthday"  class="form-control" type="date" />
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
-                                <button name="submit" type="submit" class="btn btn-primary" id="submit" form="RegisterForm">Submit</button>
+                                <button name="submit" type="submit" class="btn btn-primary" id="submit" form="RegisterForm"><?php echo L::string_submit; ?></button>
                             </div>
                         </div>
                         <div class="form-group">

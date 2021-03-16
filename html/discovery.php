@@ -42,7 +42,7 @@ $posts = $postCollector->getDiscoveryPosts($sessionObj->sessionData['activeBlog'
 <?php
 
 if (sizeof($posts) == 0) {
-    UIUtils::infoBox("No posts to show. Are you following anyone?", "Nothing found");
+    UIUtils::infoBox(L::dashboard_no_discovery, L::string_nothing_found);
 } else {
     foreach($posts as $item) {
 		$item->dashboardRender($activeBlog->ID);
@@ -51,7 +51,7 @@ if (sizeof($posts) == 0) {
 ?>
     <?php 		
     if (sizeof($posts) == 25) {
-        echo  '<a class="btn btn-primary float-right" href="https://'.$_ENV['SITE_URL'].'/discovery/' . end($posts)->ID . '">Next</a>'; 
+        echo  '<a class="btn btn-primary float-right" href="https://'.$_ENV['SITE_URL'].'/discovery/' . end($posts)->ID . '">'.L::string_next.'</a>'; 
     }
     ?>
 </div>
