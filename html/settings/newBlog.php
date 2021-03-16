@@ -48,13 +48,13 @@ $user = $sessionObj->user;
             <div class="col">
                 <div class="card">
                     <div class="card-header">
-                        New Blog
+                        <?php echo L::new_blog_title; ?>
                     </div>
                     <div class="card-body">
-                        <p>To create a new blog, simply enter the URL you'd like below.</p>
+                        <p><?php echo L::new_blog_explainer; ?></p>
                         <form name="BlogForm" id="BlogForm" class="form-inline"> 
                                     <input id="createBlog" maxlength="100" class="form-control" name="createBlog" type="text">
-                                    <button type="submit" class="btn btn-primary" form="BlogForm">Create</button>
+                                    <button type="submit" class="btn btn-primary" form="BlogForm"><?php echo L::string_create; ?></button>
                             </form>
                         <div id="DisplayDiv" name="DisplayDiv">
                     </div>

@@ -148,32 +148,23 @@ badgesChanged = false;
                 body: formData
             }
         )
-            .then(
+        .then(
                 function(response) {
                     if (response.status !== 200) {
                         console.log('Error logged, status code: ' + response.status);
-                        document.getElementById("DisplayDivInvite").innerHTML = '<?php UIUtils::errorBox("There was an error trying to invite. Please contact support."); ?>'
+                        document.getElementById("DisplayDivInvite").innerHTML = renderBox('error', "<?php echo L::error_unknown; ?>");
                         return false;
                     }
                     response.json().then(function(data) {
                         if (data.code == "SUCCESS") {
-                            document.getElementById("DisplayDivInvite").innerHTML = '<?php UIUtils::successBox("Invited! When they accept, they\'ll have access to the blog."); ?>'
-                        } else if (data.code == "ERR_BLOG_NOT_FOUND") {
-                            document.getElementById("DisplayDivInvite").innerHTML = '<?php UIUtils::errorBox("The blog URL you tried to invite doesn\'t exist."); ?>'
-                        } else if (data.code == "ERR_OWN_BLOG") {
-                            document.getElementById("DisplayDivInvite").innerHTML = '<?php UIUtils::errorBox("You can\'t invite yourself to your own blog!"); ?>'
-                        } else if (data.code == "ERR_PERMISSIONS") {
-                            document.getElementById("DisplayDivInvite").innerHTML = '<?php UIUtils::errorBox("You don\'t have permission to invite people to this blog."); ?>'
-                        } else if (data.code == "ERR_CSRF_FAILURE") {
-                            document.getElementById("DisplayDivInvite").innerHTML = '<?php UIUtils::errorBox("CSRF failure. Please refresh the page and try again."); ?>'
+                            document.getElementById("DisplayDivInvite").innerHTML = renderBox('success', data.message);
                         } else {
-                            document.getElementById("DisplayDivInvite").innerHTML = '<?php UIUtils::errorBox("There was an error trying to invite. Please contact support so we can look into it."); ?>'
-
+                            document.getElementById("DisplayDivInvite").innerHTML = renderBox('error', data.message);
                         }
                     })
                 }
             ).catch(function(err) {
-                document.getElementById("DisplayDivInvite").innerHTML = '<?php UIUtils::errorBox("There was an error trying to invite. It\'s most likely temporary, so try again - but if it persists, please contact support so we can look into it."); ?>'
+                document.getElementById("DisplayDivInvite").innerHTML = renderBox('error', "<?php echo L::error_unknown; ?>");
             })
         return false; // cancel original event to prevent form submitting
         });

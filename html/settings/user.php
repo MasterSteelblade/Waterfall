@@ -99,17 +99,17 @@ $token = $easyCSRF->generate($sessionObj->sessionData['csrfName']);
             <div class="col">
                 <div class="card">
                     <div class="card-header">
-                        <h2><i class="fas fa-user title-icon"></i>Account Settings</h2>
+                        <h2><i class="fas fa-user title-icon"></i><?php echo L::user_settings_title; ?></h2>
                     </div>
                     <form id="UserSettingsForm" action="../process/settings/user.php" method="post">
 
                         <ul class="list-group list-group-flush">
                         <li class="list-group-item">
-                            <h5 class="card-title"><i class="fas fa-sign-in title-icon"></i>Login Settings</h5>
-                            <p>How do you want to log in?</p>
+                            <h5 class="card-title"><i class="fas fa-sign-in title-icon"></i><?php echo L::user_settings_login_settings; ?></h5>
+                            <p><?php echo L::user_settings_login_settings_explainer; ?></p>
                             <div class="form-group row">
                             <div class="col">
-                            <label class="control-label" for="emailAddress">Email address:</label>
+                            <label class="control-label" for="emailAddress"><?php echo L::user_settings_email_address; ?></label>
                             <input id="emailAddress" maxlength="100" class="form-control" name="emailAddress" type="text" value="<?php echo $user->email; ?>">
                             </div>
                         </div>
@@ -117,30 +117,30 @@ $token = $easyCSRF->generate($sessionObj->sessionData['csrfName']);
 
                             <div class="form-group row">
                             <div class="col">
-                            <label class="control-label" for="currentPassword">Current Password:</label>
+                            <label class="control-label" for="currentPassword"><?php echo L::user_settings_current_password; ?></label>
                                 <input id="currentPassword" maxlength="100" class="form-control" name="currentPassword" type="password">
                             </div>
                             </div>
                             <div class="form-group row">
                             <div class="col">
-                            <label class="control-label" for="newPassword">New Password:</label>
+                            <label class="control-label" for="newPassword"><?php echo L::user_settings_new_password; ?></label>
                                 <input id="newPassword" maxlength="100" class="form-control" name="newPassword" type="password" placeholder="Leave this blank if you don't want to change it.">
                             </div>
                             </div>
                             <div class="form-group row">
                             <div class="col">
-                            <label class="control-label" for="confirmPassword">Confirm New Password:</label>
+                            <label class="control-label" for="confirmPassword"><?php echo L::user_settings_confirm_new_password; ?></label>
                                 <input id="confirmPassword" maxlength="100" class="form-control" name="confirmPassword" type="password" placeholder="Leave this blank if you don't want to change it.">
                             </div>
                             </div>
                             
                         </li>
                         <li class="list-group-item">
-                            <h5 class="card-title"><i class="fas fa-cog title-icon"></i>Basic Settings</h5>
-                            <p>Basic settings to guide your experience, including switching your main blog and dashboard theme.</p>
+                            <h5 class="card-title"><i class="fas fa-cog title-icon"></i><?php echo L::user_settings_basic_settings; ?></h5>
+                            <p><?php echo L::user_settings_basic_settings_explainer; ?></p>
                             <div class="form-group row">
                                 <div class="col">
-                                <label class="control-label" for="mainBlog">Main Blog:</label>
+                                <label class="control-label" for="mainBlog"><?php echo L::user_settings_main_blog; ?></label>
                                 <select class="form-control" id="mainBlog" name="mainBlog">
                                     <?php 
                                     foreach($sessionObj->user->blogs as $blog) {
@@ -168,7 +168,7 @@ $token = $easyCSRF->generate($sessionObj->sessionData['csrfName']);
                                         }
                                     } ?>
                                     
-                                    <label class="control-label" for="dashTheme">Dashboard Theme:</label>
+                                    <label class="control-label" for="dashTheme"><?php echo L::user_settings_dashboard_theme; ?></label>
                                     <select class="form-control" id="dashTheme" name="dashTheme">
                                         <?php 
                                             foreach ($themes as $key => $theme) {
@@ -181,9 +181,9 @@ $token = $easyCSRF->generate($sessionObj->sessionData['csrfName']);
                             </div>
                             <div class="form-group row">
                                 <div class="col">
-                                    <p>If you like, you can select pronouns to display next to your blog name on the dashboard. Set them here, then turn them on in blog settings for each blog you want them on.</p>
-                                    <p>This field is for pronouns only. For example, she/her, they/them, etc.</p>
-                                    <label class="control-label" for="pronouns">Pronouns:</label>
+                                    <p><?php echo L::user_settings_pronouns_explainer; ?></p>
+                                    <p><?php echo L::user_settings_pronouns_warning; ?></p>
+                                    <label class="control-label" for="pronouns"><?php echo L::user_settings_pronouns; ?></label>
                             <input id="pronouns" maxlength="20" class="form-control" name="pronouns" type="text" value="<?php echo $user->pronouns; ?>">
                                 </div>
                             </div>
@@ -191,7 +191,7 @@ $token = $easyCSRF->generate($sessionObj->sessionData['csrfName']);
                                 <div class="col">
                                     <div class="custom-control custom-switch">
                                         <input id="omniDash" name="omniDash" class="custom-control-input" value="true" type="checkbox" <?php if ($user->settings['omniDash']) { echo 'checked'; } ?>>
-                                        <label class="custom-control-label" for="omniDash">OmniDash - View posts from all blogs you follow on the dashboard, regardless of active blog</label>
+                                        <label class="custom-control-label" for="omniDash"><?php echo L::user_settings_omnidash; ?></label>
                                     </div>
                                 </div>
                             </div>
@@ -199,7 +199,7 @@ $token = $easyCSRF->generate($sessionObj->sessionData['csrfName']);
                                 <div class="col">
                                     <div class="custom-control custom-switch">
                                         <input id="viewNSFW" name="viewNSFW" class="custom-control-input" value="true" type="checkbox" <?php if ($user->settings['viewNSFW']) { echo 'checked'; } ?>>
-                                        <label class="custom-control-label" for="viewNSFW">View posts tagged NSFW</label>
+                                        <label class="custom-control-label" for="viewNSFW"><?php echo L::user_settings_view_nsfw; ?></label>
                                     </div>
                                 </div>
                             </div>
@@ -207,7 +207,7 @@ $token = $easyCSRF->generate($sessionObj->sessionData['csrfName']);
                                 <div class="col">
                                     <div class="custom-control custom-switch">
                                         <input id="showFeatures" name="showFeatures" class="custom-control-input" value="true" type="checkbox" <?php if ($user->settings['showFeatures']) { echo 'checked'; } ?> >
-                                        <label class="custom-control-label" for="showFeatures">Show featured posts</label>
+                                        <label class="custom-control-label" for="showFeatures"><?php echo L::user_settings_show_features; ?></label>
                                     </div>
                                 </div>
                             </div>
@@ -215,19 +215,19 @@ $token = $easyCSRF->generate($sessionObj->sessionData['csrfName']);
                                 <div class="col">
                                     <div class="custom-control custom-switch">
                                         <input id="showNaughtyFeatures" name="showNaughtyFeatures" class="custom-control-input" value="true" type="checkbox" <?php if ($user->settings['explicitFeatures']) { echo 'checked'; } ?> >
-                                        <label class="custom-control-label" for="showNaughtyFeatures">Allow explicit posts in features</label>
+                                        <label class="custom-control-label" for="showNaughtyFeatures"><?php echo L::user_settings_show_naughty_features; ?></label>
                                     </div>
                                 </div>
                             </div>
                         </li>
                         <li class="list-group-item">
-                            <h5 class="card-title"><i class="fas fa-universal-access title-icon"></i>Accessibility Settings</h5>
-                            <p>You can use these settings to alter the look of the site a little to make things easier.</p>
+                            <h5 class="card-title"><i class="fas fa-universal-access title-icon"></i><?php echo L::user_settings_accessibility_settings; ?></h5>
+                            <p><?php echo L::user_settings_accessibility_explainer; ?></p>
                             <div class="form-group row">
                                 <div class="col">
                                     <div class="custom-control custom-switch">
                                         <input id="useDyslexiaFont" name="useDyslexiaFont" class="custom-control-input" value="true" type="checkbox" <?php if ($user->settings['accessibility']['dyslexiaFont']) { echo 'checked'; } ?>>
-                                        <label class="custom-control-label" for="useDyslexiaFont">Enable dyslexia friendly font</label>
+                                        <label class="custom-control-label" for="useDyslexiaFont"><?php echo L::user_settings_dyslexia_font; ?></label>
                                     </div>
                                 </div>
                             </div>
@@ -235,19 +235,19 @@ $token = $easyCSRF->generate($sessionObj->sessionData['csrfName']);
                                 <div class="col">
                                     <div class="custom-control custom-switch">
                                         <input id="useLargeFont" name="useLargeFont" class="custom-control-input" value="true" type="checkbox" <?php if (isset($user->settings['accessibility']['largeFont']) && $user->settings['accessibility']['largeFont'] == true)  { echo 'checked'; } ?>>
-                                        <label class="custom-control-label" for="useLargeFont">Use large font</label>
+                                        <label class="custom-control-label" for="useLargeFont"><?php echo L::user_settings_dyslexia_font; ?></label>
                                     </div>
                                 </div>
                             </div>
                         </li>
                         <li class="list-group-item">
-                            <h5 class="card-title"><i class="fas fa-envelope title-icon"></i>Email Settings</h5>
-                            <p>Decide what kind of emails you want to get. Important ones will get through to you regardless of these settings.</p> 
+                            <h5 class="card-title"><i class="fas fa-envelope title-icon"></i><?php echo L::user_settings_email_settings; ?></h5>
+                            <p><?php echo L::user_settings_email_settings_explainer; ?></p> 
                             <div class="form-group row">
                                 <div class="col">
                                     <div class="custom-control custom-switch">
                                         <input id="emailFollows" name="emailFollows" class="custom-control-input" value="true" type="checkbox" <?php if ($user->settings['email']['follows']) { echo 'checked'; } ?> >
-                                        <label class="custom-control-label" for="emailFollows">Get emails when I get a new follower</label>
+                                        <label class="custom-control-label" for="emailFollows"><?php echo L::user_settings_follow_emails; ?></label>
                                     </div>
                                 </div>
                             </div>
@@ -255,7 +255,7 @@ $token = $easyCSRF->generate($sessionObj->sessionData['csrfName']);
                                 <div class="col">
                                     <div class="custom-control custom-switch">
                                         <input id="emailAsks" name="emailAsks" class="custom-control-input" value="true" type="checkbox"  <?php if ($user->settings['email']['asks']) { echo 'checked'; } ?> >
-                                        <label class="custom-control-label" for="emailAsks">Get emails when I get a new ask</label>
+                                        <label class="custom-control-label" for="emailAsks"><?php echo L::user_settings_ask_emails; ?></label>
                                     </div>
                                 </div>
                             </div>
@@ -263,7 +263,7 @@ $token = $easyCSRF->generate($sessionObj->sessionData['csrfName']);
                                 <div class="col">
                                     <div class="custom-control custom-switch">
                                         <input id="emailMentions" name="emailMentions" class="custom-control-input" value="true" type="checkbox"  <?php if ($user->settings['email']['mentions']) { echo 'checked'; } ?> >
-                                        <label class="custom-control-label" for="emailMentions">Get emails when I'm mentioned</label>
+                                        <label class="custom-control-label" for="emailMentions"><?php echo L::user_settings_mention_emails; ?></label>
                                     </div>
                                 </div>
                             </div>
@@ -271,7 +271,7 @@ $token = $easyCSRF->generate($sessionObj->sessionData['csrfName']);
                                 <div class="col">
                                     <div class="custom-control custom-switch">
                                         <input id="emailParticipation" name="emailParticipation" class="custom-control-input" value="true" type="checkbox"  <?php if ($user->settings['email']['participation']) { echo 'checked'; } ?> >
-                                        <label class="custom-control-label" for="emailParticipation">Get emails when my post gets a comment</label>
+                                        <label class="custom-control-label" for="emailParticipation"><?php echo L::user_settings_comment_emails; ?></label>
                                     </div>
                                 </div>
                             </div>
@@ -279,7 +279,7 @@ $token = $easyCSRF->generate($sessionObj->sessionData['csrfName']);
                                 <div class="col">
                                     <div class="custom-control custom-switch">
                                         <input id="emailNews" name="emailNews" class="custom-control-input" value="true" type="checkbox" <?php if ($user->settings['email']['news']) { echo 'checked'; } ?>  >
-                                        <label class="custom-control-label" for="emailNews">Get emails about site news</label>
+                                        <label class="custom-control-label" for="emailNews"><?php echo L::user_settings_news_emails; ?></label>
                                     </div>
                                 </div>
                             </div>
@@ -287,7 +287,7 @@ $token = $easyCSRF->generate($sessionObj->sessionData['csrfName']);
                                 <div class="col">
                                     <div class="custom-control custom-switch">
                                         <input id="emailPromos" name="emailPromos" class="custom-control-input" value="true" type="checkbox" <?php if ($user->settings['email']['promos']) { echo 'checked'; } ?>  >
-                                        <label class="custom-control-label" for="emailPromos">Get emails about blogs I might like</label>
+                                        <label class="custom-control-label" for="emailPromos"><?php echo L::user_settings_promo_emails; ?></label>
                                     </div>
                                 </div>
                             </div>
@@ -296,8 +296,8 @@ $token = $easyCSRF->generate($sessionObj->sessionData['csrfName']);
                         <?php 
                         if (sizeof($user->groupBlogs) > 0) { ?>
                         <li class="list-group-item"> 
-                            <h5 class="card-title"><i class="fas fa-users title-icon"></i>Group Blogs</h5>
-                            <p>These are the blogs that you're a member of, but not the owner of. If you want to leave one, you can do that here.</p>
+                            <h5 class="card-title"><i class="fas fa-users title-icon"></i><?php echo L::user_settings_group_blogs; ?></h5>
+                            <p><?php echo L::user_settings_group_blogs_explainer; ?></p>
                             <?php foreach ($user->groupBlogs as $blog) { 
                                 $avatar = new WFAvatar($blog->avatar);
                                 $groupMemBlogName = $blog->blogName;
@@ -309,7 +309,7 @@ $token = $easyCSRF->generate($sessionObj->sessionData['csrfName']);
                                             <div class="col">
                                                 <a href="<?php echo $groupMemBlogURL; ?>"><img class="avatar avatar-32" src=<?php echo $avatar->data['paths'][32]; ?>> <?php echo $groupMemBlogName; ?></a>
                                             </div> 
-                                            <button class="btn btn-danger" data-blog-name="<?php echo $groupMemBlogName; ?>" onclick="quitBlog(this)" type="button"><i class="fas fa-users-slash title-icon"></i>Leave</button>                                            
+                                            <button class="btn btn-danger" data-blog-name="<?php echo $groupMemBlogName; ?>" onclick="quitBlog(this)" type="button"><i class="fas fa-users-slash title-icon"></i><?php echo L::string_leave; ?></button>                                            
                                         </div> 
                                     </div>
                                     <?php } ?>
@@ -325,8 +325,8 @@ $token = $easyCSRF->generate($sessionObj->sessionData['csrfName']);
                         $groupInvites = $user->getUserGroupInvites();
                         if ($groupInvites !== false) { ?>
                         <li class="list-group-item"> 
-                            <h5 class="card-title"><i class="fas fa-envelope-open-text title-icon"></i>Group Blog Invites</h5>
-                            <p>The following blogs have invited you to be a member. You can accept or decline here. If you accept, the owner of the blog will see you as a member, and will be able to see whatever your main blog is set to while you're a member.</p>
+                            <h5 class="card-title"><i class="fas fa-envelope-open-text title-icon"></i><?php echo L::user_settings_group_blog_invites_explainer; ?></h5>
+                            <p><?php echo L::user_settings_group_blog_invites; ?></p>
                             <?php foreach ($groupInvites as $blogID) {
                                 $blog = new Blog($blogID[0]);
                                 $invID = $blogID[1];
@@ -340,7 +340,7 @@ $token = $easyCSRF->generate($sessionObj->sessionData['csrfName']);
                                             <div class="col">
                                                 <a href="<?php echo $groupMemBlogURL; ?>"><img class="avatar avatar-32" src=<?php echo $avatar->data['paths'][32]; ?>> <?php echo $groupMemBlogName; ?></a>
                                             </div> 
-                                            <button class="btn btn-success" data-invid="<?php echo $invID; ?>" onclick="joinBlog(this)" type="button"><i class="fas fa-user-check title-icon"></i>Accept Invite</button>                                            
+                                            <button class="btn btn-success" data-invid="<?php echo $invID; ?>" onclick="joinBlog(this)" type="button"><i class="fas fa-user-check title-icon"></i><?php echo L::string_accept_invite; ?></button>                                            
                                         </div> 
                                     </div>
                                     <?php
@@ -350,17 +350,17 @@ $token = $easyCSRF->generate($sessionObj->sessionData['csrfName']);
                         <?php } ?>
       
                         <li class="list-group-item">
-                            <h5 class="card-title"><i class="fas fa-ban title-icon"></i>Tag Blacklist</h5>
-                            <p>Here you can set a list of tags you'd rather not see and handle your block list.</p> 
+                            <h5 class="card-title"><i class="fas fa-ban title-icon"></i><?php echo L::user_settings_tag_blacklist_settings; ?></h5>
+                            <p><?php echo L::user_settings_tag_blacklist_settings_explainer; ?></p> 
                             <div class="form-group row">
                                 <div class="col">
-                                    <label class="control-label" for="blogName">Tag Blacklist:</label>
-                                    <input id="tagBlacklist" class="form-control" name="tagBlacklist" type="text" placeholder="Separate by commas..." value="<?php echo $user->getTagBlacklistString(); ?>">
+                                    <label class="control-label" for="blogName"><?php echo L::user_settings_tag_blacklist_settings; ?></label>
+                                    <input id="tagBlacklist" class="form-control" name="tagBlacklist" type="text" placeholder="<?php echo L::user_settings_tag_blacklist_separate; ?>" value="<?php echo $user->getTagBlacklistString(); ?>">
                                 </div>
                             </div>
                             <div class="form-group row">
                             <div class="col-sm-offset-2 col-sm-10">
-                                <button name="submit" type="submit" class="btn btn-success" id="submit" form="UserSettingsForm">Save Settings</button>
+                                <button name="submit" type="submit" class="btn btn-success" id="submit" form="UserSettingsForm"><?php echo L::string_save_settings; ?></button>
                             </div>
                             </div>
                             <div id="DisplayDiv"></div>
@@ -368,16 +368,16 @@ $token = $easyCSRF->generate($sessionObj->sessionData['csrfName']);
 
                         </li>
                         <li class="list-group-item">
-                        <h5 class="card-title"><i class="fas fa-user-secret title-icon"></i>Privacy and Security</h5>
-                        <p>If you need to block or unblock a user, you can do that below. Be advised that blocking is a nuclear option of sorts, and may result in you missing a significant amount of content and engagement on the site. Reserve it for serious situations.</p>
+                        <h5 class="card-title"><i class="fas fa-user-secret title-icon"></i><?php echo L::user_settings_privacy_settings; ?></h5>
+                        <p><?php echo L::user_settings_privacy_settings_explainer; ?></p>
                             <form name="BlogBlockForm" id="BlogBlockForm" class="form-inline"> 
                                     <input id="blockBlog" maxlength="100" class="form-control" name="blockBlog" type="text">
-                                    <button type="submit" class="btn btn-danger" form="BlogBlockForm">Block</button>
+                                    <button type="submit" class="btn btn-danger" form="BlogBlockForm"><?php echo L::string_block; ?></button>
                             </form>
                             <div id="DisplayDivBlock"></div>
                             <?php // Blocking stuff here 
                                 if (!empty($user->blockedUsers)) { ?>
-                                <p>The main blog of users you've blocked is listed below.</p> <?php 
+                                <p><?php echo L::user_settings_block_main_blog; ?></p> <?php 
                                     foreach ($user->blockedUsers as $blocked) {
                                         $blockedUser = new User($blocked);
                                         if (!$blockedUser->failed) { 
@@ -391,7 +391,7 @@ $token = $easyCSRF->generate($sessionObj->sessionData['csrfName']);
                                                     <div class="col">
                                                         <img class="avatar avatar-32" src=<?php echo $blockedAvatar->data['paths'][32]; ?>> <?php echo $blockedMain->blogName; ?>
                                                     </div> 
-                                                    <button class="btn btn-danger" data-blog-name="<?php echo $blockedMain->blogName; ?>" onclick="removeBlock(this)" type="button"><i class="fas fa-user-unlock"></i>Unblock</button>                                            
+                                                    <button class="btn btn-danger" data-blog-name="<?php echo $blockedMain->blogName; ?>" onclick="removeBlock(this)" type="button"><i class="fas fa-user-unlock"></i><?php echo L::string_unblock; ?></button>                                            
                                                 </div> 
                                             </div>
                                         <?php }
@@ -400,26 +400,26 @@ $token = $easyCSRF->generate($sessionObj->sessionData['csrfName']);
                                 } ?>
                             </li>
                             <li class="list-group-item">
-                                <h5 class="card-title"><i class="fas fa-key title-icon"></i>Two Factor Authentication</h5>
-                            <p>Two Factor Authentication (2FA) can add an extra layer of security to your account, by requiring a six digit code to be entered from a separate authenticator app in addition to your password. The downside is if you lose access to the app (usually on your phone),  you also lose access to your account, as support won't be able to recover it for you.</p>
+                                <h5 class="card-title"><i class="fas fa-key title-icon"></i><?php echo L::user_settings_two_fa; ?></h5>
+                            <p><?php echo L::user_settings_two_fa_explainer; ?></p>
                             <!--<p>2FA is good practice for all users, but is especially recommended if you use the Commission Marketplace.</p>-->
-                            <p>2FA Status for this account: 
+                            <p><?php echo L::user_settings_two_fa_status; ?> 
                             <?php if ($user->hasTwoFactor()) {
-                                ?> <a href="https://<?php echo $_ENV['SITE_URL']; ?>/settings/totp" role="button" name="twoFactorButton" class="btn btn-success">Enabled</a> <?php
+                                ?> <a href="https://<?php echo $_ENV['SITE_URL']; ?>/settings/totp" role="button" name="twoFactorButton" class="btn btn-success"><?php echo L::string_enabled; ?></a> <?php
                             } else {
-                                ?> <a href="https://<?php echo $_ENV['SITE_URL']; ?>/settings/totp" role="button" name="twoFactorButton" class="btn btn-outline-danger">Disabled</a>  <?php
+                                ?> <a href="https://<?php echo $_ENV['SITE_URL']; ?>/settings/totp" role="button" name="twoFactorButton" class="btn btn-outline-danger"><?php echo L::string_disabled; ?></a>  <?php
                             }?></p>
-                            <p>Use the button above to toggle it on or off.</p>
+                            <p><?php echo L::user_settings_two_fa_toggle; ?></p>
                             </li>
                             <li class="list-group-item">
-                            <div class="row"><div class="col"><button type="button" role="button" class="float-right btn btn-outline-danger" data-toggle="collapse" data-target="#deleteCollapse" aria-expanded="false" aria-controls="deleteCollapse">Delete Account</button></div></div>
+                            <div class="row"><div class="col"><button type="button" role="button" class="float-right btn btn-outline-danger" data-toggle="collapse" data-target="#deleteCollapse" aria-expanded="false" aria-controls="deleteCollapse"><?php echo L::user_settings_delete_account_button; ?></button></div></div>
                             <div class="collapse" id="deleteCollapse">
-                                <p>If you no longer wish to use the site for any reason, please enter your password below to confirm.</p>
-                                <p><strong>Deleting your account is permanent, and cannot be undone by staff.</strong></p>
-                                <p>It may take a few minutes to delete your account, depending on how much you've posted. Once it's done, you will no longer be able to log in.</p> 
+                                <p><?php echo L::user_settings_delete_account_explainer; ?></p>
+                                <p><strong><?php echo L::user_settings_delete_account_warning; ?></strong></p>
+                                <p><?php echo L::user_settings_delete_account_time_warning; ?></p> 
                                 <form name="DeleteAccountForm" id="DeleteAccountForm" class="form-inline"> 
                                     <input id="deleteAccountPassword" maxlength="100" class="form-control" name="deleteAccountPassword" type="password">
-                                    <button id="confirmDeleteButton" type="submit" class="btn btn-danger" form="DeleteAccountForm">Confirm Delete</button>
+                                    <button id="confirmDeleteButton" type="submit" class="btn btn-danger" form="DeleteAccountForm"><?php echo L::string_confirm_delete; ?></button>
                             </form>
                             <div id="DisplayDivDelete"></div>
 
