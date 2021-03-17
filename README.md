@@ -13,7 +13,7 @@ Waterfall allows image, video, and audio uploads, and has a special post type fo
 Tech stack: 
 - PHP 8.0+ 
 - PostgreSQL 13+
-- Redis 4+
+- Redis 5+
 - Apache 2.4+
 
 Ubuntu 20.04 LTS is recommended, but any system that can install the above should be fine.
