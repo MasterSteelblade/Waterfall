@@ -11,7 +11,7 @@ Waterfall allows image, video, and audio uploads, and has a special post type fo
 ## Deployment
 
 Tech stack: 
-- PHP 8.0+ 
+- PHP 7.4+ (7.3 is supported, but recommended against) 
 - PostgreSQL 13+
 - Redis 5+
 - Apache 2.4+
