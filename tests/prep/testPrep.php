@@ -7,7 +7,7 @@ $text =
 '# ENVIRONMENT is used to detect whether or not we\'re running in production or dev mode. 
 
 DB_HOST=localhost 
-DB_NAME=waterfall-'.$argv[1].'
+DB_NAME="waterfall_'.$argv[1].'"
 DB_USER=postgres
 DB_PASS=postgres
 
