@@ -1,11 +1,33 @@
 # Translators Guide
 
-## Welcome
-
-
 ## Getting started
 
+There are two possible types of translation you might do - creating a new translation, or updating an existing one.
 
+### New translations
+
+Creating a translation is pretty easy. In the `lang` folder, (the one this readme is in), there's a `lang_en.ini` file. This contains the base English locale, and can serve as a base for other translations. This will be the file you base your new translation on. 
+
+The file is formatted as a regular `ini` type. This means there's sections, keys, and values. They work sort of like this:
+
+```ini
+[section]
+key = "value"
+another_key = "another value"
+
+[another_section]
+key = "value"
+```
+
+Keys can be duplicated as long as they're in a different section. Section names can't be duplicated. Keys have spaces replaced with underscores, and values should be quoted. 
+
+**Important:** Don't delete or change any key or section names! The code needs them to find the correct translation. Only change values. 
+
+Make your way through the file, and when you're done, submit a pull request in accordance with standard git guidelines.
+
+### Updating Translations
+
+As new features get added, new strings might be localisable. When this happens, they'll be added to existing language files in English. If you notice one, you just need to change that line and make a pull request, same as above.
 
 
 ### `vsprintf`
