@@ -23,12 +23,17 @@ Keys can be duplicated as long as they're in a different section. Section names 
 
 **Important:** Don't delete or change any key or section names! The code needs them to find the correct translation. Only change values. 
 
+Languages have a two character locale code - for example, English is `en`, Japanese is `jp`, Spanish is `es`. Some languages have a second locale code - for example, `en-us` and `en-gb`- but the code only currently checks for the first part. Name your new file `lang_xx.ini`, where `xx` is the locale code ffor the language you're translating to. You can find a list of codes [here](https://www.science.co.il/language/Locale-codes.php).
+
 Make your way through the file, and when you're done, submit a pull request in accordance with standard git guidelines.
 
 ### Updating Translations
 
 As new features get added, new strings might be localisable. When this happens, they'll be added to existing language files in English. If you notice one, you just need to change that line and make a pull request, same as above.
 
+### Pull Request Checks
+
+When you submit your pull request, it'll do some tests. The one you need to worry about is the Language File Checks. If this fails, it means a translation is missing a key or section that's present in the English file. 
 
 ### `vsprintf`
 
