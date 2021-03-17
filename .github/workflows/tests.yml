@@ -70,7 +70,7 @@ jobs:
         run: PGPASSWORD="postgres" psql -h localhost -U postgres -p 5432 -c 'create database "waterfall_${{ matrix.php-versions }}_${{ matrix.operating-system }}";'
       
       - name: Load schema
-        run: PGPASSWORD="postgres" psql -h localhost -U postgres -p 5432 -d waterfall -f ./tests/prep/wf.sql
+        run: PGPASSWORD="postgres" psql -h localhost -U postgres -p 5432 -d "waterfall_${{ matrix.php-versions }}_${{ matrix.operating-system }}" -f ./tests/prep/wf.sql
           
           
       - name: Prep environment and Schema
