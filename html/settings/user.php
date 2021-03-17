@@ -235,7 +235,7 @@ $token = $easyCSRF->generate($sessionObj->sessionData['csrfName']);
                                 <div class="col">
                                     <div class="custom-control custom-switch">
                                         <input id="useLargeFont" name="useLargeFont" class="custom-control-input" value="true" type="checkbox" <?php if (isset($user->settings['accessibility']['largeFont']) && $user->settings['accessibility']['largeFont'] == true)  { echo 'checked'; } ?>>
-                                        <label class="custom-control-label" for="useLargeFont"><?php echo L::user_settings_dyslexia_font; ?></label>
+                                        <label class="custom-control-label" for="useLargeFont"><?php echo L::user_settings_large_font; ?></label>
                                     </div>
                                 </div>
                             </div>

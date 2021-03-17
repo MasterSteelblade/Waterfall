@@ -6,7 +6,7 @@ header('Content-type: application/json');
 $post = new Post($_POST['postID']);
 if ($session == false) {
     $data['code'] = 'NO_SESSION';
-    $data['message'] = "No session detected.";
+    $data['message'] = L::error_no_session;
     echo json_encode($data);
     exit();
 }

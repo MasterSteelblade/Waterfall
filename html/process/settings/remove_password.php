@@ -10,23 +10,23 @@ if ($session != false) {
     if ($permittedBlog->failed) {
         $data['blog'] = $_POST['editingblog'];
         $data['code'] = 'ERR_NOT_MEMBER';
-        $data['message'] = "This user is not a member of this blog";
+        $data['message'] = L::error_not_member;
         echo json_encode($data);
         exit();
     } elseif ($permittedBlog->checkMemberPermission($sessionObj->user->ID, 'blog_settings') == false && $permittedBlog->ownerID != $sessionObj->user->ID) {
         $data['code'] = 'ERR_PERMISSIONS';
-        $data['message'] = "You don't have permission to do that.";
+        $data['message'] = L::error_invalid_permissions;
         echo json_encode($data);
         exit();
     }
 
     if ($permittedBlog->resetPassword()) {
         $data['code'] = 'SUCCESS';
-        $data['message'] = "Success!";
+        $data['message'] = L::string_success;
         echo json_encode($data);
     } else {
         $data['code'] = 'ERR_GENERIC_FAILURE';
-        $data['message'] = "Unknown failure";
+        $data['message'] = L::error_unknown;
         echo json_encode($data);
     }
 

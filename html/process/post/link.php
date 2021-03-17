@@ -6,7 +6,7 @@ header('Content-type: application/json');
 
 if ($session == false) {
     $data['code'] = 'NO_SESSION';
-    $data['message'] = "No session detected. Try logging in again.";
+    $data['message'] = L::error_no_session;
     echo json_encode($data);
     exit();
 }
@@ -15,7 +15,7 @@ if ($session == false) {
 $blog = new Blog();
 $blog->getByBlogName($_POST['onBlog']);
 if ($blog->failed || ($blog->ownerID != $sessionObj->user->ID && !$blog->checkMemberPermission($sessionObj->user->ID, 'write_post'))) {
-    $data['message'] = "Not your blog, or you don't have permission to do that.";
+    $data['message'] = L::error_invalid_permissions;
     echo json_encode($data);
     exit();
 }
@@ -61,14 +61,14 @@ if (isset($_POST['url'])) {
     $linkJSON = json_encode($linkData);
     if ($post->createNew($_POST['postText'], substr($_POST['postTitle'],0,255), $_POST['postTags'], $blog->ID, $additions, $type, $linkJSON)) {
         $data['code'] = 'SUCCESS';
-        $data['message'] = 'Success!';
+        $data['message'] = L::string_success;
     } else {
         $data['code'] = 'ERR_MISC_FAILURE';
-        $data['message'] = 'Unknown failure';
+        $data['message'] = L::error_unknown;
     }
 } else {
     $data['code'] = 'ERR_EMPTY_TEXT';
-    $data['message'] = "No content detected!";
+    $data['message'] = L::error_no_content;
 }
 
 echo json_encode($data);

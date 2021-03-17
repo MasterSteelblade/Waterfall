@@ -6,7 +6,7 @@ header('Content-type: application/json');
 
 if ($session == false) {
     $data['code'] = 'NO_SESSION';
-    $data['message'] = "No session. Try logging in again.";
+    $data['message'] = L::error_no_session;
     echo json_encode($data);
     exit();
 }
@@ -14,7 +14,7 @@ $messageID = $_POST['answering'];
 $message = new Message($messageID);
 if ($message->failed) {
     $data['code'] = 'ERR_INVALID_MESSAGE';
-    $data['message'] = "Couldn't find the message you're trying to answer.";
+    $data['message'] = L::error_message_not_found;
     echo json_encode($data);
     exit();
 }
@@ -30,7 +30,7 @@ if (!$blog->failed && ($blog->ownerID == $sessionObj->user->ID || $blog->checkMe
     // Proceed
 } else {
     $data['code'] = 'ERR_PERMISSION_FAILURE';
-    $data['message'] = "Not your blog, or you don't have permission to answer this.";
+    $data['message'] = L::error_invalid_permissions;
     echo json_encode($data);
     exit();
 }
@@ -59,14 +59,14 @@ if (isset($_POST['postText']) && WFUtils::textContentCheck($_POST['postText'])) 
     $post = new AnswerPost();
     if ($post->createNew($_POST['postText'], $messageID, $_POST['postTags'], $blog->ID, $privateAnswer, $type)) {
         $data['code'] = 'SUCCESS';
-        $data['message'] = "Posted!";
+        $data['message'] = L::string_posted;
     } else {
         $data['code'] = 'ERR_MISC_FAILURE';
-        $data['message'] = "Unknown failure";
+        $data['message'] = L::error_unknown;
     }
 } else {
     $data['code'] = 'ERR_EMPTY_TEXT';
-    $data['message'] = "No content detected...";
+    $data['message'] = L::error_no_content;
 }
 
 echo json_encode($data);

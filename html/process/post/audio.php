@@ -6,7 +6,7 @@ header('Content-type: application/json');
 
 if ($session == false) {
     $data['code'] = 'NO_SESSION';
-    $data['message'] = "No session found. Try logging in again.";
+    $data['message'] = L::error_no_session;
     echo json_encode($data);
     exit();
 }
@@ -15,7 +15,7 @@ $blog = new Blog();
 $blog->getByBlogName($_POST['onBlog']);
 if ($blog->failed || ($blog->ownerID != $sessionObj->user->ID && !$blog->checkMemberPermission($sessionObj->user->ID, 'write_post'))) {
     $data['code'] = 'ERR_NOT_YOUR_BLOG';
-    $data['message'] = "Not your blog, or you don't have permission to do that.";
+    $data['message'] = L::error_invalid_permissions;
     echo json_encode($data);
     exit();
 }
@@ -61,7 +61,7 @@ if (isset($_POST['audioType']) && $_POST['audioType'] == 'upload') {
         $audioFile = $_FILES['audioFile'];
     } else {
         $data['code'] = 'ERR_BAD_FILE';
-        $data['message'] = "No audio file set!";
+        $data['message'] = L::error_no_audio;
         echo json_encode($data);
         exit();
     }
@@ -136,10 +136,10 @@ if (isset($_POST['audioType']) && $_POST['audioType'] == 'upload') {
         $post = new AudioPost();
         if ($post->createNew($_POST['postText'], substr($_POST['postTitle'],0,255), $_POST['postTags'], $blog->ID, $additions, $type, $audioID)) {
             $data['code'] = 'SUCCESS';
-            $data['message'] = "Success!";
+            $data['message'] = L::string_success;
         } else {
             $data['code'] = 'ERR_MISC_FAILURE';
-            $data['message'] = "Unknown failure";
+            $data['message'] = L::error_unknown;
         }
         echo json_encode($data);
     } else {
@@ -147,10 +147,10 @@ if (isset($_POST['audioType']) && $_POST['audioType'] == 'upload') {
         $post = new AudioPost();
         if ($post->createNew($_POST['postText'], substr($_POST['postTitle'],0,255), $_POST['postTags'], $blog->ID, $additions, $type, $embed, true)) {
             $data['code'] = 'SUCCESS';
-            $data['message'] = "Unknown failure";
+            $data['message'] = L::string_success;
         } else {
             $data['code'] = 'ERR_MISC_FAILURE';
-            $data['message'] = "Unknown failure";
+            $data['message'] = L::error_unknown;
         }
         echo json_encode($data);
     }

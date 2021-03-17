@@ -11,7 +11,7 @@ if ($session != false) {
         $easyCSRF->check($sessionObj->sessionData['csrfName'], $_POST['tokeItUp'], 60*15, true);
     } catch(InvalidCsrfTokenException $e) {
         $data['code'] = 'ERR_CSRF_FAILURE';
-        $data['message'] = "CSRF failure! Please refresh and try again.";
+        $data['message'] = L::error_csrf;
         echo json_encode($data);
         exit();
     }
@@ -42,7 +42,7 @@ if ($session != false) {
                 $blogChangeSuccess = $blog->updateBlogName($_POST['blogName']);
                 if (!$blogChangeSuccess) {
                     $data['code'] = 'ERR_BLOG_TAKEN';
-                    $data['message'] = "This blog name is already in use.";
+                    $data['message'] = L::error_blog_url_taken;
                     echo json_encode($data);
                     exit();
                 }
@@ -69,7 +69,7 @@ if ($session != false) {
                 if ($json['status'] != 'success') {
                     // It failed, exit
                     $data['code'] = 'ERR_NOT_IMAGE';
-                    $data['message'] = "Your avatar wasn't an image file.";
+                    $data['message'] = L::error_avatar_not_image;
                     echo json_encode($data);
                     exit();
                 }
@@ -141,7 +141,7 @@ if ($session != false) {
             }
             $blog->updateSettings();
             $data['code'] = 'SUCCESS';
-            $data['message'] = "Success!";
+            $data['message'] = L::string_success;
             echo json_encode($data);
 
         }

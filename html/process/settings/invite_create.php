@@ -8,7 +8,7 @@ $data = array();
 $blog = new Blog($sessionObj->sessionData['activeBlog']);
 if ($session == false) {
     $data['code'] = 'NO_SESSION';
-    $data['message'] = "No session found. Try logging in again.";
+    $data['message'] = L::error_no_session;
     echo json_encode($data);
     exit();
 }
@@ -17,15 +17,15 @@ if (!$blog->failed) {
     $return = $blog->createInvite($_POST['invRef']);
     if ($return == false) {
         $data['code']= 'ERR_FAILED';
-        $data['code'] = "Failed to create invite...";
+        $data['code'] = L::error_failed_invite_create;
         echo json_encode($data);
     }
     $data['inviteURL'] = 'https://'.$_ENV['SITE_URL'].'/inv/'.$return;
     $data['code']= 'SUCCESS';
-    $data['message'] = "Invite Created! Gives your friends the link below. ";
+    $data['message'] = L::blog_settings_invite_created;
     echo json_encode($data);
 } else {
     $data['code']= 'ERR_NO_BLOG';
-    $data['message'] = "Failed";
+    $data['message'] = L::error_no_session; // Shouldn't get here, but it's the same error.
     echo json_encode($data);
 }

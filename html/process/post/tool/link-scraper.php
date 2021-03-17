@@ -59,13 +59,13 @@ if (isset($_POST['url'])) {
 
     } else {
         $data['code'] = 'INVALID_URL';
-        $data['message'] = "Invalid URL";
+        $data['message'] = L::link_invalid_url;
         echo json_encode($data);
         exit();
     }
 } else {
     $data['code'] = 'NO_URL';
-    $data['message'] = "No URL";
+    $data['message'] = L::link_no_url;
     echo json_encode($data);
 
 }

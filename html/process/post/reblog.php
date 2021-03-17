@@ -6,20 +6,20 @@ header('Content-type: application/json');
 
 if ($session == false) {
     $data['code'] = 'NO_SESSION';
-    $data['message'] = "No session detected. Try logging in again.";
+    $data['message'] = L::error_no_session;
     echo json_encode($data);
     exit();
 }
 if (!isset($_POST['reblogging']) || $_POST['reblogging'] == 0 || !is_numeric($_POST['reblogging'])) {
     $data['code'] = 'ERR_INVALID';
-    $data['message'] = "Post not found.";
+    $data['message'] = L::error_post_not_found;
     echo json_encode($data);
     exit();
 }
 $reblogging = new Post(intval($_POST['reblogging']));
 if ($reblogging->failed) {
     $data['code'] = 'ERR_INVALID';
-    $data['message'] = "Post not found.";
+    $data['message'] = L::error_post_not_found;
     echo json_encode($data);
     exit();
 }
@@ -28,8 +28,7 @@ $blog = new Blog();
 $blog->getByBlogName($_POST['onBlog']);
 if ($blog->failed || ($blog->ownerID != $sessionObj->user->ID && !$blog->checkMemberPermission($sessionObj->user->ID, 'write_post'))) {
     $data['code'] = 'ERR_NOT_YOUR_BLOG';
-    $data['message'] = "Not your blog, or you don't have permission to do that.";
-
+    $data['message'] = L::error_invalid_permissions;
     echo json_encode($data);
     exit();
 }
@@ -51,10 +50,10 @@ $data = array();
     $post = new Reblog();
     if ($post->createNew($_POST['postText'], $_POST['postTags'], $blog->ID, $sourcePost, $type, $reblogging->ID)) {
         $data['code'] = 'SUCCESS';
-        $data['message'] = "Success!";
+        $data['message'] = L::string_success;
     } else {
         $data['code'] = 'ERR_MISC_FAILURE';
-        $data['message'] = "Unknwon failure";
+        $data['message'] = L::error_unknown;
     }
 
 

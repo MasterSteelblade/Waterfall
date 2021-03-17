@@ -11,17 +11,18 @@ if ($session != false) {
         $userID = $blog->ownerID;
             if ($user->block($userID)) {
                 $data['code'] = 'SUCCESS';
-                $data['message'] = "This user is now blocked.";
+                $data['message'] = L::blocks_block_success;
                 echo json_encode($data);
                 exit();
             } else {
                 $data['code'] = 'ERR_GENERIC_FAILURE';
-                $data['message'] = "Generic backend failure";
+                $data['message'] = L::error_unknown;
                 echo json_encode($data);
                 exit();
             }
     } else {
         $data['code'] = 'ERR_NOT_FOUND';
+        $data['message'] = L::error_blog_not_found;
         echo json_encode($data);
     }
 }

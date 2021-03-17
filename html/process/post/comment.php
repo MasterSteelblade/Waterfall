@@ -15,7 +15,7 @@ if ($session == false) {
 $blog = new Blog($sessionObj->sessionData['activeBlog']);
 if ($blog->failed || ($blog->ownerID != $sessionObj->user->ID && !$blog->checkMemberPermission($sessionObj->user->ID, 'write_post'))) {
     $data['code'] = 'ERR_NOT_YOUR_BLOG';
-    $data['message'] = "Not your blog, or you don't have permission to answer this.";
+    $data['message'] = L::error_invalid_permissions;
     echo json_encode($data);
     exit();
 }
@@ -23,14 +23,14 @@ if ($blog->failed || ($blog->ownerID != $sessionObj->user->ID && !$blog->checkMe
 $post = new Post($_POST['postID']);
 if ($post->failed == true) {
     $data['code'] = 'ERR_POST_NOT_FOUND';
-    $data['message'] = "Post not found";
+    $data['message'] = L::error_post_not_found;
     echo json_encode($data);
     exit();
 }
 
 if ($post->checkDNRStatus() == 'dni') {
     $data['code'] = 'ERR_DNI';
-    $data['message'] = "The poster has marked this as DNI, and you can't leave a comment.";
+    $data['message'] = L::error_post_is_dni;
     echo json_encode($data);
     exit();
 }
@@ -45,15 +45,15 @@ if (isset($_POST['text']) && WFUtils::textContentCheck($_POST['text'])) {
     $note->comment = WFText::makeTextSafe($_POST['text']);
     if ($note->createNote() != false) {
         $data['code'] = 'SUCCESS';
-        $data['message'] = "Success";
+        $data['message'] = L::string_success;
     } else {
         $data['code'] = 'ERR_BACKEND_FAILURE';
-        $data['message'] = "Unknown backend failure";
+        $data['message'] = L::error_unknown;
     }
 
 } else {
     $data['code'] = 'ERR_EMPTY_TEXT';
-    $data['message'] = "No text detected!";
+    $data['message'] = L::error_no_content;
 }
 
 echo json_encode($data);

@@ -11,18 +11,18 @@ if ($session != false) {
         $userID = $blog->ownerID;
             if ($user->unblock($userID)) {
                 $data['code'] = 'SUCCESS';
-                $data['message'] = "User unblocked!";
+                $data['message'] = L::blocks_unblock_success;
                 echo json_encode($data);
                 exit();
             } else {
                 $data['code'] = 'ERR_GENERIC_FAILURE';
-                $data['message'] = "Unknown failure";
+                $data['message'] = L::error_unknown;
                 echo json_encode($data);
                 exit();
             }
     } else {
         $data['code'] = 'ERR_NOT_FOUND';
-        $data['message'] = "Blog not found.";
+        $data['message'] = L::error_blog_not_found;
         echo json_encode($data);
     }
 }

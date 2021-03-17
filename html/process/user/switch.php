@@ -18,19 +18,19 @@ if ($session == false) {
                 $sessionObj->sessionData['activeBlog'] = $blog->ID;
                 $sessionObj->updateSession();
                 $data['code'] = 'SUCCESS';
-                $data['message'] = "Switching blog...";
+                $data['message'] = L::string_success;
             } else {
                 $data['code'] = 'ERR_NOT_YOUR_BLOG';
-                $data['message'] = "You can't switch to a blog you don't own.";
+                $data['message'] = L::error_invalid_permissions;
 
             }
         } else {
             $data['code'] = 'ERR_BLOG_DOES_NOT_EXIST';
-            $data['message'] = "This blog does not exist.";
+            $data['message'] = L::error_blog_not_found;
         }
     } else {
         $data['code'] = 'ERR_NO_BLOG_SET';
-        $data['message'] = "you didn't specify a blog to switch to";
+        $data['message'] = L::error_switch_no_set;
     }
     
 }
