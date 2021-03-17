@@ -13,7 +13,7 @@ if ($session == false) {
     $myBlog = new Blog($sessionObj->sessionData['activeBlog']);
     if ($myBlog->failed) {
         $data['code'] = 'ERR_YOUR_BLOG_NOT_FOUND';
-        $data['message'] = "Couldn't find the blog you're trying to follow from.";
+        $data['message'] = L::error_no_session;
         echo json_encode($data);
         exit();
     } 
@@ -21,7 +21,7 @@ if ($session == false) {
     $toFollow->getByBlogName($_POST['blogName']);
     if ($toFollow->failed) {
         $data['code'] = 'ERR_BLOG_TO_FOLLOW_NOT_FOUND';
-        $data['message'] = "Couldn't find the blog you're trying to follow.";
+        $data['message'] = L::follow_could_not_find;
         echo json_encode($data);
         exit();
     }

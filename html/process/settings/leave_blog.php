@@ -10,7 +10,7 @@ if ($session != false) {
     if (!$blog->failed) {
         if ($blog->ID == $sessionObj->sessionData['activeblog']) {
             $data['code'] = 'ERR_ACTIVE_BLOG';
-            $data['message'] = "Can't leave your active blog! Switch to another first.";
+            $data['message'] = L::error_leave_active;
             echo json_encode($data);
             exit();
         }
@@ -18,24 +18,24 @@ if ($session != false) {
             $obj = $blog->getMemberPermissionObject($sessionObj->user->ID);
             if ($obj->removeMember()) {
                 $data['code'] = 'SUCCESS';
-                $data['message'] = "Success!";
+                $data['message'] = L::string_success;
                 echo json_encode($data);
 
                 exit();
             } else {
                 $data['code'] = 'ERR_GENERIC_FAILURE';
-                $data['message'] = "Unknown failure";
+                $data['message'] = L::error_unknown;
                 echo json_encode($data);
                 exit();
             }
         } else {
             $data['code'] = 'ERR_PERMISSIONS';
-            $data['message'] = "You don't have permission to do that.";
+            $data['message'] = L::error_invalid_permissions;
             echo json_encode($data);
         }
     } else {
         $data['code'] = 'ERR_NOT_FOUND';
-        $data['message'] = "Blog not found";
+        $data['message'] = L::error_blog_not_found;
         echo json_encode($data);
     }
 }

@@ -9,7 +9,7 @@ $easyCSRF = new EasyCSRF\EasyCSRF($sessionObj);
 try {
     $easyCSRF->check($sessionObj->sessionData['csrfName'], $_POST['tokeItUp'], 60*15, true);
 } catch(InvalidCsrfTokenException $e) {
-    $data['code'] = 'ERR_CSRF_FAILURE';
+    $data['code'] = L::error_csrf;
     echo json_encode($data);
     exit();
 }
@@ -27,24 +27,24 @@ if ($session !== false) {
     if (isset($_POST['newPassword']) && $_POST['newPassword'] != '') {
         if ($passwordConfirmed == false) {
             $data['code'] = 'ERROR_BAD_PASSWORD';
-            $data['message'] = "You didn't confirm your password.";
+            $data['message'] = L::error_missing_pw_confirm;
             echo json_encode($data);
             exit();
         }
         if (strlen($_POST['newPassword']) < 6) {
             $data['code'] = 'ERROR_PASSWORD_SHORT';
-            $data['message'] = "Your new password is too short - it needs to be at least 6 characters.";
+            $data['message'] = L::new_pw_short;
             echo json_encode($data);
             exit();
         } elseif ($_POST['newPassword'] != $_POST['confirmPassword']) {
             $data['code'] = 'ERROR_PASSWORD_MISMATCH';
-            $data['message'] = "The new passwords didn't match.";
+            $data['message'] = L::error_new_pw_mismatch;
             echo json_encode($data);
             exit();
         } else {
             if ($user->updatePassword($_POST['newPassword']) == false) {
                 $data['code'] = 'ERROR_BACKEND_FAILURE';
-                $data['message'] = "Generic backend failure. Please contact support.";
+                $data['message'] = L::error_unknown;
                 echo json_encode($data);
                 exit();
             }
@@ -53,19 +53,19 @@ if ($session !== false) {
     if (isset($_POST['emailAddress']) && $_POST['emailAddress'] != '' && $_POST['emailAddress'] != $user->email) {
         if ($passwordConfirmed == false) {
             $data['code'] = 'ERROR_BAD_PASSWORD';
-            $data['message'] = "You didn't confirm your password.";
+            $data['message'] = L::error_missing_pw_confirm;
             echo json_encode($data);
             exit();
         }
         if (filter_var($_POST['emailAddress'], FILTER_VALIDATE_EMAIL) == false) {
             $data['code'] = 'ERROR_INVALID_EMAIL';
-            $data['message'] = "This isn't a real email address, according to the computer.";
+            $data['message'] = L::error_invalid_email;
             echo json_encode($data);
             exit();
         }
         if ($user->updateEmail($_POST['emailAddress']) == false) {
             $data['code'] = 'ERROR_EMAIL_TAKEN';
-            $data['message'] = "This email address already has an account.";
+            $data['message'] = L::error_email_in_use;
             echo json_encode($data);
             exit();
         }
@@ -161,10 +161,10 @@ if ($session !== false) {
     }
     if ($user->updateSettings()) {
         $data['code'] = 'SUCCESS';
-        $data['message'] = "Updated successfully!";
+        $data['message'] = L::string_updated;
     } else {
         $data['code'] = 'FAILURE';
-        $data['message'] = "Task failed spectacularly! Give it a minute then try again.";
+        $data['message'] = L::error_unknown;
     }
 }
 echo json_encode($data);

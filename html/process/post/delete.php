@@ -6,7 +6,7 @@ header('Content-type: application/json');
 $post = new Post($_POST['postID']);
 if ($session == false) {
     $data['code'] = 'NO_SESSION';
-    $data['message'] = "No session detected. Try logging in again.";
+    $data['message'] = L::error_no_session;
     echo json_encode($data);
     exit();
 }
@@ -15,11 +15,11 @@ if (!$post->failed) {
     if ($post->onBlog == $sessionObj->sessionData['activeBlog']) {
         $post->deletePost();
         $data['code'] = 'SUCCESS';
-        $data['message'] = "Success!";
+        $data['message'] = L::string_success;
         echo json_encode($data);
     } else {
         $data['code'] = 'ERR_NOT_YOU_POST';
-        $data['message'] = "This isn't your post.";
+        $data['message'] = L::error_invalid_permissions;
         echo json_encode($data);
     }
 }

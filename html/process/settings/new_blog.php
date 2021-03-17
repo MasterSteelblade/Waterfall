@@ -8,7 +8,7 @@ if ($session != false) {
     $nameCheck = WFUtils::blogNameCheck($_POST['createBlog']);
     if ($nameCheck == false) {
         $data['code'] = 'ERR_BLOG_EXISTS';
-        $data['message'] = "A blog with this name already exists.";
+        $data['message'] = L::blog_url_taken;
         echo json_encode($data);
     } else {
         $blog = new Blog();
@@ -16,11 +16,11 @@ if ($session != false) {
         $blog->blogName = WFUtils::urlFixer($_POST['createBlog']);
         if ($blog->createBlog()) {
             $data['code'] = 'SUCCESS';
-            $data['message'] = "Success!";
+            $data['message'] = L::string_success;
             echo json_encode($data);
         } else {
             $data['code'] = 'ERR_FAILED';
-            $data['message'] = "Unknown failure";
+            $data['message'] = L::error_unknown;
             echo json_encode($data);
         }
     }

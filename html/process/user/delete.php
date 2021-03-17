@@ -10,7 +10,7 @@ header('Content-type: application/json');
 $data = array();
 if ($session === false || !isset($_POST['deletePassword'])) {
     $data['code'] = 'ERR_GENERIC_FAILURE';
-    $data['message'] = "Generic backend failure. Please refresh and try again.";
+    $data['message'] = L::error_unknown;
     echo json_encode($data);
     $size = ob_get_length();
     header("Content-Encoding: none");
@@ -24,7 +24,7 @@ if ($session === false || !isset($_POST['deletePassword'])) {
         $easyCSRF->check($sessionObj->sessionData['csrfName'], $_POST['tokeItUp'], 60*15, true);
     } catch(InvalidCsrfTokenException $e) {
         $data['code'] = 'ERR_CSRF_FAILURE';
-        $data['message'] = "CSRF failure! Refresh and try again.";
+        $data['message'] = L::error_csrf;
         echo json_encode($data);
         $size = ob_get_length();
         header("Content-Encoding: none");
@@ -38,7 +38,7 @@ if ($session === false || !isset($_POST['deletePassword'])) {
     $user = $sessionObj->user;
     if (password_verify($_POST['deletePassword'], $user->password)) {
         $data['code'] = 'SUCCESS';
-        $data['message'] = "See you, space cowboy...";
+        $data['message'] = L::string_goodbye;
         $sessionObj->destroySession();
         echo json_encode($data);
         $size = ob_get_length();
@@ -55,7 +55,7 @@ if ($session === false || !isset($_POST['deletePassword'])) {
     } else {
         // Wrong password. 
         $data['code'] = 'ERR_WRONG_PASS';
-        $data['message'] = "Wrong password.";
+        $data['message'] = L::error_invalid_credentials;
         echo json_encode($data);
         $size = ob_get_length();
         header("Content-Encoding: none");

@@ -6,7 +6,7 @@ if ($session == false) {
     header('Content-type: application/json');
 
     $data['code'] = 'NO_SESSION';
-    $data['message'] = "You don't seem to be logged in.";
+    $data['message'] = L::error_no_session;
     echo json_encode($data);
     exit();
 }
@@ -16,7 +16,7 @@ if ($post->failed) {
     header('Content-type: application/json');
 
     $data['code'] = 'ERR_INVALID_POST';
-    $data['message'] = "Post not found";
+    $data['message'] = L::error_post_not_found;
     echo json_encode($data);
     exit();
 }
@@ -38,7 +38,7 @@ if ($poll->registerVote($_POST['selected'], $sessionObj->user->ID)) {
     header('Content-type: application/json');
 
      $data['code'] = 'ERR_VOTE_FAILED';
-     $data['message'] = "Voting failed.";
+     $data['message'] = L::error_voting_failed;
      echo json_encode($data);
      exit();
  }

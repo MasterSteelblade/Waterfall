@@ -6,7 +6,7 @@ header('Content-type: application/json');
 
 if ($session == false) {
     $data['code'] = 'NO_SESSION';
-    $data['message'] = "No session detected. Try logging in again.";
+    $data['message'] = L::error_no_session;
     echo json_encode($data);
     exit();
 }
@@ -15,7 +15,7 @@ $blog = new Blog();
 $blog->getByBlogName($_POST['onBlog']);
 if ($blog->failed || ($blog->ownerID != $sessionObj->user->ID && !$blog->checkMemberPermission($sessionObj->user->ID, 'write_post'))) {
     $data['code'] = 'ERR_NOT_YOUR_BLOG';
-    $data['message'] = "Not your blog, or you don't have permission to do that.";
+    $data['message'] = L::error_invalid_permissions;
 
     echo json_encode($data);
     exit();
@@ -57,7 +57,7 @@ if (isset($_POST['videoType']) && $_POST['videoType'] == 'upload') {
         $videoFile = $_FILES['videoFile'];
     } else {
         $data['code'] = 'ERR_BAD_FILE';
-        $data['message'] = "No file detected!";
+        $data['message'] = L::error_no_video;
         echo json_encode($data);
         exit();
     }
@@ -74,7 +74,7 @@ if (isset($_POST['videoType']) && $_POST['videoType'] == 'upload') {
                 $videoID = $res;
             } else {
                 $data['code'] = 'ERR_MISC_FAILURE';
-                $data['message'] = "Unknown failure";
+                $data['message'] = L::error_unknown;
                 echo json_encode($data);
                 exit();
             }
@@ -93,7 +93,7 @@ if (isset($_POST['videoType']) && $_POST['videoType'] == 'upload') {
             if ($json['status'] != 'success') {
                 // It failed, exit
                 $data['code'] = 'ERR_NOT_VIDEO';
-                $data['message'] = "This doesn't seem to be a video file.";
+                $data['message'] = L::error_no_video;
                 echo json_encode($data);
                 exit();
             }
@@ -107,10 +107,10 @@ if (isset($_POST['videoType']) && $_POST['videoType'] == 'upload') {
         $post = new VideoPost();
         if ($post->createNew($_POST['postText'], substr($_POST['postTitle'],0,255), $_POST['postTags'], $blog->ID, $additions, $type, $videoID)) {
             $data['code'] = 'SUCCESS';
-            $data['code'] = "Success!";
+            $data['code'] = L::string_success;
         } else {
             $data['code'] = 'ERR_MISC_FAILURE';
-            $data['message'] = "Unknown failure";
+            $data['message'] = L::error_unknown;
 
         }
         echo json_encode($data);
@@ -125,10 +125,10 @@ if (isset($_POST['videoType']) && $_POST['videoType'] == 'upload') {
         $post = new VideoPost();
         if ($post->createNew($_POST['postText'], substr($_POST['postTitle'],0,255), $_POST['postTags'], $blog->ID, $additions, $type, $embed, true)) {
             $data['code'] = 'SUCCESS';
-            $data['code'] = "Success!";
+            $data['code'] = L::string_success;
         } else {
             $data['code'] = 'ERR_MISC_FAILURE';
-            $data['message'] = "Unknown failure";
+            $data['message'] = L::error_unknown;
 
         }
         echo json_encode($data);

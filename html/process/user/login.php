@@ -11,7 +11,7 @@ $data = array();
 if ($session !== false) {
     // The user is already logged in. 
     $data['code'] = 'ERR_ALREADY_LOGGED_IN';
-    $data['message'] = "Already logged in!";
+    $data['message'] = L::error_already_logged_in;
     $json = json_encode($data);
     echo $json;
 } else {
@@ -19,7 +19,7 @@ if ($session !== false) {
         $easyCSRF->check($sessionObj->sessionData['csrfName'], $_POST['tokeItUp'], 60*15, true);
     } catch(InvalidCsrfTokenException $e) {
         $data['code'] = 'ERR_CSRF_FAILURE';
-        $data['message'] = "CSRF failure! Refresh and try again.";
+        $data['message'] = L::error_csrf;
         echo json_encode($data);
         exit();
     }
@@ -28,7 +28,7 @@ if ($session !== false) {
     $failures = $redis->get($_SERVER['REMOTE_ADDR']);
     if ($failures >= 5) {
         $data['code'] = 'ERR_LOGIN_BAN';
-        $data['message'] = "You have too many failed logins, and need to wait a while before trying again.";
+        $data['message'] = L::error_login_ban;
         $json = json_encode($data);
         echo $json;
         exit();
@@ -46,7 +46,10 @@ if ($session !== false) {
         // Check if they have 2FA, and whether we have it set. 
         if (password_verify($password, $user->password) == false) {
             $data['code'] = 'ERR_INVALID_CREDS';
-            $data['message'] = "Either this email doesn't have an account, or the password was wrong.";
+            // This uses a special error instead of the generic, since it slightly screws up
+            // brute force attacks to try and figure out who has an account or not. 
+            // It's considered good practice. 
+            $data['message'] = L::error_login_invalid_credentials;
             $redis->increment($_SERVER['REMOTE_ADDR']);
             $redis->expireIn($_SERVER['REMOTE_ADDR'], 600);
             $json = json_encode($data);
@@ -56,13 +59,13 @@ if ($session !== false) {
         if ($user->hasTwoFactor() && (!isset($twoFactor) || $twoFactor == '')) {
             // 2FA is there, but not in the form. 
             $data['code'] = 'ERR_2FA_NEEDED';
-            $data['message'] = "This account has two-factor authentication enabled.";
+            $data['message'] = L::error_two_fa_needed;
         } else {
             if ($user->hasTwoFactor() && isset($twoFactor)) {
                 // Check the 2FA code. 
                 if (!$user->verifyTwoFactor($twoFactor)) {
                     $data['code'] = 'ERR_INVALID_2FA';
-                    $data['message'] = "Wrong 2FA code given.";
+                    $data['message'] = L::error_two_fa_invalid;
                     echo json_encode($data);
                     exit(); // Exit early to make things cleaner. 
                 }
@@ -74,24 +77,25 @@ if ($session !== false) {
             $sessionID = $user->login($emailAddress, $password);
             if ($sessionID === false) {
                 $data['code'] = 'ERR_INVALID_CREDS';
-                $data['message'] = "Either this email doesn't have an account, or the password was wrong.";
+                $data['message'] = L::error_login_invalid_credentials;
 
                 $redis->increment($_SERVER['REMOTE_ADDR']);
                 $redis->expireIn($_SERVER['REMOTE_ADDR'], 600);
 
             } elseif ($sessionID === 0) {
                 $data['code'] = 'ERR_BACKEND_FAILURE';
-                $data['message'] = "Unknown backend failure";
+                $data['message'] = L::error_unknown;
             } else {
                 $data['code'] = 'SUCCESSFUL_LOGIN';
-                $data['message'] = "Successfully logged in!";
+                $data['message'] = L::login_success;
             }
         }
 
     } else {
-        // That user doesn't exist. 
-        $data['code'] = 'ERR_USER_NOT_FOUND';
-        $data['message'] = "This user does not exist.";
+        // That user doesn't exist. I don't know why I separated this out to begin with, 
+        // but it gets the same treatment as above.
+        $data['code'] = 'ERR_INVALID_CREDS';
+        $data['message'] = L::error_login_invalid_credentials;
     }
 
 }

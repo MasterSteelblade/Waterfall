@@ -12,19 +12,19 @@ if ($session != false) {
         if ($permittedBlog->failed) {
             $data['blog'] = $_POST['editingblog'];
             $data['code'] = 'ERR_NOT_MEMBER';
-            $data['message'] = "This user isn't a member of this blog.";
+            $data['message'] = L::error_not_member;
             echo json_encode($data);
             exit();
         } elseif ($blog->checkMemberPermission($sessionObj->user->ID, 'blog_settings') == false && $blog->ownerID != $sessionObj->user->ID) {
             $data['code'] = 'ERR_PERMISSIONS';
-            $data['message'] = "You don't have permission to do that.";
+            $data['message'] = L::error_invalid_permissions;
             echo json_encode($data);
             exit();
         }
         $permissions = $blog->getMemberPermissionObject($permittedBlog->ownerID);
         if ($permissions == false) {
             $data['code'] = 'ERR_PERMISSION_OBJECT_NOT_LOADED';
-            $data['message'] = "Couldn't load permissions for this blog.";
+            $data['message'] = L::error_permission_object;
             echo json_encode($data);
             exit();
         }
@@ -32,22 +32,22 @@ if ($session != false) {
         if ($blog->ownerID == $user->ID  || $blog->checkMemberPermission($sessionObj->user->ID, 'blog_settings')) {
             if ($permissions->removeMember()) {
                 $data['code'] = 'SUCCESS';
-                $data['message'] = "Success!";
+                $data['message'] = L::string_success;
                 echo json_encode($data);
             } else {
                 $data['code'] = 'ERR_GENERIC_FAILURE';
-                $data['message'] = "Unknown error";
+                $data['message'] = L::error_unknown;
                 echo json_encode($data);
             }
 
         } else {
             $data['code'] = 'ERR_PERMISSIONS';
-            $data['message'] = "You don't have permission to do that.";
+            $data['message'] = L::error_invalid_permissions;
             echo json_encode($data);
         }
     } else {
         $data['code'] = 'ERR_ACTIVEBLOG';
-        $data['message'] = "Unknown error";
+        $data['message'] = L::error_unknown;
         echo json_encode($data);
     }
 }
