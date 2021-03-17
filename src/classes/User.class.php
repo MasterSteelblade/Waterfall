@@ -499,30 +499,32 @@ class User{
     public function getAllowedThemes($fromDB) {
         $vals = array(true);
         $defaultRes = $this->database->db_select("SELECT * FROM themes where default_theme = $1", $vals);
-        foreach ($defaultRes as $res) {
-            $this->themesAllowed[] = $res['id'];
+        if ($defaultRes) {
+            foreach ($defaultRes as $res) {
+                $this->themesAllowed[] = $res['id'];
+            }
+            foreach ($fromDB as $res) {
+                $this->themesAllowed[] = $res;
+            }
+            $this->themesAllowed = array_unique($this->themesAllowed);
+            $this->themesAllowed = array_filter($this->themesAllowed);
         }
-        foreach ($fromDB as $res) {
-            $this->themesAllowed[] = $res;
-        }
-        $this->themesAllowed = array_unique($this->themesAllowed);
-        $this->themesAllowed = array_filter($this->themesAllowed);
-
     }
 
     public function getAllowedBadges($fromDB) {
         $vals = array(true);
         $defaultRes = $this->database->db_select("SELECT * FROM badges where default_badge = $1", $vals);
-        foreach ($defaultRes as $res) {
-            $this->badgesAllowed[] = $res['id'];
-        }
+        if ($defaultRes) {
+            foreach ($defaultRes as $res) {
+                $this->badgesAllowed[] = $res['id'];
+            }
 
-        foreach ($fromDB as $res) {
-            $this->badgesAllowed[] = $res;
+            foreach ($fromDB as $res) {
+                $this->badgesAllowed[] = $res;
+            }
+            $this->badgesAllowed = array_unique($this->badgesAllowed);
+            $this->badgesAllowed = array_filter($this->badgesAllowed);
         }
-        $this->badgesAllowed = array_unique($this->badgesAllowed);
-        $this->badgesAllowed = array_filter($this->badgesAllowed);
-
     }
   
     public function addTheme(int $themeID) {
