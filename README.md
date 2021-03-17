@@ -12,7 +12,7 @@ Waterfall allows image, video, and audio uploads, and has a special post type fo
 
 Tech stack: 
 - PHP 7.4+ (7.3 is supported, but recommended against) 
-- PostgreSQL 13+
+- PostgreSQL 12+
 - Redis 5+
 - Apache 2.4+
 
