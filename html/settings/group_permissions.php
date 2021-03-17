@@ -130,19 +130,19 @@ if ($permissions == false) {
             <div class="col">
                 <div class="card">
                     <div class="card-header">
-                        Group Blog Permissions for <?php echo $permittedBlog->blogName; ?> on <?php echo $blog->blogName; ?>
+                        <?php echo L::permissions_title($permittedBlog->blogName, $blog->blogName); ?>
                     </div>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">
-                    <h5 class="card-title">Posting</h5>
-                            <p>These settings govern the permissions related to basic posting.</p>
+                    <h5 class="card-title"><?php echo L::permissions_posting_header; ?></h5>
+                            <p><?php echo L::permissions_posting_explainer; ?></p>
                     <form id="PermissionsForm" action="../process/settings/group_perms.php" method="post">
                         <input type="hidden" id="editingBlog" name="editingBlog" value="<?php echo $permittedBlog->blogName; ?>">
                         <div class="form-group row">
                             <div class="col">
                                 <div class="custom-control custom-switch">
                                     <input id="write_post" name="write_post" class="custom-control-input" value="true" type="checkbox" <?php if (in_array('write_post', $permissions)) { echo 'checked'; } ?>  >
-                                    <label class="custom-control-label" for="write_post">Able to write posts for this blog</label>
+                                    <label class="custom-control-label" for="write_post"><?php echo L::permissions_write_post; ?></label>
                                 </div>
                             </div>
                         </div>
@@ -150,7 +150,7 @@ if ($permissions == false) {
                             <div class="col">
                                 <div class="custom-control custom-switch">
                                     <input id="edit_post" name="edit_post" class="custom-control-input" value="true" type="checkbox" <?php if (in_array('edit_post', $permissions)) { echo 'checked'; } ?>  >
-                                    <label class="custom-control-label" for="edit_post">Able to edit posts on this blog</label>
+                                    <label class="custom-control-label" for="edit_post"><?php echo L::permissions_edit_post; ?></label>
                                 </div>
                             </div>
                         </div>
@@ -158,19 +158,19 @@ if ($permissions == false) {
                             <div class="col">
                                 <div class="custom-control custom-switch">
                                     <input id="delete_post" name="delete_post" class="custom-control-input" value="true" type="checkbox" <?php if (in_array('delete_post', $permissions)) { echo 'checked'; } ?>  >
-                                    <label class="custom-control-label" for="delete_post">Able to delete posts on blog</label>
+                                    <label class="custom-control-label" for="delete_post"><?php echo L::permissions_delete_post; ?></label>
                                 </div>
                             </div>
                         </div>
                         </li>
                         <li class="list-group-item">
-                            <h5 class="card-title">Messaging</h5>
-                            <p>These settings govern access rights to your inbox and outbox.</p> 
+                            <h5 class="card-title"><?php echo L::permissions_messaging_header; ?></h5>
+                            <p><?php echo L::permissions_messaging_explainer; ?></p> 
                         <div class="form-group row">
                             <div class="col">
                                 <div class="custom-control custom-switch">
                                     <input id="read_asks" name="read_asks" class="custom-control-input" value="true" type="checkbox" <?php if (in_array('read_asks', $permissions)) { echo 'checked'; } ?>  >
-                                    <label class="custom-control-label" for="read_asks">Able to access the inbox and outbox</label>
+                                    <label class="custom-control-label" for="read_asks"><?php echo L::permissions_read_asks; ?></label>
                                 </div>
                             </div>
                         </div>
@@ -178,7 +178,7 @@ if ($permissions == false) {
                             <div class="col">
                                 <div class="custom-control custom-switch">
                                     <input id="answer_asks" name="answer_asks" class="custom-control-input" value="true" type="checkbox" <?php if (in_array('answer_asks', $permissions)) { echo 'checked'; } ?>  >
-                                    <label class="custom-control-label" for="answer_asks">Able to answer messages this blog receives</label>
+                                    <label class="custom-control-label" for="answer_asks"><?php echo L::permissions_answer_asks; ?></label>
                                 </div>
                             </div>
                         </div>
@@ -186,7 +186,7 @@ if ($permissions == false) {
                             <div class="col">
                                 <div class="custom-control custom-switch">
                                     <input id="delete_asks" name="delete_asks" class="custom-control-input" value="true" type="checkbox" <?php if (in_array('delete_asks', $permissions)) { echo 'checked'; } ?>  >
-                                    <label class="custom-control-label" for="delete_asks">Able to delete messages in the inbox and outbox</label>
+                                    <label class="custom-control-label" for="delete_asks"><?php echo L::permissions_delete_asks; ?></label>
                                 </div>
                             </div>
                         </div>
@@ -194,19 +194,19 @@ if ($permissions == false) {
                             <div class="col">
                                 <div class="custom-control custom-switch">
                                     <input id="send_asks" name="send_asks" class="custom-control-input" value="true" type="checkbox" <?php if (in_array('send_asks', $permissions)) { echo 'checked'; } ?>  >
-                                    <label class="custom-control-label" for="send_asks">Able to send messages from this blog</label>
+                                    <label class="custom-control-label" for="send_asks"><?php echo L::permissions_send_asks; ?></label>
                                 </div>
                             </div>
                         </div>
                         </li>
                         <li class="list-group-item">
-                            <h5 class="card-title">Pages</h5>
-                            <p>Permissions relating to pages.</p> 
+                            <h5 class="card-title"><?php echo L::permissions_pages_header; ?></h5>
+                            <p><?php echo L::permissions_pages_explainer; ?></p> 
                         <div class="form-group row">
                             <div class="col">
                                 <div class="custom-control custom-switch">
                                     <input id="create_page" name="create_page" class="custom-control-input" value="true" type="checkbox" <?php if (in_array('create_page', $permissions)) { echo 'checked'; } ?>  >
-                                    <label class="custom-control-label" for="create_page">Able to create new pages of either style on this blog</label>
+                                    <label class="custom-control-label" for="create_page"><?php echo L::permissions_create_page; ?></label>
                                 </div>
                             </div>
                         </div>
@@ -214,7 +214,7 @@ if ($permissions == false) {
                             <div class="col">
                                 <div class="custom-control custom-switch">
                                     <input id="edit_page" name="edit_page" class="custom-control-input" value="true" type="checkbox" <?php if (in_array('edit_page', $permissions)) { echo 'checked'; } ?>  >
-                                    <label class="custom-control-label" for="edit_page">Able to edit pages on this blog</label>
+                                    <label class="custom-control-label" for="edit_page"><?php echo L::permissions_edit_page; ?></label>
                                 </div>
                             </div>
                         </div>
@@ -222,19 +222,19 @@ if ($permissions == false) {
                             <div class="col">
                                 <div class="custom-control custom-switch">
                                     <input id="delete_page" name="delete_page" class="custom-control-input" value="true" type="checkbox" <?php if (in_array('delete_page', $permissions)) { echo 'checked'; } ?>  >
-                                    <label class="custom-control-label" for="delete_page">Able to delete pages on this blog</label>
+                                    <label class="custom-control-label" for="delete_page"><?php echo L::permissions_delete_page; ?></label>
                                 </div>
                             </div>
                         </div>
                         </li>
                         <li class="list-group-item">
-                            <h5 class="card-title">Blog Settings</h5>
-                            <p>Permissions relating to blog settings.</p> 
+                            <h5 class="card-title"><?php echo L::permissions_blog_settings_header; ?></h5>
+                            <p><?php echo L::permissions_blog_settings_explainer; ?></p> 
                             <div class="form-group row">
                         <div class="col">
                                 <div class="custom-control custom-switch">
                                     <input id="change_password" name="change_password" class="custom-control-input" value="true" type="checkbox" <?php if (in_array('change_password', $permissions)) { echo 'checked'; } ?>  >
-                                    <label class="custom-control-label" for="change_password">Able to make the blog private, public, or change its password</label>
+                                    <label class="custom-control-label" for="change_password"><?php echo L::permissions_change_password; ?></label>
                                 </div>
                             </div>
                         </div>
@@ -242,7 +242,7 @@ if ($permissions == false) {
                             <div class="col">
                                 <div class="custom-control custom-switch">
                                     <input id="change_theme" name="change_theme" class="custom-control-input" value="true" type="checkbox" <?php if (in_array('change_theme', $permissions)) { echo 'checked'; } ?>  >
-                                    <label class="custom-control-label" for="change_theme">Able to adjust the blog theme</label>
+                                    <label class="custom-control-label" for="change_theme"><?php echo L::permissions_change_theme; ?></label>
                                 </div>
                             </div>
                         </div>
@@ -250,7 +250,7 @@ if ($permissions == false) {
                             <div class="col">
                                 <div class="custom-control custom-switch">
                                     <input id="blog_settings" name="blog_settings" class="custom-control-input" value="true" type="checkbox" <?php if (in_array('blog_settings', $permissions)) { echo 'checked'; } ?>  >
-                                    <label class="custom-control-label" for="blog_settings">Blog admin - able to change all blog settings, including user permissions.</label>
+                                    <label class="custom-control-label" for="blog_settings"><?php echo L::permissions_blog_settings; ?></label>
                                 </div>
                             </div>
                         </div>
@@ -258,7 +258,7 @@ if ($permissions == false) {
                         <div class="DsiplayDiv" id="DisplayDiv"></div>
                         <div class="form-group row">
                             <div class="col-sm-offset-2 col-sm-10">
-                                <button name="submit" type="submit" class="btn btn-primary" id="submit" form="PermissionsForm">Submit</button>
+                                <button name="submit" type="submit" class="btn btn-primary" id="submit" form="PermissionsForm"><?php echo L::string_submit; ?></button>
                             </div>
                         </div>
                     </form>

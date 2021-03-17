@@ -219,7 +219,7 @@ badgesChanged = false;
  
         <div class="card">
         <div class="card-header">
-                        <h2><i class="fas fa-book title-icon"></i>Blog Settings</h2>
+                        <h2><i class="fas fa-book title-icon"></i><?php echo L::blog_settings_title; ?></h2>
                     </div>
             <div class="row">
                 <div class="col">
@@ -234,12 +234,12 @@ badgesChanged = false;
                         <p contenteditable="true" placeholder="Blog Description" id="blogDescription" class="editable"><?php echo $blog->blogDescription; ?></p>
                         </li>
                         <li class="list-group-item">
-                            <h5 class="card-title"><i class="fas fa-cog title-icon"></i>Basic Settings</h5>
-                            <p>Basic blog settings, such as blog URL etc. To change the blog title, avatar, or description, click them above. </p>
+                            <h5 class="card-title"><i class="fas fa-cog title-icon"></i><?php echo L::blog_settings_basic_settings_header; ?></h5>
+                            <p><?php echo L::blog_settings_basic_settings_explainer; ?></p>
 
                             <div class="form-group row">
                                 <div class="col">
-                                    <label class="control-label" for="blogName">Blog URL:</label>
+                                    <label class="control-label" for="blogName"><?php echo L::blog_settings_blog_url; ?></label>
                                     <input id="blogName" maxlength="50" class="form-control" name="blogName" type="text" value="<?php echo $blog->blogName; ?>">
                                 </div>
                             </div>
@@ -256,7 +256,7 @@ badgesChanged = false;
                                         }
                                     } ?>
                                     
-                                    <label class="control-label" for="blogTheme">Blog Theme:</label>
+                                    <label class="control-label" for="blogTheme"><?php echo L::blog_settings_basic_blog_theme; ?></label>
                                     <select class="form-control" id="blogTheme" name="blogTheme" autocomplete="off">
                                         <?php 
                                             foreach ($themes as $key => $theme) {
@@ -268,8 +268,7 @@ badgesChanged = false;
                                 </div>
                             </div>
 
-                            <p>Badges are able to be applied to your avatar to spice things up a bit. There's a few you'll always have access to, but others can be earned through using the site.</p>
-                            <p>The preview below demonstrates how they'll look.</p>
+                            <p><?php echo L::blog_settings_badge_explainer; ?></p>
                             <div class="card">
                                 <div class="card-header">
                                     <div class="row">
@@ -302,8 +301,8 @@ badgesChanged = false;
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <p>Click on one of the badges above to remove it. To add one, click it in the list below. They're categorised, so feel free to experiment!</p>
-                                    <p>To change the order, drag them around on your avatar above.</p>
+                                    <p><?php echo L::blog_settings_badge_preview; ?></p>
+                                    <p><?php echo L::blop_settings_badge_preview_instructions; ?></p>
                                 </div>
                                 <script>Sortable.create(badgeHolder, { 
                                     onUpdate: function (evt) {
@@ -333,7 +332,7 @@ badgesChanged = false;
                                 <div class="card-header" id="staffBadgeHeading">
                                     <h2 class="mb-0">
                                         <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseStaff" aria-expanded="true" aria-controls="collapseStaff">
-                                        Staff Badges
+                                        <?php echo L::badge_types_staff; ?>
                                         </button>
                                     </h2>
                                 </div>
@@ -341,9 +340,9 @@ badgesChanged = false;
                                         <table class="table table-bordered">
                                     <thead>
                                         <tr>
-                                        <th scope="col">Badge</th>
-                                        <th scope="col">Name</th>
-                                        <th scope="col">Description</th>
+                                        <th scope="col"><?php echo L::string_badge; ?></th>
+                                        <th scope="col"><?php echo L::string_name; ?></th>
+                                        <th scope="col"><?php echo L::string_description; ?></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -359,7 +358,7 @@ badgesChanged = false;
                                 <div class="card-header" id="specialBadgeHeading">
                                     <h2 class="mb-0">
                                         <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseSpecial" aria-expanded="true" aria-controls="collapseSpecial">
-                                        Special Badges
+                                        <?php echo L::badge_types_special; ?>
                                         </button>
                                     </h2>
                                 </div>
@@ -368,9 +367,9 @@ badgesChanged = false;
                                         <table class="table table-bordered">
                                     <thead>
                                         <tr>
-                                        <th scope="col">Badge</th>
-                                        <th scope="col">Name</th>
-                                        <th scope="col">Description</th>
+                                        <th scope="col"><?php echo L::string_badge; ?></th>
+                                        <th scope="col"><?php echo L::string_name; ?></th>
+                                        <th scope="col"><?php echo L::string_description; ?></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -387,7 +386,7 @@ badgesChanged = false;
                                 <div class="card-header" id="awardBadgeHeading">
                                     <h2 class="mb-0">
                                         <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseAward" aria-expanded="true" aria-controls="collapseAward">
-                                        Award Badges
+                                        <?php echo L::badge_types_award; ?>
                                         </button>
                                     </h2>
                                 </div>
@@ -396,9 +395,9 @@ badgesChanged = false;
                                         <table class="table table-bordered">
                                     <thead>
                                         <tr>
-                                        <th scope="col">Badge</th>
-                                        <th scope="col">Name</th>
-                                        <th scope="col">Description</th>
+                                        <th scope="col"><?php echo L::string_badge; ?></th>
+                                        <th scope="col"><?php echo L::string_name; ?></th>
+                                        <th scope="col"><?php echo L::string_description; ?></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -415,7 +414,7 @@ badgesChanged = false;
                                 <div class="card-header" id="achievementBadgeHeading">
                                     <h2 class="mb-0">
                                         <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseAchievement" aria-expanded="true" aria-controls="collapseAchievement">
-                                        Achievement Badges
+                                        <?php echo L::badge_types_achievement; ?>
                                         </button>
                                     </h2>
                                 </div>
@@ -424,9 +423,9 @@ badgesChanged = false;
                                         <table class="table table-bordered">
                                     <thead>
                                         <tr>
-                                        <th scope="col">Badge</th>
-                                        <th scope="col">Name</th>
-                                        <th scope="col">Description</th>
+                                        <th scope="col"><?php echo L::string_badge; ?></th>
+                                        <th scope="col"><?php echo L::string_name; ?></th>
+                                        <th scope="col"><?php echo L::string_description; ?></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -443,7 +442,7 @@ badgesChanged = false;
                                 <div class="card-header" id="conditionalBadgeHeading">
                                     <h2 class="mb-0">
                                         <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseConditional" aria-expanded="true" aria-controls="collapseConditional">
-                                        Conditional Badges
+                                        <?php echo L::badge_types_conditional; ?>
                                         </button>
                                     </h2>
                                 </div>
@@ -452,9 +451,9 @@ badgesChanged = false;
                                         <table class="table table-bordered">
                                     <thead>
                                         <tr>
-                                        <th scope="col">Badge</th>
-                                        <th scope="col">Name</th>
-                                        <th scope="col">Description</th>
+                                        <th scope="col"><?php echo L::string_badge; ?></th>
+                                        <th scope="col"><?php echo L::string_name; ?></th>
+                                        <th scope="col"><?php echo L::string_description; ?></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -471,7 +470,7 @@ badgesChanged = false;
                                 <div class="card-header" id="prideBadgeHeading">
                                     <h2 class="mb-0">
                                         <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapsePride" aria-expanded="true" aria-controls="collapsePride">
-                                        Pride Badges
+                                        <?php echo L::badge_types_pride; ?>
                                         </button>
                                     </h2>
                                 </div>
@@ -480,9 +479,9 @@ badgesChanged = false;
                                         <table class="table table-bordered">
                                     <thead>
                                         <tr>
-                                        <th scope="col">Badge</th>
-                                        <th scope="col">Name</th>
-                                        <th scope="col">Description</th>
+                                        <th scope="col"><?php echo L::string_badge; ?></th>
+                                        <th scope="col"><?php echo L::string_name; ?></th>
+                                        <th scope="col"><?php echo L::string_description; ?></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -499,8 +498,8 @@ badgesChanged = false;
                             
                         </li>
                         <li class="list-group-item"> 
-                            <h5 class="card-title"><i class="fas fa-file title-icon"></i>Blog Pages</h5>
-                            <p>Pages can be used for things like portfolio pages, worldbuilding, masterlists, FAQs - anything that deserves its own dedicated space with an easy to remember link.
+                            <h5 class="card-title"><i class="fas fa-file title-icon"></i><?php echo L::blog_settings_blog_pages_header; ?></h5>
+                            <p><?php echo L::blog_settings_blog_pages_explainer; ?></p>
                             <?php 
                             $blog->getPages();
                             foreach ($blog->pages as $page) {
@@ -511,7 +510,7 @@ badgesChanged = false;
                                             <a href="<?php echo $blog->getBlogURL().'/'.$page->url; ?>"><?php echo $page->pageName; ?></a>
                                         </div>
                                         <div class="col-auto">
-                                            <a href="https://<?php echo $_ENV['SITE_URL']; ?>/page/edit/<?php echo $page->url;?>" id="editPage<?php echo $page->url; ?>" type="button" class="btn btn-primary float-right">Edit</a>
+                                            <a href="https://<?php echo $_ENV['SITE_URL']; ?>/page/edit/<?php echo $page->url;?>" id="editPage<?php echo $page->url; ?>" type="button" class="btn btn-primary float-right"><?php echo L::string_edit; ?></a>
 
                                         </div>
                                     </div>
@@ -521,23 +520,23 @@ badgesChanged = false;
                             } ?>
                             <div class="row">
                             <div class="col">
-                            <a href="https://<?php echo $_ENV['SITE_URL']; ?>/page/new" id="newPage" type="button" class="btn btn-primary float-right">New Page</a>
+                            <a href="https://<?php echo $_ENV['SITE_URL']; ?>/page/new" id="newPage" type="button" class="btn btn-primary float-right"><?php echo L::blog_settings_new_page; ?></a>
 
                             </div></div>
                         </li>
                         
                         <li class="list-group-item">
-                            <h5 class="card-title"><i class="fas fa-user-secret title-icon"></i>Privacy and Security</h5>
-                            <p>Here you can decide on some basic security settings for your blog.</p> 
+                            <h5 class="card-title"><i class="fas fa-user-secret title-icon"></i><?php echo L::blog_settings_privacy_header; ?></h5>
+                            <p><?php echo L::blog_settings_privacy_explainer; ?></p> 
                             <div class="form-group row">
                             <div class="col">
-                                <p>Adding a password to your blog means that people won't be able to see your blog without entering it.</p>
-                            <label class="control-label" for="blogPass">Blog Password:</label>
+                                <p><?php echo L::blog_settings_password_explainer; ?></p>
+                            <label class="control-label" for="blogPass"><?php echo L::blog_settings_blog_password; ?></label>
                                 <input id="blogPass" maxlength="100" class="form-control" name="blogPass" type="password" autocomplete="off">
                                 <?php if ($blog->password != null) {
                                     ?>
-                                    <p>Your blog already has a password set. Enter a new one above to change it, or click below to make your blog public again.</p>
-                                    <button type="button" class="btn btn-danger" id="removePasswordButton" data-blog-name="<?php echo $blog->blogName; ?>" style="width: 100%;" onclick="removePassword(this)">Remove Password</button>
+                                    <p><?php echo L::blog_settings_password_already_set; ?></p>
+                                    <button type="button" class="btn btn-danger" id="removePasswordButton" data-blog-name="<?php echo $blog->blogName; ?>" style="width: 100%;" onclick="removePassword(this)"><?php echo L::blog_settings_remove_password; ?></button>
                                     <?php
                                 } ?>
                             </div>
@@ -546,7 +545,7 @@ badgesChanged = false;
                                 <div class="col">
                                     <div class="custom-control custom-switch">
                                         <input id="adultOnly" name="adultOnly" class="custom-control-input" value="true" type="checkbox" <?php if ($blog->nsfwBlog) { echo 'checked'; } ?>  >
-                                        <label class="custom-control-label" for="adultOnly">Mark this blog adult only or NSFW</label>
+                                        <label class="custom-control-label" for="adultOnly"><?php echo L::blog_settings_mark_adult_only; ?></label>
                                     </div>
                                 </div>
                             </div>
@@ -555,37 +554,37 @@ badgesChanged = false;
                             <div class="form-group row">
                                 <div class="col">
                                     <div class="custom-control custom-switch">
-                                        <input id="showPronouns" name="showPronouns" class="custom-control-input" value="true" type="checkbox" <?php if (isset($blog->settings['showPronouns']) &&$blog->settings['showPronouns']) { echo 'checked'; } ?>  >
-                                        <label class="custom-control-label" for="showPronouns">Show my pronouns in post headers for this blog</label>
+                                        <input id="showPronouns" name="showPronouns" class="custom-control-input" value="true" type="checkbox" <?php if (isset($blog->settings['showPronouns']) && $blog->settings['showPronouns']) { echo 'checked'; } ?>  >
+                                        <label class="custom-control-label" for="showPronouns"><?php echo L::blog_settings_show_pronouns; ?></label>
                                     </div>
                                 </div>
                             </div>
                             <?php } ?>
                             <div class="form-group row">
                                 <div class="col">
-                                <label class="control-label" for="askLevel">Ask settings:</label>
+                                <label class="control-label" for="askLevel"><?php echo L::blog_settings_ask_settings; ?></label>
                                 <select class="form-control" id="askLevel" name="askLevel">
-                                    <option value="0" <?php if ($blog->askLevel == 0) { echo 'selected'; } ?>>Turn asks off</option>
-                                    <option value="1" <?php if ($blog->askLevel == 1) { echo 'selected'; } ?>>Allow asks, but not anonymously</option>
-                                    <option value="2" <?php if ($blog->askLevel == 2) { echo 'selected'; } ?>>Allow anonymous asks, but only from logged in users</option>
-                                    <option value="3" <?php if ($blog->askLevel == 3) { echo 'selected'; } ?>>Allow all asks</option>
+                                    <option value="0" <?php if ($blog->askLevel == 0) { echo 'selected'; } ?>><?php echo L::blog_settings_ask_level_zero; ?></option>
+                                    <option value="1" <?php if ($blog->askLevel == 1) { echo 'selected'; } ?>><?php echo L::blog_settings_ask_level_one; ?></option>
+                                    <option value="2" <?php if ($blog->askLevel == 2) { echo 'selected'; } ?>><?php echo L::blog_settings_ask_level_two; ?></option>
+                                    <option value="3" <?php if ($blog->askLevel == 3) { echo 'selected'; } ?>><?php echo L::blog_settings_ask_level_three; ?></option>
 
                                 </select>
                                 </div>
                             </div>
                             </li>
                             <li class="list-group-item">
-                            <h5 class="card-title"><i class="fas fa-clock title-icon"></i>Queue Settings</h5>
-                            <p>Here you can set your queue settings.</p> 
+                            <h5 class="card-title"><i class="fas fa-clock title-icon"></i><?php echo L::blog_settings_queue_settings_header; ?></h5>
+                            <p><?php echo L::blog_settings_queue_settings_explainer; ?></p> 
                             <div class="form-group row">
                                 <div class="col">
-                                    <label class="control-label" for="queueFreq">Post this many times:</label>
+                                    <label class="control-label" for="queueFreq"><?php echo L::blog_settings_post_this_many; ?></label>
                                     <input class="form-control" id="queueFreq" name="queueFreq" value="<?php echo $blog->settings['queueFrequency']; ?>">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col">
-                                    <label class="control-label" for="queueStart">Between:</label>
+                                    <label class="control-label" for="queueStart"><?php echo L::blog_settings_between; ?></label>
                                     <select class="form-control" id="queueStart" name="queueStart">
                                         <option value="0" <?php if ($blog->settings['queueRangeStart'] == 0) {echo 'selected';} ?>>12 a.m.</option>
                                         <option value="1" <?php if ($blog->settings['queueRangeStart'] == 1) {echo 'selected';} ?>>1 a.m.</option>
@@ -648,13 +647,13 @@ badgesChanged = false;
                             
                             <div class="form-group row">
                                 <div class="col">
-                            <label class="control-label" for="queueTag">Queue Tag:</label>
+                            <label class="control-label" for="queueTag"><?php echo L::blog_settings_queue_tag; ?></label>
                                 <input id="queueTag" maxlength="100" class="form-control" name="queueTag" type="text" value="<?php echo $blog->settings['queueTag']; ?>">
                             </div>
                             </div>
                             <div class="form-group row">
                             <div class="col-sm-offset-2 col-sm-10">
-                                <button name="submit" type="submit" class="btn btn-success" id="submit" form="BlogSettingsForm">Save Settings</button>
+                                <button name="submit" type="submit" class="btn btn-success" id="submit" form="BlogSettingsForm"><?php echo L::string_save_settings; ?></button>
                             </div>
 
                         </div>
@@ -663,11 +662,11 @@ badgesChanged = false;
                     </form>
                         </li>
                         <li class="list-group-item">
-                        <h5 class="card-title"><i class="fas fa-envelope title-icon"></i>Invites</h5>
-                            <p>You can help bring people to the site by using invites! Generate one below then send out the link - anyone who joins the site using it will automatically follow you. Invites can be used an unlimited number of times, and never expire. You can also give each a name so you can track where your followers came from, if you like. Invites are per generated per blog.</p>
+                        <h5 class="card-title"><i class="fas fa-envelope title-icon"></i><?php echo L::blog_settings_invites_header; ?></h5>
+                            <p><?php echo L::blog_settings_invites_explainer; ?></p>
                             <form name="InviteCreateForm" id="InviteCreateForm" class="form-inline"> 
                                     <input id="invRef" maxlength="100" class="form-control" name="invRef" type="text">
-                                    <button type="submit" class="btn btn-primary" form="InviteCreateForm">Invite</button>
+                                    <button type="submit" class="btn btn-primary" form="InviteCreateForm"><?php echo L::string_invite; ?></button>
                             </form>
                             <div id="DisplayDivInviteCreate"></div>
                             <?php 
@@ -677,9 +676,9 @@ badgesChanged = false;
                             
                             <table class="table">
                             <tr>
-                                <th>Code</th>
-                                <th>Reference</th>
-                                <th>Times used</th>
+                                <th><?php echo L::blog_settings_inv_code; ?></th>
+                                <th><?php echo L::blog_settings_inv_ref; ?></th>
+                                <th><?php echo L::blog_settings_times_used; ?></th>
                             <tr>
                             <?php
                                 foreach($invites as $inv) {
@@ -695,8 +694,8 @@ badgesChanged = false;
                             <?php } ?>
                         </li>
                         <li class="list-group-item">
-                            <h5 class="card-title"><i class="fas fa-users title-icon"></i>Group Blog</h5>
-                            <p>Optionally, you can invite users to join this blog. Once they've accepted, their main blog will be listed below.</p>
+                            <h5 class="card-title"><i class="fas fa-users title-icon"></i><?php echo L::blog_settings_group_blog_header; ?></h5>
+                            <p><?php echo L::blog_settings_group_blog_explainer; ?></p>
                             <?php if (sizeof($blog->blogMembers) == 0) {
                                  UIUtils::infoBox('This blog currently has no members.', 'Not a group blog');
                             } else {
@@ -717,7 +716,7 @@ badgesChanged = false;
                                             <?php if ($blog->ownerID == $sessionObj->user->ID || $blog->checkMemberPermission($sessionObj->user->ID, 'blog_settings')) { ?>
                                             <div class="col-auto">
                                             <a  class="btn btn-primary" role="button" name="permissions<?php echo $groupMemBlogName; ?>" href="https://<?php echo $_ENV['SITE_URL']; ?>/settings/group/<?php echo $groupMemBlogName; ?>">Permissions</a>
-                                            <button class="btn btn-danger" data-blog-name="<?php echo $groupMemBlogName; ?>" onclick="kickBlogMember(this)" type="button">Remove</button>                                            </div> <?php } ?>
+                                            <button class="btn btn-danger" data-blog-name="<?php echo $groupMemBlogName; ?>" onclick="kickBlogMember(this)" type="button"><?php echo L::string_remove; ?></button>                                            </div> <?php } ?>
                                             </div>
                                             <hr>
                                             </div> <?php
@@ -725,21 +724,21 @@ badgesChanged = false;
                                     }
                                 }
                             } ?>
-                            <p>To add group members, type their blog name here and press "invite".</p>
+                            <p><?php echo L::group_add_explainer; ?></p>
                             <form name="BlogInviteForm" id="BlogInviteForm" class="form-inline"> 
                                     <input id="invitingBlog" maxlength="100" class="form-control" name="invitingBlog" type="text">
-                                    <button type="submit" class="btn btn-primary" form="BlogInviteForm">Invite</button>
+                                    <button type="submit" class="btn btn-primary" form="BlogInviteForm"><?php echo L::string_invite; ?></button>
                             </form>
                             <div id="DisplayDivInvite"></div>
                         
-                        <button id="deleteBlog" onclick="blogDelete(this)" data-blog-name="<?php echo $blog->blogName; ?>" type="button" class="btn btn-danger float-right">Delete Blog</button>
+                        <button id="deleteBlog" onclick="blogDelete(this)" data-blog-name="<?php echo $blog->blogName; ?>" type="button" class="btn btn-danger float-right"><?php echo L::blog_settings_delete_blog; ?></button>
                         <div id="DisplayDivDelete">
                         </li>
                         
                         </ul>
 
                     <?php } else {
-                        UIUtils::errorBox('You don\'t have permission to edit this blog\'s settings.', 'Permissions Error');
+                        UIUtils::errorBox(L::error_invalid_permissions, L::error_invalid_permissions_title);
                     } ?>
                 
             </div>
@@ -747,7 +746,7 @@ badgesChanged = false;
             <ul class="list-group list-group-flush">
 
 <li class="list-group-item switch-blog-blog-settings">
-            <h5 class="card-title"><i class="fas fa-random title-icon"></i>Switch Blog</h5>
+            <h5 class="card-title"><i class="fas fa-random title-icon"></i><?php echo L::blog_settings_switch_blog; ?></h5>
             </li>
                 </ul>    
                         <?php
@@ -762,7 +761,7 @@ badgesChanged = false;
                         echo '<a onclick="switchBlog(\''.$blogName.'\')"><img class="img-fluid avatar avatar-32" src="'.$blogAv->data['paths'][32].'"></span>   '.$blogName.'</a></li>';
                         echo '<hr>';
                         } ?>
-                    <a href="https://<?php echo $_ENV['SITE_URL'];?>/settings/blog/new">Create another...</a>
+                    <a href="https://<?php echo $_ENV['SITE_URL'];?>/settings/blog/new"><?php echo L::blog_settings_create_another; ?></a>
             </div>
             </div>
         </div>
@@ -885,7 +884,7 @@ const avatarUploadField = document.getElementById('file-input');
 
 <script>
     function blogDelete(elem) {
-        var r = confirm("Are you sure you want to delete this blog?");
+        var r = confirm("<?php echo L::blog_settings_delete_confirm; ?>");
         if (r == false) {
             return false;
         }
