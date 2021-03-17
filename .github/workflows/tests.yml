@@ -76,7 +76,7 @@ jobs:
       - name: Prep environment and Schema
         # Runs a script that creates a PostgreSQL client, populates
         # the client with data, and retrieves data
-        run: php ./tests/prep/testPrep.php "${{ matrix.php-versions }}-${{ matrix.operating-system }}"
+        run: php ./tests/prep/testPrep.php "${{ matrix.php-versions }}_${{ matrix.operating-system }}"
 
       - name: Run Tests
         run: vendor/bin/phpunit -c phpunit.xml.dist --coverage-clover build/logs/clover.xml
