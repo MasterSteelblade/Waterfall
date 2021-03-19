@@ -27,11 +27,11 @@ if ($thisBlog->failed) {
 
 
 
-//$blogOwnerBlockCheck = new BlockManager($thisBlog->ownerID);
+$blogOwnerBlockCheck = new BlockManager($thisBlog->ownerID);
 if ($session !== false) {
-  //if ($blogOwnerBlockCheck->hasBlockedUser($sessionObj->user->ID)) {
-    //$failed = true;
-  //}
+  if ($blogOwnerBlockCheck->hasBlockedUser($sessionObj->user->ID)) {
+    $failed = true;
+  }
 }
 if ($thisBlog->password != null && (!isset($sessionObj->sessionData['blogLogins'][$thisBlog->ID]) || time() > $sessionObj->sessionData['blogLogins'][$thisBlog->ID])) {
   require_once(__DIR__.'/blogLogin.php');

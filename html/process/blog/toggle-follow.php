@@ -25,13 +25,13 @@ if ($session == false) {
         echo json_encode($data);
         exit();
     }
-    //$blogOwnerBlockCheck = new BlockManager($recipientBlog->ownerID);
-    //$myBlogCheck = new BlockManager($senderBlog->ownerID);
-    //if ($blogOwnerBlockCheck->hasBlockedUser($senderBlog->ownerID) || $myBlogCheck->hasBlockedUser($recipientBlog->ownerID)) {
-    //    $data['code'] = 'ERR_BLOG_TO_FOLLOW_NOT_FOUND';
-    //    echo json_encode($data);
-    //    exit();
-    //}
+    $blogOwnerBlockCheck = new BlockManager($toFollow->ownerID);
+    $myBlogCheck = new BlockManager($myBlog->ownerID);
+    if ($blogOwnerBlockCheck->hasBlockedUser($myBlog->ownerID) || $myBlogCheck->hasBlockedUser($toFollow->ownerID)) {
+        $data['code'] = 'ERR_BLOG_TO_FOLLOW_NOT_FOUND';
+        echo json_encode($data);
+        exit();
+    }
     $following = $myBlog->checkForFollow($toFollow->ID);
     if (!$following) {
         $myBlog->addFollow($toFollow->ID);
