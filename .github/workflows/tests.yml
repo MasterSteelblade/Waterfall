@@ -58,7 +58,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: 8.0
-          tools: composer:v2, phpunit:9.5
+          tools: composer:v2, phpunit:9.5, phpstan
           extensions: mbstring, dom, fileinfo, pgsql, redis
           coverage: pcov
 
@@ -89,3 +89,12 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: build/logs/clover.xml
+
+      - name: Run PHPStan - /src
+        run: phpstan analyse src
+
+      - name: Run PHPStan - /blogs
+        run: phpstan analyse blogs
+
+      - name: Run PHPStan - /html
+        run: phpstan analyse html
