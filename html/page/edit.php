@@ -144,4 +144,5 @@ if ($page->failed) {
 	<script src="https://<?php echo $_ENV['SITE_URL']; ?>/js/quick-reblog.js"></script>
     <script src="https://<?php echo $_ENV['SITE_URL']; ?>/js/poll.js"></script>
     <script src="https://<?php echo $_ENV['SITE_URL']; ?>/js/feather.js"></script>
+    <script src="https://<?php echo $_ENV['SITE_URL']; ?>/js/ui.js"></script>
 
