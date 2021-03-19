@@ -1,11 +1,10 @@
-name: PostgreSQL and PHP Tests
+name: Waterfall 2.0 Dev Tests
 
 on:
   pull_request:
     push:
     - 2.0-dev
     branches:
-    - main
     - 2.0-main
 
 jobs:
@@ -92,4 +91,4 @@ jobs:
           file: build/logs/clover.xml
 
       - name: Run PHPStan - /src
-        run: phpstan analyse src langcache blogs html tests
+        run: phpstan analyse -l 8 src langcache blogs html tests
