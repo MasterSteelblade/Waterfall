@@ -16,11 +16,11 @@ if (isset($_GET['prevPost'])) {
 $activeBlog = new Blog($sessionObj->sessionData['activeBlog']);
 $posts = $postCollector->getDashboardPosts($sessionObj->sessionData['activeBlog'], 25, $prevPostTime, $sessionObj->user->settings['omniDash']);
 if (sizeof($posts) != 0) {
-    if ($activeBlog->settings['mutualActivity'] == false) {
+    if ($sessionObj->user->settings['mutualActivity'] == false) {
         $notes = $postCollector->getNotes($prevPostTime, end($posts)->timestamp);
     } else {
-		//$notes = $postCollector->getMutualNotes($prevPostTime, end($posts)->timestamp);
-		$notes = $postCollector->getNotes($prevPostTime, end($posts)->timestamp);
+		$notes = $postCollector->getMutualNotes($prevPostTime, end($posts)->timestamp);
+		#$notes = $postCollector->getNotes($prevPostTime, end($posts)->timestamp);
 
     }
 } else {

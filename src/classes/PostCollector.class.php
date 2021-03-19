@@ -344,18 +344,19 @@ class PostCollector {
 
 
     public function getMutualNotes($prevPostTime, $lastPostTime, $limit = 25) {
+        $notes = array();
+
         if ($this->userID != 0 && $this->blogID != 0) {
             $data = array();
             $blog = new Blog($this->blogID);
             $followed = $blog->getFollowedBlogs(9999999);
             $currentTime = microtime(TRUE) * 1000000;
-            $notes = array();
             $followedIDs = implode(',', $followed);
             $values = array($this->blogID, $lastPostTime, $prevPostTime, $limit);
-            $results = $this->database->db_select("SELECT * FROM notes WHERE WHERE `actioner` IN ($followedIDs) AND recipient = $1 AND timestamp > $2 AND timestamp < $3 AND timestamp < NOW() ORDER BY timestamp DESC LIMIT $4", $values);
+            $results = $this->database->db_select("SELECT * FROM notes WHERE actioner IN ($followedIDs) AND recipient = $1 AND timestamp > $2 AND timestamp < $3 AND timestamp < NOW() ORDER BY timestamp DESC LIMIT $4", $values);
             if ($results) {
                 foreach ($results as $note) {
-                    $noteObj = new Note($note['ID']);
+                    $noteObj = new Note($note['id']);
                     if (!$noteObj->failed) {
                         $notes[] = $noteObj;
                     }

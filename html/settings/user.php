@@ -30,6 +30,9 @@ $token = $easyCSRF->generate($sessionObj->sessionData['csrfName']);
         if (document.getElementById("showFeatures").checked) {
             formData.append('showFeatures', document.getElementById("showFeatures").value);
         }
+        if (document.getElementById("mutualActivity").checked) {
+            formData.append('mutualActivity', document.getElementById("mutualActivity").value);
+        }
         if (document.getElementById("showNaughtyFeatures").checked) {
             formData.append('showNaughtyFeatures', document.getElementById("showNaughtyFeatures").value);
         }
@@ -192,6 +195,14 @@ $token = $easyCSRF->generate($sessionObj->sessionData['csrfName']);
                                     <div class="custom-control custom-switch">
                                         <input id="omniDash" name="omniDash" class="custom-control-input" value="true" type="checkbox" <?php if ($user->settings['omniDash']) { echo 'checked'; } ?>>
                                         <label class="custom-control-label" for="omniDash"><?php echo L::user_settings_omnidash; ?></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col">
+                                    <div class="custom-control custom-switch">
+                                        <input id="mutualActivity" name="mutualActivity" class="custom-control-input" value="true" type="checkbox" <?php if (isset($user->settings['mutualActivity']) && $user->settings['mutualActivity']) { echo 'checked'; } ?>>
+                                        <label class="custom-control-label" for="mutualActivity"><?php echo L::user_settings_mutual_notes; ?></label>
                                     </div>
                                 </div>
                             </div>
