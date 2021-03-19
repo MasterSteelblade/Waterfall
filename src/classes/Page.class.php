@@ -97,4 +97,17 @@ class Page {
             return false;
         }
     }
+
+    public function deletePage() {
+        /** If we call this after the page is already initialised or whatever, we can save time
+         * and only pass through a single parameter in the query - the ID. 
+         */
+        $values = array($this->ID);
+        $result = $this->database->db_delete("DELETE FROM pages WHERE id = $1", $values);
+        if ($result) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

@@ -29,6 +29,44 @@ badgesChanged = false;
         updateBadges();
     }
 
+    function deletePage(elem) {
+        var confirmed = confirm("Press a button!");
+        if (confirmed == false) {
+            return false;
+        }
+        pageName = elem.getAttribute('data-page-name');
+        var formData = new FormData();
+        formData.append('editingBlog', document.getElementById("editingBlog").value);
+        formData.append('pageURL', elem.getAttribute('data-page-name'));
+        fetch(siteURL + "/process/page/delete.php",
+                {
+                    method: 'POST',
+                    mode: 'cors',
+                    credentials: 'include',
+                    redirect: 'follow',
+                    body: formData
+                }
+            ).then(
+                function(response) {
+                    if (response.status !== 200) {
+                        console.log('Error logged, status code: ' + response.status);
+                        return false;
+                    }
+                    response.json().then(function(data) {
+                        if (data.code == "SUCCESS") {
+                            elem.innerHTML = 'Removed!';
+                            element = document.getElementById(pageName + 'PageNode');
+                            element.parentNode.removeChild(element);
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    })        }
+            ).catch(function(err) {
+                console.log(err);
+            })
+        }
+
     function badgeAdd(elem) {
         if (document.getElementsByClassName('badge-sortable').length < 3) {
             if (document.getElementById('badge-' + elem.getAttribute('data-short-name')) == null) {
@@ -52,7 +90,6 @@ badgesChanged = false;
         } else {
             alert("You can select up to 3 badges.");
         }
-
     }
 
     $(document).ready(function() {
@@ -256,7 +293,7 @@ badgesChanged = false;
                                         }
                                     } ?>
                                     
-                                    <label class="control-label" for="blogTheme"><?php echo L::blog_settings_basic_blog_theme; ?></label>
+                                    <label class="control-label" for="blogTheme"><?php echo L::blog_settings_blog_theme; ?></label>
                                     <select class="form-control" id="blogTheme" name="blogTheme" autocomplete="off">
                                         <?php 
                                             foreach ($themes as $key => $theme) {
@@ -302,7 +339,7 @@ badgesChanged = false;
                                 </div>
                                 <div class="card-body">
                                     <p><?php echo L::blog_settings_badge_preview; ?></p>
-                                    <p><?php echo L::blop_settings_badge_preview_instructions; ?></p>
+                                    <p><?php echo L::blog_settings_badge_preview_instructions; ?></p>
                                 </div>
                                 <script>Sortable.create(badgeHolder, { 
                                     onUpdate: function (evt) {
@@ -505,12 +542,15 @@ badgesChanged = false;
                             foreach ($blog->pages as $page) {
                                     ?>
                                     
-                                    <div class="row">
+                                    <div class="row" id="<?php echo $page->url; ?>PageNode">
                                         <div class="col">
                                             <a href="<?php echo $blog->getBlogURL().'/'.$page->url; ?>"><?php echo $page->pageName; ?></a>
                                         </div>
                                         <div class="col-auto">
-                                            <a href="https://<?php echo $_ENV['SITE_URL']; ?>/page/edit/<?php echo $page->url;?>" id="editPage<?php echo $page->url; ?>" type="button" class="btn btn-primary float-right"><?php echo L::string_edit; ?></a>
+                                            <a href="https://<?php echo $_ENV['SITE_URL']; ?>/page/edit/<?php echo $page->url;?>" id="editPage<?php echo $page->url; ?>" type="button" class="btn btn-primary float-right"><?php echo L::string_edit; ?></a> 
+                                        </div>
+                                        <div class="col-auto">
+                                            <button type="button" data-page-name="<?php echo $page->url; ?>" onclick="deletePage(this)" class="btn btn-danger float-right"><?php echo L::string_delete; ?></button>
 
                                         </div>
                                     </div>
@@ -724,7 +764,7 @@ badgesChanged = false;
                                     }
                                 }
                             } ?>
-                            <p><?php echo L::group_add_explainer; ?></p>
+                            <p><?php echo L::blog_settings_group_add_explainer; ?></p>
                             <form name="BlogInviteForm" id="BlogInviteForm" class="form-inline"> 
                                     <input id="invitingBlog" maxlength="100" class="form-control" name="invitingBlog" type="text">
                                     <button type="submit" class="btn btn-primary" form="BlogInviteForm"><?php echo L::string_invite; ?></button>
