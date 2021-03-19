@@ -114,6 +114,11 @@ if ($session !== false) {
     } else {
         $user->settings['mutualActivity'] = false;
     }
+    if (isset($_POST['ocOnly']) && $_POST['ocOnly'] == 'true') {
+        $user->settings['ocOnly'] = true;
+    } else {
+        $user->settings['ocOnly'] = false;
+    }
     if (isset($_POST['showNaughtyFeatures']) && $_POST['showNaughtyFeatures'] == 'true') {
         $user->settings['explicitFeatures'] = true;
     } else {

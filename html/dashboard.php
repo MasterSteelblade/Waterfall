@@ -14,7 +14,12 @@ if (isset($_GET['prevPost'])) {
     $prevPostTime = $prevPost->format("Y-m-d H:i:s.u");
 }
 $activeBlog = new Blog($sessionObj->sessionData['activeBlog']);
-$posts = $postCollector->getDashboardPosts($sessionObj->sessionData['activeBlog'], 25, $prevPostTime, $sessionObj->user->settings['omniDash']);
+if (isset($sessionObj->user->settings['ocOnly']) && $sessionObj->user->settings['ocOnly'] == true) {
+	$ocOnly = true;
+} else {
+	$ocOnly = false;
+}
+$posts = $postCollector->getDashboardPosts($sessionObj->sessionData['activeBlog'], 25, $prevPostTime, $sessionObj->user->settings['omniDash'], $ocOnly);
 if (sizeof($posts) != 0) {
     if ($sessionObj->user->settings['mutualActivity'] == false) {
         $notes = $postCollector->getNotes($prevPostTime, end($posts)->timestamp);

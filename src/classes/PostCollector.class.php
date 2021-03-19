@@ -190,7 +190,7 @@ class PostCollector {
         return $posts;
     }
 
-    public function getDashboardPosts($blogID, $limit = 25, $before = 0, $omniDash = false) {
+    public function getDashboardPosts($blogID, $limit = 25, $before = 0, $omniDash = false, $ocOnly = false) {
         $blog = new Blog(intval($blogID)); // Pass it from the session in the API route
         $user = new User(intval($blog->ownerID));
         $viewNSFW = $user->settings['viewNSFW'];
@@ -209,7 +209,12 @@ class PostCollector {
         $i = 0;
         while ($i < $limit) {
             $values = array($timestamp);
-            $result = $this->database->db_select("SELECT id,timestamp FROM posts WHERE on_blog IN ($followingArray) AND post_status = 'posted' AND timestamp < $1 ORDER BY timestamp DESC LIMIT 1", $values);
+            if ($ocOnly == false) {
+                $result = $this->database->db_select("SELECT id,timestamp FROM posts WHERE on_blog IN ($followingArray) AND post_status = 'posted' AND timestamp < $1 ORDER BY timestamp DESC LIMIT 1", $values);
+            } else {
+                $result = $this->database->db_select("SELECT id,timestamp FROM posts WHERE on_blog IN ($followingArray) AND post_status = 'posted' AND is_reblog = 'f' AND timestamp < $1 ORDER BY timestamp DESC LIMIT 1", $values);
+
+            }
             if ($result) {
                 $blocked = false;
                 $timestamp = $result[0]['timestamp'];
