@@ -51,4 +51,16 @@ final class UserTest extends TestCase {
         $user = new User(3);
         $this->assertTrue($user->updateEmail('tesfsdfst2@test.net'));
     }
+
+    public function testBlocking() {
+        $user = new User(1);
+        $user->block(2);
+        $blockManager = new BlockManager(1);
+        $this->assertTrue($blockManager->hasBlockedUser(2));
+    }
+
+    public function testLoggedOutBlockFail() {
+        $blockManager = new BlockManager(1);
+        $this->assertFalse($blockManager->hasBlockedUser(0));
+    }
 }
