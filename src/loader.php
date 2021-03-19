@@ -18,7 +18,6 @@ require_once(__DIR__."/classes/Poll.class.php");
 
 require_once(__DIR__."/classes/Session.class.php");
 require_once(__DIR__."/classes/BlockManager.class.php");
-require_once(__DIR__."/classes/Serial.class.php");
 require_once(__DIR__."/classes/Postgres.class.php");
 require_once(__DIR__."/classes/PostCollector.class.php");
 require_once(__DIR__."/classes/Message.class.php");

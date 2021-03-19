@@ -12,6 +12,9 @@ class Poll {
     public $voteCounts;
     public $deadline;
     public $voteType = 'single';
+    public $onBlog;
+    public $pollQuestion;
+    public $failed;
 
     public function __construct($ID = 0) {
         /**

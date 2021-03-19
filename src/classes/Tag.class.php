@@ -5,7 +5,7 @@ class Tag {
     /** 
      * Tag class. Contains everything needed for tags.
      */
-    private $connection;
+    private $database;
     public $ID;
     public $string;
     public $lowercased;

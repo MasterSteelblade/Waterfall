@@ -16,6 +16,9 @@ class PostCollector {
     public $blockedUsers; 
     public $nsfw;
     private $blockManager;
+    public $uuid;
+    public $IP;
+    
 
     public function __construct($userID = 0, $blogID = 0) { // This is the active blog. 
         $this->database = Postgres::getInstance();

@@ -5,6 +5,8 @@ class WFVideo {
     private $database;
     public int $ID = 0;
     public $data;
+    public $baseURL;
+    public $qualities;
 
     public function __construct($ID) {
         if (is_numeric($ID)) {

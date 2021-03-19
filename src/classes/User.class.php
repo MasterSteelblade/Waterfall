@@ -41,6 +41,9 @@ class User{
     public $restrictions;
     public $failed = false;
     public $pronouns;
+    public $accountType;
+    public $userFlags;
+
 
     public function __construct($ID = 0) {
         /** 
@@ -339,11 +342,11 @@ class User{
          */
         if (isset($array['birthday'])) {
             $dateObj = new DateTime($array['birthday']);
-            $values = array($dateObj->format('Y-m-d'), $this->userID);
+            $values = array($dateObj->format('Y-m-d'), $this->ID);
             $updateRes = $this->database->db_update("UPDATE users SET date_of_birth = $1 where id = $2", $values);
         }
         if (isset($array['timezone'])) {
-            $values = array($array['timezone'], $this->userID);
+            $values = array($array['timezone'], $this->ID);
             $updateRes = $this->database->db_update("UPDATE users SET timezone = $1 where id = $2", $values);
         }
     }

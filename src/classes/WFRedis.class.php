@@ -12,7 +12,7 @@
 class WFRedis {
     private $redis;
     public $type;
-    
+    private $connected;
 
     public function __construct(string $type) {
         try {
