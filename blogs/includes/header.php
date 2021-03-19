@@ -26,11 +26,12 @@ if ($thisBlog->failed) {
 
 
 
-
-$blogOwnerBlockCheck = new BlockManager($thisBlog->ownerID);
-if ($session !== false) {
-  if ($blogOwnerBlockCheck->hasBlockedUser($sessionObj->user->ID)) {
-    $failed = true;
+if ($failed == false) {
+  $blogOwnerBlockCheck = new BlockManager($thisBlog->ownerID);
+  if ($session !== false) {
+    if ($blogOwnerBlockCheck->hasBlockedUser($sessionObj->user->ID)) {
+      $failed = true;
+    }
   }
 }
 if ($thisBlog->password != null && (!isset($sessionObj->sessionData['blogLogins'][$thisBlog->ID]) || time() > $sessionObj->sessionData['blogLogins'][$thisBlog->ID])) {
