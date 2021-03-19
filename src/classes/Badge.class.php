@@ -47,16 +47,6 @@ class Badge {
         }
     }
 
-    private function getArtistURL() {
-        /**
-         * If the user this is for is an artist, get their URL. 
-         */
-        $blog = new Blog(intval($this->associatedBlog));
-        $artist = new Artist(intval($blog->ownerID));
-        $artistURL = new Blog(intval($artist->associatedBlog));
-        return $artistURL->blogName;
-    }
-
     public function getJSON() {
         /**
          * Gets JSON output for the API. 

@@ -58,7 +58,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: 8.0
-          tools: composer:v2, phpunit:9.5
+          tools: composer:v2, phpunit:9.5, phpstan
           extensions: mbstring, dom, fileinfo, pgsql, redis
           coverage: pcov
 
@@ -74,7 +74,8 @@ jobs:
       - name: Load schema
         run: PGPASSWORD="postgres" psql -h localhost -U postgres -p 5432 -d "waterfall_${{ matrix.php-versions }}_${{ matrix.operating-system }}" -f ./tests/prep/wf.sql
           
-          
+      - name: Make langcache directory
+        run: mkdir ./langcache    
       - name: Prep environment and Schema
         # Runs a script that creates a PostgreSQL client, populates
         # the client with data, and retrieves data
@@ -89,3 +90,6 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: build/logs/clover.xml
+
+      - name: Run PHPStan - /src
+        run: phpstan analyse src langcache blogs html

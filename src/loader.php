@@ -8,8 +8,6 @@ require_once(__DIR__."/classes/UIUtils.class.php");
 
 require_once(__DIR__."/classes/WFRedis.class.php");
 require_once(__DIR__."/classes/BlogMember.class.php");
-require_once(__DIR__."/classes/KestrelEvent.class.php");
-require_once(__DIR__."/classes/WaterfallKestrel.class.php");
 require_once(__DIR__."/classes/User.class.php");
 require_once(__DIR__."/classes/Blog.class.php");
 require_once(__DIR__."/classes/Tag.class.php");
@@ -20,7 +18,6 @@ require_once(__DIR__."/classes/Poll.class.php");
 
 require_once(__DIR__."/classes/Session.class.php");
 require_once(__DIR__."/classes/BlockManager.class.php");
-require_once(__DIR__."/classes/Serial.class.php");
 require_once(__DIR__."/classes/Postgres.class.php");
 require_once(__DIR__."/classes/PostCollector.class.php");
 require_once(__DIR__."/classes/Message.class.php");

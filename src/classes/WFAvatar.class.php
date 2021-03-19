@@ -12,6 +12,7 @@ class WFAvatar {
     private $database;
     public int $ID = 0;
     public $data;
+    private $version;
 
 
     public function __construct($ID = 0) {

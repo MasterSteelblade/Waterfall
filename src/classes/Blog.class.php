@@ -33,6 +33,7 @@ class Blog {
     public $failed = false;
     public array $pages = array();
     public $pronoun;
+    public $theme;
 
     public function __construct(int $ID = 0) {
         /**

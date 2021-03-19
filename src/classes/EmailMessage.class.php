@@ -17,6 +17,9 @@ class EmailMessage {
     public $htmlContent;
     public $subject;
     public $disregardPrefs;
+    public $type;
+    private $redis;
+    
 
     public function __construct() {
         $this->disregardPrefs = false;

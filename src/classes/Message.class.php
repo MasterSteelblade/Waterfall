@@ -18,6 +18,7 @@ class Message {
     public $deletedOutbox = false;
     public $timestamp = 0;
     public $failed = false;
+    public $messageType;
 
     public function __construct(int $ID = 0) {
         /**

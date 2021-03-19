@@ -57,7 +57,6 @@ class WFText {
         $result = str_replace('img src', 'img class="img-fluid" src', $result);
         $result = str_replace('img  src', 'img class="img-fluid" src', $result);
         $result = str_replace('\\', '', $result);
-        $emoji = new Twemoji();
 
         return $result;
     }

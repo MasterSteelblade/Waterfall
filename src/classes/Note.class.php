@@ -17,6 +17,7 @@ class Note {
     public $hide = false;
     public $comment = '';
     public $timestamp;
+    public $timestring;
     public $failed = false;
 
 
@@ -46,6 +47,8 @@ class Note {
                     $this->sourcePost = $note['source_post'];
                     $this->hide = $note['hide'];
                     $this->timestamp = $note['timestamp'];
+                    // I'm fully aware of how stupid this is, but it's needed for sorting with posts. 
+                    // Don't ask, I couldn't figure it out either. It just crashes if you don't use a string.
                     $this->timestring = strtotime(substr($note['timestamp'], 0, 20));
                     
                     $this->comment = $note['comment'];
@@ -66,7 +69,7 @@ class Note {
             return false;
         }
         if ($this->comment != '') {
-            $comment =  WFtext::makeTextSafe($this->comment);
+            $comment =  WFText::makeTextSafe($this->comment);
         }
         $time = microtime(TRUE) * 1000000;
         $time = time();

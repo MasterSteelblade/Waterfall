@@ -109,7 +109,7 @@ foreach ($outputJSONs as $json) {
 }
 
 if ($failed == true) {
-    $array = array('code' => 'ERR_IMAGE_INSERT_FAILURE', 'message' => L::image_insert_failure);
+    $array = array('code' => 'ERR_IMAGE_INSERT_FAILURE', 'message' => L::error_image_insert_failure);
     echo json_encode($array);
     exit();
 }

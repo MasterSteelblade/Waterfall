@@ -8,7 +8,7 @@ if ($session != false) {
     $nameCheck = WFUtils::blogNameCheck($_POST['createBlog']);
     if ($nameCheck == false) {
         $data['code'] = 'ERR_BLOG_EXISTS';
-        $data['message'] = L::blog_url_taken;
+        $data['message'] = L::error_blog_url_taken;
         echo json_encode($data);
     } else {
         $blog = new Blog();

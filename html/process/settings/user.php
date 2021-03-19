@@ -33,7 +33,7 @@ if ($session !== false) {
         }
         if (strlen($_POST['newPassword']) < 6) {
             $data['code'] = 'ERROR_PASSWORD_SHORT';
-            $data['message'] = L::new_pw_short;
+            $data['message'] = L::error_new_pw_short;
             echo json_encode($data);
             exit();
         } elseif ($_POST['newPassword'] != $_POST['confirmPassword']) {

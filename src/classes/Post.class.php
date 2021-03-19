@@ -12,6 +12,7 @@ class Post {
     public $sourceTags;
     public $onBlog;
     public $timestamp;
+    public $timestring;
     public $postStatus;
     public $imageIDs = array();
     public $images;
@@ -24,6 +25,14 @@ class Post {
     public $failed = false;
     public $isEmbed;
     public $embedString;
+    public $audioID;
+    public $videoID;
+    public $pollID;
+    public $lastInChain;
+    public $quoteData;
+    public $linkData;
+    public $inlineImages = array();
+    
 
     public function __construct($ID = 0) {
         /**
@@ -51,6 +60,8 @@ class Post {
                     $this->postStatus = $row['post_status'];
                     $this->onBlog = $row['on_blog'];
                     $this->timestamp = $row['timestamp'];
+                    // Don't ask. It's stupid, but needed for sorting with notes in the same array.
+                    // It just crashes if you try and do it on the timestamp.
                     $this->timestring = strtotime(substr($row['timestamp'], 0, 20));
                     if ($row['image_id'] != '{}' && $row['image_id'] != null) { // TODO: Update this for position data
                         $this->imageIDs = $this->database->postgres_to_php($row['image_id']);

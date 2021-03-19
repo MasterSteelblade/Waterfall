@@ -17,6 +17,9 @@ class Session implements SessionProvider {
     public $user; 
     public $userIsValid = true;
     public $userMissing = array();
+    public $sessionMapRedis;
+    public $JSON;
+    
 
     public function __construct() {
         $this->redis = new WFRedis('sessions');

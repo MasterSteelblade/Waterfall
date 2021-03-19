@@ -4,6 +4,7 @@ class AnswerPost extends Post {
     /** 
      * Text Post extension for Posts. Contains functionality specific to making Text Posts. 
      */
+    private $messageObj;
 
     public function createNew($postText, $messageID, $postTags, $onBlog, $privateAnswer, $type) {
         $this->database = Postgres::getInstance();

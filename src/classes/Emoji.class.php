@@ -8,6 +8,7 @@ class Emoji {
     // For example - :pleading: will use the default twemoji
     // namespace, but :wf~smugsan: will use the "wf" namespace.
 
+    private $assetPath;
     protected $emojiIndex = array();
     // An array of namespaces, which in turn are arrays of icon names 
     // and paths.

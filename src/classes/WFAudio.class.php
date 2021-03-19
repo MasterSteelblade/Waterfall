@@ -5,6 +5,15 @@ class WFAudio {
     private $database;
     public int $ID = 0;
     public $data;
+    public $audioPath;
+    public $durationMinutes;
+    public $durationSeconds;
+    public $artist;
+    public $title;
+    public $albumArt;
+    public $baseURL;
+    public $URL;
+    
 
     public function __construct($ID) {
         if (is_numeric($ID)) {

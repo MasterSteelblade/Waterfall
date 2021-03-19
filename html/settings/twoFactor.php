@@ -64,7 +64,7 @@ $token = $easyCSRF->generate($sessionObj->sessionData['csrfName']);
 
                                 <div class="form-group row">
                                     <div class="col">
-                                        <label class="control-label" for="totpcode"><?php echo L::two_factor_authentication_code; ?></label>
+                                        <label class="control-label" for="totpcode"><?php echo L::two_factor_auth_code; ?></label>
                                         <input id="totpcode" maxlength="6" class="form-control" name="totpcode" type="text" pattern="[0-9]+">
                                     </div>
                                 </div>
