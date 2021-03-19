@@ -8,8 +8,6 @@ require_once(__DIR__."/classes/UIUtils.class.php");
 
 require_once(__DIR__."/classes/WFRedis.class.php");
 require_once(__DIR__."/classes/BlogMember.class.php");
-require_once(__DIR__."/classes/KestrelEvent.class.php");
-require_once(__DIR__."/classes/WaterfallKestrel.class.php");
 require_once(__DIR__."/classes/User.class.php");
 require_once(__DIR__."/classes/Blog.class.php");
 require_once(__DIR__."/classes/Tag.class.php");

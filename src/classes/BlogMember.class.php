@@ -15,6 +15,7 @@ class BlogMember {
     public $permissions;
     public $confirmed;
     public $failed = false;
+    public $joined;
     /**
      * Permissions:
      *
@@ -131,7 +132,7 @@ class BlogMember {
     public function createInvite($invitingID, $forBlog) {
         // Inviting ID is a user ID
         $checkVals = array($invitingID, $forBlog);
-        $check = $this->datbase->db_select("SELECT * FROM blog_members WHERE user_id = $1 AND blog_id = $2", $checkVals);
+        $check = $this->database->db_select("SELECT * FROM blog_members WHERE user_id = $1 AND blog_id = $2", $checkVals);
         if ($check) {
             return true;
         }
