@@ -296,8 +296,8 @@ $token = $easyCSRF->generate($sessionObj->sessionData['csrfName']);
                         <?php 
                         if (sizeof($user->groupBlogs) > 0) { ?>
                         <li class="list-group-item"> 
-                            <h5 class="card-title"><i class="fas fa-users title-icon"></i><?php echo L::user_settings_group_blogs; ?></h5>
-                            <p><?php echo L::user_settings_group_blogs_explainer; ?></p>
+                            <h5 class="card-title"><i class="fas fa-users title-icon"></i><?php echo L::user_settings_group_blog_settings; ?></h5>
+                            <p><?php echo L::user_settings_group_blog_settings_explainer; ?></p>
                             <?php foreach ($user->groupBlogs as $blog) { 
                                 $avatar = new WFAvatar($blog->avatar);
                                 $groupMemBlogName = $blog->blogName;

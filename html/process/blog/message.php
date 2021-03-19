@@ -79,7 +79,7 @@ if ($session == false) {
 
         if ($recipientBlog->askLevel == 0) {
             $data['code'] = 'ERR_ASK_LEVEL_NOT_ACCEPTING';
-            $data['message'] = L::error_messages_asks_closed;
+            $data['message'] = L::error_message_asks_closed;
             echo json_encode($data);
             exit();  
         }
@@ -109,7 +109,7 @@ if ($session == false) {
             $data['message'] = L::string_success;
         } else {
             $data['code'] = 'ERR_COULD_NOT_SAVE';
-            $data['message'] = L::message_critical_failure;
+            $data['message'] = L::error_message_critical_failure;
         }
     } 
 }

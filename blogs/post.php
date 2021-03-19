@@ -93,7 +93,7 @@ if (isset($sessionObj->sessionData['activeBlog'])) {
 			</div></div>
 			<?php
 		} else {
-			 UIUtils::errorBox(L::string_post_not_on_blog, L::string_not_found);
+			 UIUtils::errorBox(L::error_post_not_on_blog, L::error_not_found);
 		}
      ?>
      <?php

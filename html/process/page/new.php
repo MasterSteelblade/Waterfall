@@ -15,7 +15,7 @@ $blog = new Blog();
 $blog->getByBlogName($_POST['onBlog']);
 if ($blog->failed || ($blog->ownerID != $sessionObj->user->ID && !$blog->checkMemberPermission($sessionObj->user->ID, 'create_page'))) {
     $data['code'] = 'ERR_NOT_YOUR_BLOG';
-    $data['message'] = L::invalid_permissions;
+    $data['message'] = L::error_invalid_permissions;
     echo json_encode($data);
     exit();
 }

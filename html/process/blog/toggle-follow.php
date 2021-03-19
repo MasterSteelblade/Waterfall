@@ -21,7 +21,7 @@ if ($session == false) {
     $toFollow->getByBlogName($_POST['blogName']);
     if ($toFollow->failed) {
         $data['code'] = 'ERR_BLOG_TO_FOLLOW_NOT_FOUND';
-        $data['message'] = L::follow_could_not_find;
+        $data['message'] = L::error_follow_could_not_find;
         echo json_encode($data);
         exit();
     }

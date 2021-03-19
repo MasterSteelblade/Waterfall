@@ -192,7 +192,7 @@ date_default_timezone_set('Etc/UTC'); // We just want everything in UTC.
 <?php 
 
 if ($failed == true) {
-  UIUtils::errorBox(L::string_blog_not_found);
+  UIUtils::errorBox(L::error_blog_not_found);
   exit();
 }
 if ($thisBlog->nsfwBlog == true) {
