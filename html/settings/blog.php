@@ -30,7 +30,7 @@ badgesChanged = false;
     }
 
     function deletePage(elem) {
-        var confirmed = confirm("Press a button!");
+        var confirmed = confirm("<?php echo L::pages_delete_confirm; ?>");
         if (confirmed == false) {
             return false;
         }

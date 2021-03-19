@@ -109,6 +109,11 @@ if ($session !== false) {
     } else {
         $user->settings['showFeatures'] = false;
     }
+    if (isset($_POST['mutualActivity']) && $_POST['mutualActivity'] == 'true') {
+        $user->settings['mutualActivity'] = true;
+    } else {
+        $user->settings['mutualActivity'] = false;
+    }
     if (isset($_POST['showNaughtyFeatures']) && $_POST['showNaughtyFeatures'] == 'true') {
         $user->settings['explicitFeatures'] = true;
     } else {

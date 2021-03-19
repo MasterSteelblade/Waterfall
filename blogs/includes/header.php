@@ -9,7 +9,6 @@ $startTime = microtime(TRUE);
 
 if (Huntress::checkIPBan($_SERVER['REMOTE_ADDR'])) {
     header("Location: https://".$_ENV['SITE_URL']."/error/banned");
-
 }
 // Before anything else, might as well check the user's info is up to date. 
 if ($session !== false && $sessionObj->userIsValid == false && (isset($onUpdatePage) && $onUpdatePage == false)) {
