@@ -16,11 +16,14 @@ if (isset($_GET['recipient']) && !empty($_GET['recipient'])) {
 } else {
   $failed = true;
 }
-/* $blogOwnerBlockCheck = new BlockManager($recipient->ownerID);
-$myBlogCheck = new BlockManager($sessionObj->user->ID);
-if ($blogOwnerBlockCheck->hasBlockedUser($sessionObj->user->ID) || $myBlogCheck->hasBlockedUser($recipient->ownerID)) {
-    $failed = true;
-} */
+$blogOwnerBlockCheck = new BlockManager($recipient->ownerID);
+if ($session !== false) {
+    $myBlogCheck = new BlockManager($sessionObj->user->ID);
+
+    if ($blogOwnerBlockCheck->hasBlockedUser($sessionObj->user->ID) || $myBlogCheck->hasBlockedUser($recipient->ownerID)) {
+        $failed = true;
+    }
+}
 
 if (isset($activeBlog->ownerID) && ($activeBlog->ownerID != $sessionObj->user->ID && $activeBlog->checkMemberPermission($sessionObj->user->ID, 'send_asks') == false)  ) {
     $failed = true;

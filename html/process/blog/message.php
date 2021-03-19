@@ -69,12 +69,14 @@ if ($session == false) {
         // ============================
 
         $blogOwnerBlockCheck = new BlockManager($recipientBlog->ownerID);
-        $myBlogCheck = new BlockManager($senderBlog->ownerID);
-        if ($blogOwnerBlockCheck->hasBlockedUser($senderBlog->ownerID) || $myBlogCheck->hasBlockedUser($recipientBlog->ownerID)) {
-            $data['code'] = 'ERR_RECIPIENT_BLOG_NOT_FOUND'; // Lie and say it doesn't exist. 
-            $data['message'] = L::error_message_recipient_not_found;
-            echo json_encode($data);
-            exit();  
+        if ($session !== false) {
+            $myBlogCheck = new BlockManager($senderBlog->ownerID);
+            if ($blogOwnerBlockCheck->hasBlockedUser($senderBlog->ownerID) || $myBlogCheck->hasBlockedUser($recipientBlog->ownerID)) {
+                $data['code'] = 'ERR_RECIPIENT_BLOG_NOT_FOUND'; // Lie and say it doesn't exist. 
+                $data['message'] = L::error_message_recipient_not_found;
+                echo json_encode($data);
+                exit();  
+            }
         }
 
         if ($recipientBlog->askLevel == 0) {

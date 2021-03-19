@@ -19,6 +19,9 @@ class BlockManager {
     public $myBlockedUsers = array();
 
     public function __construct(int $userID = 0) {
+        if ($userID == 0) {
+            return true;
+        }
         $this->user = new User($userID);
         if ($this->user->failed == true) {
             return false;
@@ -28,6 +31,9 @@ class BlockManager {
     }
 
     public function hasBlockedUser($userID) {
+        if ($userID == 0) {
+            return false;
+        }
         if (in_array($userID, $this->user->blockedUsers)) {
             return true;
         } else {

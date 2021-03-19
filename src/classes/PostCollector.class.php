@@ -44,7 +44,7 @@ class PostCollector {
             $this->IP = $_SERVER['REMOTE_ADDR'];
         }
         if ($this->userID != 0) {
-            //$this->blockManager = new BlockManager($this->userID);
+            $this->blockManager = new BlockManager($this->userID);
         }
     }
 
@@ -225,10 +225,10 @@ class PostCollector {
                     $sourcePost = new Post(intval($post->sourcePost));
                     $sourceBlog = new Blog(intval($sourcePost->onBlog));
                     if (!$sourceBlog->failed && $sourceBlog->ownerID != null) {
-                        //$sourceUserBlockMan = new BlockManager($sourceBlog->ownerID);
-                        //if ($sourceUserBlockMan->hasBlockedUser($this->userID) || $this->blockManager->hasBlockedUser($sourceBlog->ownerID)) {
-                        //    $blocked = true;
-                        //}
+                        $sourceUserBlockMan = new BlockManager($sourceBlog->ownerID);
+                        if ($sourceUserBlockMan->hasBlockedUser($this->userID) || $this->blockManager->hasBlockedUser($sourceBlog->ownerID)) {
+                            $blocked = true;
+                        }
                     }
                     
                 }
@@ -273,10 +273,10 @@ class PostCollector {
                 if (!$postUser->failed && $post->sourcePost != $post->ID) {
                     $sourcePost = new Post(intval($post->sourcePost));
                     $sourceBlog = new Blog(intval($sourcePost->onBlog));
-                    //$sourceUserBlockMan = new BlockManager($sourceBlog->ownerID);
-                    //if ($sourceUserBlockMan->hasBlockedUser($this->userID) || $this->blockManager->hasBlockedUser($sourceBlog->ownerID)) {
-                    //    $blocked = true;
-                    //}
+                    $sourceUserBlockMan = new BlockManager($sourceBlog->ownerID);
+                    if ($sourceUserBlockMan->hasBlockedUser($this->userID) || $this->blockManager->hasBlockedUser($sourceBlog->ownerID)) {
+                        $blocked = true;
+                    }
 
                     
                 }

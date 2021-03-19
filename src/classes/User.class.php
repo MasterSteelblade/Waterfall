@@ -242,6 +242,9 @@ class User{
         $values = array($this->ID, $this->database->php_to_postgres($this->blockedUsers));
         $result = $this->database->db_update("UPDATE users SET blocked_users = $2 WHERE id = $1", $values);
         if ($result) {
+            $values = array($userID, $this->ID);
+            $followers = $this->database->db_delete("DELETE FROM follows WHERE follower = $1 and followee = $2", $values);
+            $followees = $this->database->db_delete("DELETE FROM follows WHERE follower = $2 and followee = $1", $values);
             return true;
         } else {
             return false;
