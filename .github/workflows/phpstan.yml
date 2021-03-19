@@ -1,0 +1,33 @@
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+name: Test
+
+jobs:
+  phpstan:
+    name: PHPStan
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: "Checkout"
+      uses: actions/checkout@v2
+
+    - name: Scan source files
+      uses: docker://oskarstark/phpstan-ga
+      with:
+        args: analyse src/
+
+    - name: Scan web files
+      uses: docker://oskarstark/phpstan-ga
+      with:
+        args: analyse html/
+
+    - name: Scan blog files
+      uses: docker://oskarstark/phpstan-ga
+      with:
+        args: analyse blogs/
