@@ -1,7 +1,9 @@
 <?php 
 
 require_once(__DIR__.'/../../src/loader.php');
-require_once(__DIR__.'/session.php');
+if (!isset($session) || !isset($sessionObj)) {
+  require_once(__DIR__.'/session.php');
+}
 require_once(__DIR__.'/script.php');
 
 require_once(__DIR__.'/maint.php');
