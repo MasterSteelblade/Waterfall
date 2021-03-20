@@ -180,7 +180,7 @@ if ($blog->failed || ($blog->ownerID != $sessionObj->user->ID && !$blog->checkMe
         <div class="row"> 
             <div class="col">
         <?php if ($editing->postStatus != 'draft') { ?>
-	        <button name="submit" type="submit" class="btn btn-primary submitbutton" id="submit" form="PostForm" value="post"><?php echo L::string_save; ?></button>
+	        <button name="submit" type="submit" class="btn btn-primary submitbutton" id="postButton" form="PostForm" value="post"><?php echo L::string_save; ?></button>
         <?php   } else { ?>
             <div class="btn-group">
 

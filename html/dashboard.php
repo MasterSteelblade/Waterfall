@@ -21,7 +21,7 @@ if (isset($sessionObj->user->settings['ocOnly']) && $sessionObj->user->settings[
 }
 $posts = $postCollector->getDashboardPosts($sessionObj->sessionData['activeBlog'], 25, $prevPostTime, $sessionObj->user->settings['omniDash'], $ocOnly);
 if (sizeof($posts) != 0) {
-    if ($sessionObj->user->settings['mutualActivity'] == false) {
+    if (!isset($sessionObj->user->settings['mutualActivity']) || $sessionObj->user->settings['mutualActivity'] == false) {
         $notes = $postCollector->getNotes($prevPostTime, end($posts)->timestamp);
     } else {
 		$notes = $postCollector->getMutualNotes($prevPostTime, end($posts)->timestamp);
