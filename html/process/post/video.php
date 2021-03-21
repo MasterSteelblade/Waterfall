@@ -107,13 +107,15 @@ if (isset($_POST['videoType']) && $_POST['videoType'] == 'upload') {
         $post = new VideoPost();
         if ($post->createNew($_POST['postText'], substr($_POST['postTitle'],0,255), $_POST['postTags'], $blog->ID, $additions, $type, $videoID)) {
             $data['code'] = 'SUCCESS';
-            $data['code'] = L::string_success;
+            $data['message'] = L::string_success;
+            echo json_encode($data);
+            exit();
         } else {
             $data['code'] = 'ERR_MISC_FAILURE';
             $data['message'] = L::error_unknown;
-
+            echo json_encode($data);
+            exit();
         }
-        echo json_encode($data);
     } else {
         if ($_POST['embedType'] == 'youtube') {
             $embed = 'YOUTUBE:'.$_POST['embedID'];
@@ -125,11 +127,14 @@ if (isset($_POST['videoType']) && $_POST['videoType'] == 'upload') {
         $post = new VideoPost();
         if ($post->createNew($_POST['postText'], substr($_POST['postTitle'],0,255), $_POST['postTags'], $blog->ID, $additions, $type, $embed, true)) {
             $data['code'] = 'SUCCESS';
-            $data['code'] = L::string_success;
+            $data['message'] = L::string_success;
+            echo json_encode($data);
+            exit();
         } else {
             $data['code'] = 'ERR_MISC_FAILURE';
             $data['message'] = L::error_unknown;
-
+            echo json_encode($data);
+            exit();
         }
-        echo json_encode($data);
+        //echo json_encode($data);
     }
