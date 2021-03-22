@@ -176,7 +176,7 @@ if (sizeof($posts) == 0) {
 										<i class="like-button footer-button fas fa-heart liked-post" data-post-id="<?php echo $featuredPost->ID; ?>" data-source-id="<?php echo $featuredPost->sourcePost; ?>" onclick="likePost(this);"></i>
 										<?php }
 										}  if ($hasReblogged == false) { ?>
-											<a href="https://<?php echo $_ENV['SITE_URL']; ?>/reblog/<?php echo $featuredPost->ID; ?>"><i data-post-id="<?php echo $featuredPost->ID; ?>" class="footer-button fad fa-reblog-alt"></i></a>
+											<a href="https://<?php echo $_ENV['SITE_URL']; ?>/reblog/<?php echo $featuredPost->ID; ?>"><i data-post-id="<?php echo $featuredPost->ID; ?>" class="footer-button fas fa-reblog-alt"></i></a>
 										<?php } else { ?>
 											<a href="https://<?php echo $_ENV['SITE_URL']; ?>/reblog/<?php echo $featuredPost->ID; ?>"><i data-post-id="<?php echo $featuredPost->ID; ?>" class="footer-button fas fa-reblog-alt already-reblogged"></i></a>
 										<?php } ?>

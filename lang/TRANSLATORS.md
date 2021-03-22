@@ -31,6 +31,19 @@ Make your way through the file, and when you're done, submit a pull request in a
 
 As new features get added, new strings might be localisable. When this happens, they'll be added to existing language files in English. If you notice one, you just need to change that line and make a pull request, same as above.
 
+### Committing your work
+
+There are two ways to commit your work. Both require a GitHub account. If you're familiar with Git already, you'll probably know about forks and pull requests already - just follow the usual procedure. 
+
+If you don't have a GitHub account, make one! Then, fork the repository. On the page for the project, there'll be a "Fork" button in the top left - once you press it, go through the process and then you'll have a copy of Waterfall's code ready to work with. 
+
+You can think of a repository fork as a fork in the road - it's where a path splits into two directions. Later on, they can merge again, or continue on their own path. In your fork, make the changes - If you're in the `lang` folder, you'll see an "Add file" option, which you can use to make your file. Name it lang_xx.ini (where xx is the locale code),
+and copy paste the contents of lang_en.ini in there. Make your changes, and save. 
+
+Now you're ready to make a pull request! Hit the pull request tab, and press "new pull request". Hit the "compare across forks" link. The `base repository` setting should be set to `MasterSteelblade/Waterfall`, with the `base` set to `main`. The `head repository` should be `YourUsername/Waterfall` and `compare` set to whatever branch you were working in (most likely main). 
+
+It should show you the file changes, and if you're making a new translation, there'll be one file with a lot of green lines here. Hit Create Pull Request and follow the process - and you're done! Your work will be reviewed and merged into the site's code once it's been checked. 
+
 ### Pull Request Checks
 
 When you submit your pull request, it'll do some tests. The one you need to worry about is the Language File Checks. If this fails, it means a translation is missing a key or section that's present in the English file. 

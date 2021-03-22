@@ -624,7 +624,7 @@ class Post {
         <?php 
         if ($this->checkDNRStatus() == '' && $requestingBlog != 0) {
             if ($hasReblogged == false) { ?>
-                <a href="https://<?php echo $_ENV['SITE_URL']; ?>/reblog/<?php echo $this->ID; ?>"><i data-post-id="<?php echo $this->ID; ?>" class="footer-button fad fa-reblog-alt"></i></a>
+                <a href="https://<?php echo $_ENV['SITE_URL']; ?>/reblog/<?php echo $this->ID; ?>"><i data-post-id="<?php echo $this->ID; ?>" class="footer-button fas fa-reblog-alt"></i></a>
             <?php } else { ?>
                 <a href="https://<?php echo $_ENV['SITE_URL']; ?>/reblog/<?php echo $this->ID; ?>"><i data-post-id="<?php echo $this->ID; ?>" class="footer-button fas fa-reblog-alt already-reblogged"></i></a>
             <?php }
