@@ -104,7 +104,7 @@ if (!$failed) {
 <link rel="stylesheet" href="https://<?php echo $_ENV['SITE_URL']; ?>/css/base/canvas.css">
 <link rel="stylesheet" href="https://<?php echo $_ENV['SITE_URL']; ?>/css/base/brush.css">
 <link rel="stylesheet" href="https://<?php echo $_ENV['SITE_URL']; ?>/css/waterfall.css" crossorigin="anonymous">
-<link rel="stylesheet" href="https://<?php echo $_ENV['SITE_URL']; ?>/css/font/css/all.css" crossorigin="anonymous">
+<link rel="stylesheet" href="https://<?php echo $_ENV['SITE_URL']; ?>/css/font/css/fontawesome.css" crossorigin="anonymous">
 <link rel="stylesheet" href="https://<?php echo $_ENV['SITE_URL']; ?>/css/font/css/solid.css" crossorigin="anonymous">
 <link rel="stylesheet" href="https://<?php echo $_ENV['SITE_URL']; ?>/css/amplitude.css" crossorigin="anonymous">
 <?php
