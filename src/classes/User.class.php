@@ -37,7 +37,7 @@ class User{
     public $groupBlogIDs;
     public $blogs;
     public $groupBlogs = array();
-    public $settings = array('omniDash' => false, 'showFeatures' => true, 'postDepth' => 5, 'viewNSFW' => false, 'commissionMarketTOSAccepted' => false, 'explicitFeatures' => false, 'email' => array('follows' => true, 'news' => true, 'asks' => true, 'promos' => true, 'mentions' => true, 'participation' => false), 'accessibility' => array('dyslexiaFont' => false, 'showImageID' => false));
+    public $settings = array('language' => 'en', 'omniDash' => false, 'showFeatures' => true, 'postDepth' => 5, 'viewNSFW' => false, 'commissionMarketTOSAccepted' => false, 'explicitFeatures' => false, 'email' => array('follows' => true, 'news' => true, 'asks' => true, 'promos' => true, 'mentions' => true, 'participation' => false), 'accessibility' => array('dyslexiaFont' => false, 'showImageID' => false));
     public $restrictions;
     public $failed = false;
     public $pronouns;
