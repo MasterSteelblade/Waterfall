@@ -1,6 +1,7 @@
 <?php 
 
 require_once(__DIR__.'/../../includes/session.php');
+require_once(__DIR__.'/../../../lang/langList.php');
 header('Content-type: application/json');
 $data = array();
 use EasyCSRF\Exceptions\InvalidCsrfTokenException;
@@ -124,6 +125,22 @@ if ($session !== false) {
     } else {
         $user->settings['explicitFeatures'] = false;
     }
+
+    // Language settings
+    if (isset($_POST['userLanguage']) && $_POST['userLanguage'] != '') {
+        $language = trim($_POST['userLanguage']);
+        if (array_key_exists($language, getLanguageNames())) {
+            $user->settings['language'] = $language;
+            setcookie('lang', $language, array(
+                'expires' => time() + 2592000,
+                'path' => '/',
+                'domain' => $_ENV['COOKIE_URL'],
+                'secure' => true,
+                'samesite' => 'lax',
+                'httponly' => true,
+            ));
+        }
+    }    
 
     // Main Blog
     if (isset($_POST['switchMainBlog'])) {

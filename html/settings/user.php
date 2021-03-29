@@ -1,6 +1,7 @@
 <?php 
 
 require_once(__DIR__.'/../includes/header.php');
+require_once(__DIR__.'/../../lang/langList.php');
 $user = $sessionObj->user;
 $easyCSRF = new EasyCSRF\EasyCSRF($sessionObj);
 $token = $easyCSRF->generate($sessionObj->sessionData['csrfName']);
@@ -17,6 +18,7 @@ $token = $easyCSRF->generate($sessionObj->sessionData['csrfName']);
         formData.append('mainBlog', document.getElementById("mainBlog").value);
         formData.append('pronouns', document.getElementById("pronouns").value);
         formData.append('dashTheme', document.getElementById("dashTheme").value);
+        formData.append('userLanguage', document.getElementById("userLanguage").value);
         formData.append('tokeItUp', document.getElementById("token").value);
 
         if (document.getElementById("omniDash").checked) {
@@ -144,6 +146,29 @@ $token = $easyCSRF->generate($sessionObj->sessionData['csrfName']);
                         <li class="list-group-item">
                             <h5 class="card-title"><i class="fas fa-cog title-icon"></i><?php echo L::user_settings_basic_settings; ?></h5>
                             <p><?php echo L::user_settings_basic_settings_explainer; ?></p>
+                            <div class="form-group row">
+                                <div class="col">
+                                <label class="control-label" for="userLanguage"><?php echo L::user_settings_display_language; ?></label>
+                                <select class="form-control" id="userLanguage" name="userLanguage">
+                                    <?php 
+                                    foreach(getLanguageNames() as $lang_code => $lang_name) {
+                                        $selected = '';
+                                        if (array_key_exists('language', $sessionObj->user->settings)) {
+                                            if ($lang_code == $sessionObj->user->settings['language']) {
+                                                $selected = 'selected';
+                                            }
+                                        } else {
+                                            if ($lang_code == $i18n->getFallbackLang()) {
+                                                $selected = 'selected';
+                                            }
+                                        }
+
+                                        echo '<option value="'.$lang_code.'" '.$selected.'>'.$lang_name.'</option>';
+                                    }
+                                    ?>
+                                </select>
+                                </div>
+                            </div>
                             <div class="form-group row">
                                 <div class="col">
                                 <label class="control-label" for="mainBlog"><?php echo L::user_settings_main_blog; ?></label>
