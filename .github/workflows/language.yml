@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Checkout master English file 
-        run: git checkout main -- lang/lang_en.ini
+        run: git checkout origin/main -- lang/lang_en.ini
 
       - name: Install PHP with extensions
         uses: shivammathur/setup-php@v2
