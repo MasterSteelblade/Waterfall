@@ -13,9 +13,11 @@ if ($session == false) {
 } else {
     if (isset($_POST['birthday'])) {
         try {
-            $date = new DateTime($_POST['birthday']);
+            $timestamp = strtotime($_POST['birthday']);
+            $date = new DateTime();
+            $date->setTimestamp($timestamp);
         } catch (Exception $e) {
-            $data['code'] = 'ERR_INVALID_DATE';
+            $data['code'] = 'ERR_INVALID_DATE1';
             $data['message'] = L::error_invalid_date;
             echo json_encode($data);
             exit();
@@ -24,17 +26,20 @@ if ($session == false) {
         $age = $now->diff($date);
         $y = $age->y;
         if ($y < 13) {
-            $data['code'] = 'ERR_INVALID_DATE';
+            $data['code'] = 'ERR_INVALID_DATE2';
             $data['message'] = L::error_too_young;
             echo json_encode($data);
             exit();
         }
         $dForm = $date->format('Y-m-d');
-        if ($sessionObj->user->updateBirthday($dForm)) {
-            $data['code'] = 'ERR_INVALID_DATE';
+        if (!$sessionObj->user->updateBirthday($dForm)) {
+            $data['code'] = 'ERR_INVALID_DATE3';
             $data['message'] = L::error_invalid_date;
             echo json_encode($data);
             exit();
+        } else {
+            $data['code'] = 'SUCCESS';
+            $data['message'] = L::string_success;
         }
     }
     $data['code'] = 'SUCCESS';

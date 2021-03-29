@@ -18,6 +18,10 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v2
 
+      - name: Checkout master English file 
+        uses: actions/checkout@v2
+        run: git checkout main -- lang/lang_en.ini
+
       - name: Install PHP with extensions
         uses: shivammathur/setup-php@v2
         with:

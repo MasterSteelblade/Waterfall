@@ -82,4 +82,3 @@ it to treat the inputs a little differently. For example, `%d` treats it as a si
 
 ## Technical Notes
 For those of you wanting to understand more about how things work, this is the section for you. The `vsprintf` section is likely to be of interest to everyone as it's used in the translations files, but the rest is optional reading.
-
