@@ -17,11 +17,19 @@ jobs:
       # Downloads a copy of the code in the repository before running CI tests
       - name: Check out repository code
         uses: actions/checkout@v2
+        with: 
+          fetch-depth: 0
 
       - name: Install PHP with extensions
         uses: shivammathur/setup-php@v2
         with:
           php-version: 8.0
 
-      - name: Check language files for missing translations
+      - name: Check local branch language files for missing translations
+        run: php lang/langCheck.php
+
+      - name: Checkout master English file 
+        run: git checkout origin/main -- lang/lang_en.ini
+
+      - name: Check against main branch English file
         run: php lang/langCheck.php

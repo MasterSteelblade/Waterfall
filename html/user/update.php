@@ -34,7 +34,7 @@ $missing = $sessionObj->userMissing;
                     response.json().then(function(data) {
                         if (data.code == "SUCCESS") {
                             document.getElementById("DisplayDiv").innerHTML = renderBox('success', data.message);
-                            window.location.href = "<?php echo $_ENV['SITE_URL']; ?>/dashboard";
+                            window.location.href = "https://<?php echo $_ENV['SITE_URL']; ?>/dashboard";
                             return false;
                         } else {
                             document.getElementById("DisplayDiv").innerHTML = renderBox('error', data.message);

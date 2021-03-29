@@ -12,7 +12,7 @@ if (Huntress::checkIPBan($_SERVER['REMOTE_ADDR'])) {
 
 }
 // Before anything else, might as well check the user's info is up to date. 
-if ($session !== false && $sessionObj->userIsValid == false && (isset($onUpdatePage) && $onUpdatePage == false)) {
+if ($session !== false && $sessionObj->userIsValid == false && !isset($onUpdatePage)) {
     header("Location: https://".$_ENV['SITE_URL']."/user/update");
 }
 
