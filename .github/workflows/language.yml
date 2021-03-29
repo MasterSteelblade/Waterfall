@@ -17,7 +17,8 @@ jobs:
       # Downloads a copy of the code in the repository before running CI tests
       - name: Check out repository code
         uses: actions/checkout@v2
-        with: fetch-depth: 0
+        with: 
+          fetch-depth: 0
 
       - name: Checkout master English file 
         run: git checkout main -- lang/lang_en.ini
