@@ -17,9 +17,10 @@ jobs:
       # Downloads a copy of the code in the repository before running CI tests
       - name: Check out repository code
         uses: actions/checkout@v2
+        with: fetch-depth: 0
 
       - name: Checkout master English file 
-        run: git checkout origin/main -- lang/lang_en.ini
+        run: git checkout main -- lang/lang_en.ini
 
       - name: Install PHP with extensions
         uses: shivammathur/setup-php@v2
