@@ -127,7 +127,7 @@ if ($session !== false) {
     }
 
     // Language settings
-    if (isset($_POST['userLanguage'])) {
+    if (isset($_POST['userLanguage']) && $_POST['userLanguage'] != '') {
         $language = trim($_POST['userLanguage']);
         if (array_key_exists($language, getLanguageNames())) {
             $user->settings['language'] = $language;
