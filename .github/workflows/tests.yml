@@ -92,4 +92,4 @@ jobs:
           file: build/logs/clover.xml
 
       - name: Run PHPStan - /src
-        run: phpstan analyse src langcache blogs html tests
+        run: phpstan analyse src lang langcache blogs html tests
