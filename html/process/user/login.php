@@ -85,6 +85,7 @@ if ($session !== false) {
             } elseif ($sessionID === 0) {
                 $data['code'] = 'ERR_BACKEND_FAILURE';
                 $data['message'] = L::error_unknown;
+
             } else {
                 // Successful login: set user language (if it's set)
                 if (array_key_exists('language', $user->settings) && $user->settings['language'] !== null) {
@@ -94,7 +95,6 @@ if ($session !== false) {
                         'domain' => $_ENV['COOKIE_URL'],
                         'secure' => true,
                         'samesite' => 'lax',
-                        'httponly' => true,
                     ));
                 }
 

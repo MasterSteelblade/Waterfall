@@ -137,7 +137,6 @@ if ($session !== false) {
                 'domain' => $_ENV['COOKIE_URL'],
                 'secure' => true,
                 'samesite' => 'lax',
-                'httponly' => true,
             ));
         }
     }    
