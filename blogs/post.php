@@ -1,13 +1,13 @@
 <?php 
 require_once(__DIR__.'/../src/loader.php');
 
+$blogPageType = 'post';
 if (!empty($_GET['post'])) {
 	$post = new Post(intval($_GET['post']));
 	$failed = false;
 } else {
 	$failed = true;
-  }
-
+}
 
 // Do meta stuff
 

@@ -1,5 +1,7 @@
 <?php 
 
+$blogPageType = 'blog';
+
 require_once(__DIR__.'/includes/header.php');
 
 $isMobile = WFUtils::detectMobile();
