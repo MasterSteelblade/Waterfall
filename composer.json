@@ -14,8 +14,8 @@
         "phpmailer/phpmailer": "^6.2",
         "mastersteelblade/google-authenticator": "^1.0",
         "mapkyca/php-ogp": "^1.0",
-        "gilbitron/easycsrf": "^1.4"
-        
+        "gilbitron/easycsrf": "^1.4",
+        "philipp15b/php-i18n": "^4.0"
     },
     "autoload": {
         "classmap": [
