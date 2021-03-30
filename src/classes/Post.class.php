@@ -519,6 +519,22 @@ class Post {
         <?php
     }
 
+    public function metadataRender() {
+        /**
+         * Render the last segment of a post that has content, stripping
+         * all markup from it, suitable for embedding in Open Graph tags.
+         */
+
+        $segments = $this->calculateSegments();
+        foreach (array_reverse($segments) as $segment) {
+            if ($this->textContentCheck($segment)) {
+                return WFText::makeTextStripped($segment->content);
+            }
+        }
+
+        return '';
+    }
+
     public function checkDNRStatus() {
         /**
          * Checks whether a post can be interacted with in a given way by iterating through tags. 
