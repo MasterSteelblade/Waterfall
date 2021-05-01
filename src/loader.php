@@ -26,7 +26,7 @@ require_once(__DIR__."/classes/WFImage.class.php");
 require_once(__DIR__."/classes/WFAvatar.class.php");
 require_once(__DIR__."/classes/WFText.class.php");
 require_once(__DIR__."/classes/WFVideo.class.php");
-require_once(__DIR__."/classes/i18n.class.php");
+require_once(__DIR__."/classes/WFi18n.class.php");
 require_once(__DIR__."/classes/posts/TextPost.class.php");
 require_once(__DIR__."/classes/posts/AnswerPost.class.php");
 require_once(__DIR__."/classes/posts/ImagePost.class.php");
@@ -65,5 +65,6 @@ if ($_ENV['SENTRY_DSN'] != null && $_ENV['SENTRY_DSN'] != '') {
 
 require_once(__DIR__."/classes/Emoji.class.php");
 
-$i18n = new i18n(__DIR__.'/../lang/lang_{LANGUAGE}.ini', __DIR__.'/../langcache/', 'en');
+// Set up translations
+$i18n = new \WFi18n(__DIR__.'/../lang/lang_{LANGUAGE}.ini', __DIR__.'/../langcache/', 'en');
 $i18n->init();
