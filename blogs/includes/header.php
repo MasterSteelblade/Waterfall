@@ -81,10 +81,47 @@ if (!$failed) {
 
 ?>
 <!doctype html>
+<html prefix="og: https://ogp.me/ns#">
 <head>
 <title><?php echo $pageTitle; ?></title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<?php // Render the OpenGraph tags!
+if (isset($blogPageType) && $failed === false) { ?>
+    <?php if ($blogPageType === 'post' && isset($post)) { ?>
+        <!-- Open Graph - blog post -->
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="<?php echo $thisBlog->getBlogURL() . '/post/' . $post->ID ?>">
+        <meta property="og:title" content="<?php
+            if (is_null($post->postTitle) || empty($post->postTitle)) {
+                $postMetadataType = ucwords($post->postType);
+                echo htmlspecialchars("{$postMetadataType} post by {$thisBlog->blogTitle}");
+            } else {
+                echo htmlspecialchars("{$thisBlog->blogTitle} - {$post->postTitle}");
+            }
+        ?>">
+        <?php if (!empty($postMetadataContent = $post->metadataRender())) { ?>
+          <?php if (strlen($postMetadataContent) > 100) { $postMetadataContent = substr($postMetadataContent, 0, 100) . '...'; } ?>
+          <meta property="og:description" content="<?php echo htmlspecialchars($postMetadataContent) ?>">
+        <?php } ?>
+
+    <?php } elseif ($blogPageType === 'page' && isset($thisPage)) { ?>
+        <!-- Open Graph - blog page -->
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="<?php echo $thisBlog->getBlogURL() . '/' . $thisPage->url ?>">
+        <meta property="og:title" content="<?php echo htmlspecialchars("{$thisBlog->blogTitle} - {$thisPage->pageTitle}") ?>">
+
+    <?php } elseif ($blogPageType === 'blog') { ?>
+        <!-- Open Graph - blog index -->
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="<?php echo $thisBlog->getBlogURL() ?>">
+        <meta property="og:title" content="<?php echo htmlspecialchars($thisBlog->blogTitle) ?>">
+        <meta property="og:description" content="<?php echo htmlspecialchars($thisBlog->blogDescription) ?>">
+    <?php } ?>
+
+    <meta property="og:site_name" content="Waterfall">
+<?php } ?>
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/1.25.0/luxon.min.js" integrity="sha512-OyrI249ZRX2hY/1CAD+edQR90flhuXqYqjNYFJAiflsKsMxpUYg5kbDDAVA8Vp0HMlPG/aAl1tFASi1h4eRoQw==" crossorigin="anonymous"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">

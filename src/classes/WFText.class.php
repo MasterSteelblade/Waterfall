@@ -61,6 +61,19 @@ class WFText {
         return $result;
     }
       
+    public static function makeTextStripped($content, $segmentID = 0) {
+        // Render as for edit
+        $content = self::makeTextRenderableForEdit($content, $segmentID);
+
+        // Strip out all HTML.
+        //
+        // HtmlSanitizer at it's default settings (with no extensions) will
+        // strip *everything*, which is what we want.
+        $sanitizer = \HtmlSanitizer\Sanitizer::create(['extensions' => []]);
+        $content = $sanitizer->sanitize($content);
+
+        return $content;
+    }
 
 
     public static function mentionReplace($content) {

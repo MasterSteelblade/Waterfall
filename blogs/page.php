@@ -1,5 +1,6 @@
 <?php 
 require_once(__DIR__.'/../src/loader.php');
+$blogPageType = 'page';
 $url = $_SERVER['HTTP_HOST'];
 $tmp = explode('.', $url);
 $subdomain = WFText::makeTextSafe(current($tmp));
