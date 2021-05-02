@@ -25,7 +25,7 @@ if ($thisBlog->failed) {
 }
 
 
-
+// Check if the owner of this blog has blocked the current user
 if ($failed == false) {
   $blogOwnerBlockCheck = new BlockManager($thisBlog->ownerID);
   if ($session !== false) {
@@ -34,6 +34,15 @@ if ($failed == false) {
     }
   }
 }
+
+// Check if the current user has blocked the owner of this blog
+if ($failed == false && $session !== false) {
+  $currentUserBlockCheck = new BlockManager($sessionObj->user->ID);
+  if ($currentUserBlockCheck->hasBlockedUser($thisBlog->ownerID)) {
+    $failed = true;
+  }
+}
+
 if ($thisBlog->password != null && (!isset($sessionObj->sessionData['blogLogins'][$thisBlog->ID]) || time() > $sessionObj->sessionData['blogLogins'][$thisBlog->ID])) {
   require_once(__DIR__.'/blogLogin.php');
   exit();

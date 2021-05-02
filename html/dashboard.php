@@ -3,6 +3,7 @@
 require_once(__DIR__.'/includes/header.php');
 
 $userID = $sessionObj->sessionData['userID'];
+$blockManager = new BlockManager($userID);
 $postCollector = new PostCollector($userID, $sessionObj->sessionData['activeBlog']);
 if (isset($_GET['prevPost'])) {
     $prevPost = new Post(intval($_GET['prevPost']));
@@ -127,10 +128,22 @@ if (sizeof($posts) == 0) {
 </div>
  <div class="d-none d-lg-block" style="width:300px;"> <!-- This stuff is too big for mobile -->
 		<?php if (!isset($sessionObj->user->settings['showFeatures']) || $sessionObj->user->settings['showFeatures'] == true) { 
-			$featuredID = WFUtils::selectFeaturedPost();
-			$featuredPost = new Post($featuredID);
-			$featuredBlog = new Blog($featuredPost->onBlog);
-			if (!$featuredPost->failed && !$featuredBlog->failed) {
+			$featuredTries = 0;
+			$featuredID = 0;
+			while ($featuredTries < 5) {
+				$featuredID = WFUtils::selectFeaturedPost();
+				$featuredPost = new Post($featuredID);
+				$featuredBlog = new Blog($featuredPost->onBlog);
+
+				if ($featuredPost->failed || $featuredBlog->failed || $blockManager->hasBlockedUser($featuredBlog->ownerID)) {
+					$featuredTries += 1;
+					$featuredID = 0;
+				} else {
+					break;
+				}
+			}
+
+			if ($featuredID !== 0 && !$featuredPost->failed && !$featuredBlog->failed) {
 				$featuredAv = new WFAvatar($featuredBlog->avatar);
 				$tags = [];
         		$sourceTags = [];
