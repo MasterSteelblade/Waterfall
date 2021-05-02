@@ -176,15 +176,19 @@ else:
     serverPort = config['SERVER']['serverPort']
     verifyKey = config['SERVER']['verifyKey']
     baseDir = config['SERVER']['baseDir']
-    sentry_logging = LoggingIntegration(
-        level=logging.INFO,        # Capture info and above as breadcrumbs
-        event_level=logging.WARNING  # Send errors as events
-    )
-    sentry_sdk.init(
-        dsn=config['SENTRY']['DSN'],
-        integrations=[FlaskIntegration()],
-        traces_sample_rate=1.0
-    )
+
+    if config['SENTRY']['DSN'] != 'no':
+        sentry_logging = LoggingIntegration(
+            level=logging.INFO,        # Capture info and above as breadcrumbs
+            event_level=logging.WARNING  # Send errors as events
+        )
+
+        sentry_sdk.init(
+            dsn=config['SENTRY']['DSN'],
+            integrations=[FlaskIntegration()],
+            traces_sample_rate=1.0
+        )
+
     serverHWScore = checkHardwareScore()
     ravenObj = RavenManager.Raven()
     ravenObj.factory(serverRole, config)
