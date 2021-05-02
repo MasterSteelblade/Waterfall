@@ -102,6 +102,7 @@ if (isset($blogPageType) && $failed === false) { ?>
             }
         ?>">
         <?php if (!empty($postMetadataContent = $post->metadataRender())) { ?>
+          <?php if (strlen($postMetadataContent) > 100) { $postMetadataContent = substr($postMetadataContent, 0, 100) . '...'; } ?>
           <meta property="og:description" content="<?php echo htmlspecialchars($postMetadataContent) ?>">
         <?php } ?>
 
