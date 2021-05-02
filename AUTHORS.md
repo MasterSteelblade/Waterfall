@@ -10,3 +10,4 @@ The following people have all made contributions to Waterfall.
 
 ## Other Contributors
 
+- [The Iris System](https://github.com/u1f408) ([@blobcat](https://blobcat.waterfall.social))
