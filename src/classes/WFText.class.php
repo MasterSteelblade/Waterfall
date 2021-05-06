@@ -1,6 +1,51 @@
 <?php 
 
 class WFText {
+	public static function createDefaultPostSanitizer() {
+		$sanitizerBuilder = \HtmlSanitizer\SanitizerBuilder::createDefault();
+		$sanitizerBuilder->registerExtension(new \WFHtmlSanitizer\WFExtension());
+
+		return $sanitizerBuilder->build([
+			'extensions' => [
+				// Selected HtmlSanitizer defaults
+				'basic', 'list', 'image', 'code', 'details', 'extra',
+
+				// Waterfall extensions
+				'waterfall',
+			],
+
+			'tags' => [
+				'a' => [
+					'allowed_attributes' => [
+						// Standard stuff
+						'href', 'id', 'class', 'width',
+						
+						// Mentions
+						'data-url-mentions',
+						
+						// Lightbox stuff
+						'data-caption', 'data-fancybox',
+					 ],					
+				],
+
+				'img' => [
+					'allowed_attributes' => ['src', 'alt', 'title', 'class', 'data-image-id'],
+
+					// Only allow images loaded from our own servers to pass through the filter
+					'allowed_hosts' => [$_ENV['SITE_URL']],
+
+					// Always use HTTPS
+					'force_https' => true,
+
+					// Always add the `img-fluid` class to images
+					'override_class' => "img-fluid",
+					
+					// Preserve the classes already on the image
+					'preserve_classes' => true,
+				],
+			],
+		]);
+	}
 
     public static function makeTextRenderable($content, $segmentID = 0) {
         /** Makes text be HTML formatted. Not necesary, but for safety.
