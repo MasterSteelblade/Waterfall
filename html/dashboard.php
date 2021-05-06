@@ -133,14 +133,22 @@ if (sizeof($posts) == 0) {
 			while ($featuredTries < 5) {
 				$featuredID = WFUtils::selectFeaturedPost();
 				$featuredPost = new Post($featuredID);
-				$featuredBlog = new Blog($featuredPost->onBlog);
-
-				if ($featuredPost->failed || $featuredBlog->failed || $blockManager->hasBlockedUser($featuredBlog->ownerID)) {
+				if ($featuredPost->failed) {
 					$featuredTries += 1;
 					$featuredID = 0;
-				} else {
-					break;
+					continue;
 				}
+				
+				
+				$featuredBlog = new Blog($featuredPost->onBlog);
+
+				if ($featuredBlog->failed || $blockManager->hasBlockedUser($featuredBlog->ownerID)) {
+					$featuredTries += 1;
+					$featuredID = 0;
+					continue;
+				}
+				
+				break;
 			}
 
 			if ($featuredID !== 0 && !$featuredPost->failed && !$featuredBlog->failed) {
