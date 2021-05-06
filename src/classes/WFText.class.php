@@ -122,8 +122,17 @@ class WFText {
     }
       
     public static function makeTextStripped($content, $segmentID = 0) {
-        // Render as for edit
-        $content = self::makeTextRenderableForEdit($content, $segmentID);
+        /**
+		 * Renders a stripped text-only version of the text of a post/page,
+		 * suitable for use in things like Open Graph description tags.
+		 * 
+		 * @param content The content to make renderable.
+         * @return The rendered plain text.
+         */
+		
+		// Run Parsedown on the input
+		$parsedown = (new Parsedown())->setSafeMode(true)->setBreaksEnabled(true);
+		$content = $parsedown->text($content);
 
         // Strip out all HTML.
         //
@@ -131,6 +140,9 @@ class WFText {
         // strip *everything*, which is what we want.
         $sanitizer = \HtmlSanitizer\Sanitizer::create(['extensions' => []]);
         $content = $sanitizer->sanitize($content);
+		
+		// Replace all linebreaks with a single space.
+		$content = str_replace("\n", " ", $content);
 
         return $content;
     }
