@@ -17,11 +17,11 @@ final class WFHtmlSanitizerHrTest extends TestCase {
 		]);
 
 		// Run the sanitizer
-		$inputData = '<hr>';
+		$inputData = '<p>Test paragraph before read more</p><hr><p>Test paragraph after read more</p>';
 		$outputData = $sanitizer->sanitize($inputData);
 
 		// Verify the output
-		$this->assertEquals($outputData, '{{READMORE}}');
+		$this->assertNotFalse(strpos($outputData, '{{READMORE}}'));
 	}
 
 	public function testReadMoreShortcodingClosingSlash() {
@@ -34,10 +34,27 @@ final class WFHtmlSanitizerHrTest extends TestCase {
 		]);
 
 		// Run the sanitizer
-		$inputData = '<hr />';
+		$inputData = '<p>Test paragraph before read more</p><hr /><p>Test paragraph after read more</p>';
 		$outputData = $sanitizer->sanitize($inputData);
 
 		// Verify the output
-		$this->assertEquals($outputData, '{{READMORE}}');
+		$this->assertNotFalse(strpos($outputData, '{{READMORE}}'));
+	}
+	
+	public function testReadMoreDoesNotShortcodeWhenNotEnabled() {
+		// Construct the sanitizer
+		$sanitizerBuilder = SanitizerBuilder::createDefault();
+		$sanitizerBuilder->registerExtension(new WFExtension());
+		$sanitizer = $sanitizerBuilder->build([
+			'extensions' => ['waterfall'],
+			'waterfall-shortcodes' => ['enabled' => []],
+		]);
+
+		// Run the sanitizer
+		$inputData = '<p>Test paragraph before read more</p><hr><p>Test paragraph after read more</p>';
+		$outputData = $sanitizer->sanitize($inputData);
+
+		// Verify the output
+		$this->assertFalse(strpos($outputData, '{{READMORE}}'));
 	}
 }
