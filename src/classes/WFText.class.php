@@ -224,6 +224,33 @@ class WFText {
 
         return $content;
     }
+	
+	public static function makeTextSafe($content) {
+		/**
+		 * Makes the input content "safe" for rendering in most places in the user
+		 * interface, by stripping literally everything from it.
+		 *
+		 * Do not use this for post or page content, or anything that should retain
+		 * markup (use the `makeTextPostContentSafe` function for that) - because
+		 * everything you love about the input markup will be gone from the return
+		 * value.
+		 *
+		 * @param content The content to make "safe"
+		 * @return The "safe" text
+		 */
+		
+		// Strip out all HTML.
+		//
+		// HtmlSanitizer at it's default settings (with no extensions) will
+		// strip *everything*, which is what we want.
+		$sanitizer = \HtmlSanitizer\Sanitizer::create(['extensions' => []]);
+		$content = $sanitizer->sanitize($content);
+		
+		// Yeet the Zalgo text into the sun, hopefully.
+		$content = preg_replace("~(?:[\p{M}]{1})([\p{M}])~uis", "", $content);
+		
+		return $content;
+	}
 
     public static function shorttagMentionRender($content) {
 		/**
@@ -343,40 +370,6 @@ class WFText {
         }
         return $postContent;
       }
-
-      public static function makeTextSafe($content) {
-        /** Makes text safe to store.
-        *
-        * @param content The content to make safe.
-        * @return result The safe text.
-        */
-        $result = $content;
-        $result = nl2br($result);
-
-        $result = str_replace('<div>', '<p>', $result);
-        $result = str_replace('</div>', '</p>', $result);
-        $result = preg_replace('/\bon\w+=\S+(?=.*>)/', '', $result);
-        $result = str_replace('<p><a href', '<div><a href', $result);
-        $result = str_replace('</a></p>', '</a></div>', $result);
-        $result = str_replace('("', '(   "', $result);
-        $result = str_replace('")', '"   )', $result);
-        // MCE
-        $result =  preg_replace('/<hr \/>/', '{{READMORE}}', $result, 1);
-        $result =  preg_replace('/<hr>/', '{{READMORE}}', $result, 1);
-               $converter = new League\HTMLToMarkdown\HtmlConverter(array(
-          'strip_tags' => true
-        ));
-        $result = $converter->convert($result);
-        $result = str_replace("\_", "_", $result);
-        $result = str_replace('("', '(', $result);
-        $result = str_replace('")', ')', $result);
-        $result = str_replace('"   )', '")', $result);
-        $result = str_replace('(   "', '("', $result);
-        $result = preg_replace("~(?:[\p{M}]{1})([\p{M}])~uis","", $result);
-
-        $result = substr($result, 0, 35000);
-        return $result;
-    }
 
     public static function getInlines($text) {
         $database = Postgres::getInstance();
