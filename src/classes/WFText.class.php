@@ -48,35 +48,43 @@ class WFText {
 	}
 
     public static function makeTextRenderable($content, $segmentID = 0) {
-        /** Makes text be HTML formatted. Not necesary, but for safety.
-        * @param content The content to make renderable.
-        * @return result The renderable HMTL.
-        */
-        //$result =  str_replace('\;', ';', $result);
-        $result = $content;
-        //$result = imageReplace($result, $type);
-        $result = str_replace('\"', '"', $result);
-        $result = str_replace("\'", "'", $result);
-        #$result = str_replace('"images/', '"https://'.$_ENV['SITE_URL'].'/images/', $result);
-        #$result = str_replace('"../images/', '"https://'.$_ENV['SITE_URL'].'/images/', $result);
-        $Parsedown = new Parsedown();
-        $Parsedown->setSafeMode(true);
-        $Parsedown->setBreaksEnabled(true);
-        $result = $Parsedown->text($result);
-        $result = WFText::mentionReplace($result);
-        $result = WFText::imageReplace($result);
-        if ($segmentID != 0) {
-            $result = WFText::doReadMoreCheck($result, $segmentID);
-        }
-        $result = str_replace('img src', 'img class="img-fluid" src', $result);
-        $result = str_replace('img  src', 'img class="img-fluid" src', $result);
-        $result = str_replace('\\', '', $result);
+        /**
+		 * Makes the text of a post segment (or blog page) renderable by the UI,
+		 * including HTML sanitization.
+		 * 
+		 * @param content The content to make renderable.
+         * @return The renderable HTML.
+         */
 
-        $emoji = new Emoji();
-        #$result = $emoji->parseText($result);
-        $result = str_replace('<pre>', '', $result);
-        $result = str_replace('</pre>', '', $result);
-        return $result;
+		// Create a Parsedown instance
+		$parsedown = (new Parsedown())->setSafeMode(true)->setBreaksEnabled(true);
+
+		// Create an HtmlSanitizer
+		$sanitizer = self::createDefaultPostSanitizer();
+
+		// Run Parsedown on the input
+		$content = $parsedown->text($content);
+
+		// Replace mentions and images
+		$content = self::mentionReplace($content);
+		$content = self::imageReplace($content);
+
+		// Run the HTML sanitizer
+		//
+		// Note that this should be done AFTER the call to `WFText::imageReplace`
+		// but BEFORE the read-more and emoji checks
+		$content = $sanitizer->sanitize($content);
+
+		// Replace emoji
+		//$emoji = new Emoji();
+		//$content = $emoji->parseText($content);
+
+		// Do the read-more check
+		if ($segmentID != 0) {
+			$content = self::doReadMoreCheck($content, $segmentID);
+		}
+
+		return $content;
     }
 
     public static function makeTextRenderableForEdit($content, $segmentID = 0) {
