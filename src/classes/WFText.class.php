@@ -1,31 +1,78 @@
 <?php 
 
+use \HtmlSanitizer\SanitizerBuilder;
+use \HtmlSanitizer\Sanitizer;
+use \WFHtmlSanitizer\WFExtension;
+
 class WFText {
-	public static function createDefaultPostSanitizer() {
-		$sanitizerBuilder = \HtmlSanitizer\SanitizerBuilder::createDefault();
-		$sanitizerBuilder->registerExtension(new \WFHtmlSanitizer\WFExtension());
+	public static function createBaseSanitizer(array $options = []): Sanitizer {
+		/**
+		 * Creates a strict HtmlSanitizer for post content, optionally overriding
+		 * the base configuration provided by this function with the passed-in
+		 * options.
+		 * 
+		 * @param options HtmlSanitizer option overrides
+		 * @return A configured HtmlSanitizer
+		 */
 
-		return $sanitizerBuilder->build([
-			'extensions' => [
-				// Selected HtmlSanitizer defaults
-				'basic', 'list', 'image', 'code', 'details', 'extra',
+		$options = array_merge(
+			// Defaults
+			[
+				'tags' => [
+					'a' => [
+						'allowed_attributes' => ['id', 'class', 'href'],
+					],
 
-				// Waterfall extensions
-				'waterfall',
+					'img' => [
+						'allowed_attributes' => ['id', 'class', 'src', 'alt', 'title'],
+						'allowed_hosts' => [$_ENV['SITE_URL']],
+						'override_class' => '',
+						'preserve_classes' => false,
+					],
+				],
 			],
 
+			// Provided options after defaults
+			$options,
+
+			// Forceful override of provided options
+			[
+				'extensions' => [
+					// Selected HtmlSanitizer defaults
+					'basic', 'list', 'image', 'code', 'details', 'extra',
+
+					// Waterfall extensions
+					'waterfall',
+				],
+			],
+		);
+
+		$sanitizerBuilder = SanitizerBuilder::createDefault();
+		$sanitizerBuilder->registerExtension(new WFExtension());
+		return $sanitizerBuilder->build($options);
+	}
+
+	public static function createDefaultPostSanitizer(): Sanitizer {
+		/**
+		 * Create an HtmlSanitizer configured to validate and sanitize the Parsedown
+		 * output from a post or page object that is already stored in the database.
+		 *
+		 * @return A configured HtmlSanitizer
+		 */
+
+		return self::createBaseSanitizer([
 			'tags' => [
 				'a' => [
 					'allowed_attributes' => [
 						// Standard stuff
 						'href', 'id', 'class', 'width',
-						
+
 						// Mentions
 						'data-url-mentions',
-						
+
 						// Lightbox stuff
 						'data-caption', 'data-fancybox',
-					 ],					
+					 ],
 				],
 
 				'img' => [
@@ -39,7 +86,7 @@ class WFText {
 
 					// Always add the `img-fluid` class to images
 					'override_class' => "img-fluid",
-					
+
 					// Preserve the classes already on the image
 					'preserve_classes' => true,
 				],
