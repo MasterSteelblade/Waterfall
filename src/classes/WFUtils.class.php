@@ -178,7 +178,8 @@ class WFUtils {
             "internals",
             "waterfall",
             "theoverseerproject",
-            "departmentofapprovals"
+            "departmentofapprovals",
+			"unidentified-blog",
         );
         $blogName = WFUtils::urlFixer($blogName);
         $blogName = strtolower($blogName);

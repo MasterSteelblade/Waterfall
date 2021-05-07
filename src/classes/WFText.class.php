@@ -66,7 +66,7 @@ class WFText {
 		$content = $parsedown->text($content);
 
 		// Replace mentions and images
-		$content = self::mentionReplace($content);
+		$content = self::shorttagMentionRender($content);
 		$content = self::imageReplace($content);
 
 		// Run the HTML sanitizer
@@ -106,7 +106,7 @@ class WFText {
 		$content = $parsedown->text($content);
 
 		// Replace mentions and images
-		$content = self::mentionReplace($content);
+		$content = self::shorttagMentionRender($content);
 		$content = self::imageReplace($content);
 
 		// Run the HTML sanitizer
@@ -147,31 +147,82 @@ class WFText {
         return $content;
     }
 
+    public static function shorttagMentionRender($content) {
+		/**
+		 * Replace all MENTION short-tags in the content with a link to the blog
+		 * being mentioned.
+		 *
+		 * @param content The content to search and modify
+		 * @return The modified content
+		 */
 
-    public static function mentionReplace($content) {
-        $postText = $content;
-        preg_match_all('/{{MENTION:{{([0-9]+)}}}}/',$postText,$matches);
-        $matches = end($matches);
-        foreach ($matches as $match) {
-            $blogID = $match;
-            $blogID = ltrim($blogID, '{{MENTION:{{');
-            $blogID = rtrim($blogID, '}}}}');
-            $blog = new Blog($blogID);
-            if (!isset($blog->failed)) {
-                $blogName = $blog->blogName;
-                $postText = str_replace('{{MENTION:{{'.$match.'}}}}', '<a href="https://'.$blogName.'.'.$_ENV['SITE_URL'].'" data-url-mentions="'.$blogName.'">@'.$blogName.'</a>', $postText);
+		$replacements = array();
 
-            } else {
-                $blogName = 'UnidentifiedBlog';
-                $postText = str_replace('{{MENTION:{{'.$match.'}}}}', '<a href="https://staff.'.$_ENV['SITE_URL'].'" data-url-mentions="'.$blogName.'">@'.$blogName.'</a>', $postText);
+		$match_regex = '|{{MENTION:{{([0-9]+)}}}}|';
+		if (preg_match($match_regex, $content, $matches)) {
+			foreach ($matches as $i => $match) {
+				if ($i == 0) continue;
 
-            }
-            $postText = str_replace('{{MENTION:{{'.$match.'}}}}', '<a href="https://'.$blogName.'.'.$_ENV['SITE_URL'].'" data-url-mentions="'.$blogName.'">@'.$blogName.'</a>', $postText);
-        }
+				$blogID = intval($match) ?? 0;
+				$blog = new Blog($blogID);
 
+				// If we have a valid blog, add an entry to the `replacements` array
+				if ($blogID > 0 && isset($blog) && !$blog->failed) {
+					$replacements[strval($blogID)] = $blog;
+				}
+			}
+		}
+		
+		// For each entry in the `replacements` array …
+		foreach ($replacements as $strBlogID => $blog) {
+			// … construct a link to the mentioned blog …
+			$mentionDoc = new \DOMDocument("1.0");
+			$mentionLink = $mentionDoc->createElement('a');
+			$mentionDoc->appendChild($mentionLink);
+			$mentionLink->nodeValue = "@{$blog->blogName}";
+			$mentionLink->setAttribute('href', $blog->getBlogURL());
+			$mentionLink->setAttribute('data-url-mentions', $blog->blogName);
 
-        return $postText;
-    }
+			// … dump that link element as XML …
+			$replacement_text = $mentionDoc->saveXML($mentionLink);
+
+			// … create a pattern to do the replacement with …
+			$replacement_pattern = '{{MENTION:{{' . strval(intval($strBlogID)) . '}}}}';
+
+			// … and replace all occurrences in our `$content` with the link
+			$content = str_replace($replacement_pattern, $replacement_text, $content);
+		}
+		
+		// Now, we want to scan for any MENTION short-tags left over (which will be
+		// the result of an invalid blog), and replace them with a mention link
+		// pointing to `unidentified-blog`.
+		if (preg_match($match_regex, $content, $matches)) {
+			// Construct a link to the `unidentified-blog` …
+			$mentionDoc = new \DOMDocument("1.0");
+			$mentionLink = $mentionDoc->createElement('a');
+			$mentionDoc->appendChild($mentionLink);
+			$mentionLink->nodeValue = "@unidentified-blog";
+			$mentionLink->setAttribute('href', "https://unidentified-blog." . $_ENV['SITE_URL'] . "/");
+			$mentionLink->setAttribute('data-url-mentions', 'unidentified-blog');
+
+			// … dump that link element as XML …
+			$replacement_text = $mentionDoc->saveXML($mentionLink);
+
+			// … iterate over our matches …
+			foreach ($matches as $i => $match) {
+				if ($i == 0) continue;
+
+				// … create a pattern to do the replacement with …
+				$replacement_pattern = '{{MENTION:{{' . $match . '}}}}';
+
+				// … and replace all occurrences in our `$content` with the link
+				$content = str_replace($replacement_pattern, $replacement_text, $content);
+			}
+		}
+
+		// And with that, we're done!
+		return $content;
+	}
 
     public static function imageReplace($postText) {
         $detect = new Mobile_Detect;
