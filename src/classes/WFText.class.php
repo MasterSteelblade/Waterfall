@@ -183,7 +183,7 @@ class WFText {
 
 		// Replace mentions and images
 		$content = self::shorttagMentionRender($content);
-		$content = self::imageReplace($content);
+		$content = self::shorttagImageRender($content);
 
 		// Run the HTML sanitizer
 		//
@@ -223,7 +223,7 @@ class WFText {
 
 		// Replace mentions and images
 		$content = self::shorttagMentionRender($content);
-		$content = self::imageReplace($content);
+		$content = self::shorttagImageRender($content);
 
 		// Run the HTML sanitizer
 		//
@@ -416,38 +416,6 @@ class WFText {
 		return $content;
 	}
 
-    public static function imageReplace($postText) {
-        $detect = new Mobile_Detect;
-        if ( $detect->isMobile() ) {
-            $type = 'mobile';
-        } elseif ($detect->isTablet()) {
-            $type = 'tablet';
-        } else {
-            $type = 'desktop';
-        }
-        preg_match_all('/{{IMAGE:{{([0-9]+)}}}}/',$postText,$matches);
-        $matches = end($matches);
-        foreach ($matches as $match) {
-            
-            $imageID = $match;
-            $imageID = ltrim($imageID, '{{IMAGE:{{');
-            $imageID = rtrim($imageID, '}}}}');
-            $img1 = new WFImage($imageID);
-            $width = $img1->getDimension('width');
-
-            $rid = WFUtils::generateRandomString(12);
-
-            if ($width < 810) { // CHECK LATER
-                $str = '<a class="mx-auto" data-caption="'.$img1->getCaption().'" data-fancybox="'.$rid.'" width="'.$width.'" href="'.$img1->getPath('full').'"><img class="mx-auto img-fluid" width="'.$width.'" data-image-id="'.$img1->ID.'" alt="'.$img1->data['description'].'" title="'.$img1->data['caption'].'" src="'.$img1->getPath('full').'"></a>';
-            } else {
-                $str = '<a data-caption="'.$img1->getCaption().'" data-fancybox="'.$rid.'" href="'.$img1->getPath('full').'"><img class="img-fluid w-100" data-image-id="'.$img1->ID.'" alt="'.$img1->data['description'].'" title="'.$img1->data['caption'].'" src="'.$img1->getPath($type).'"></a>';
-            }
-            $postText = str_replace('{{IMAGE:{{'.$match.'}}}}', $str, $postText);
-        }
-        return $postText;
-
-    }
-
 	public static function shorttagReadMoreRender($postContent, $segmentID) {
 		/**
 		 * Searches for a READMORE shortcode within the content of the post, adding
@@ -537,6 +505,85 @@ class WFText {
 		libxml_use_internal_errors($libxmlPreviousErrorMode);
 
 		return $postContent;
+	}
+
+	public static function shorttagImageRender($content) {
+		/**
+		 * Replace all IMAGE short-tags in the content with the embedded image.
+		 *
+		 * @param content The content to search and modify
+		 * @return The modified content
+		 */
+		
+		// Turn on "user error handling" for LibXML, storing the old value so we
+		// can flip it back at the end of the function
+		$libxmlPreviousErrorMode = libxml_use_internal_errors(true);
+
+		// Device detection, for choosing a resolution
+		$deviceDetect = new \Mobile_Detect();
+		$deviceType = "desktop";
+		if ($deviceDetect->isMobile()) {
+			$deviceType = "mobile";
+		} elseif ($deviceDetect->isTablet()) {
+			$deviceType = "tablet";
+		}
+
+		// Initialise the replacement data array
+		$replacements = array();
+
+		// Start matching
+		$match_regex = '|{{IMAGE:{{([0-9]+)}}}}|';
+		if (preg_match($match_regex, $content, $matches)) {
+			foreach ($matches as $i => $match) {
+				if ($i == 0) continue;
+
+				$imageID = intval($match) ?? 0;
+				$replacements[strval($imageID)] = new WFImage($imageID);
+			}
+		}
+
+		// For each entry in the `replacements` array …
+		foreach ($replacements as $strImageID => $image) {
+			// … grab an ID for the lightbox …
+			$rid = WFUtils::generateRandomString(12);
+
+			// … construct an image container …
+			$imageDoc = new \DOMDocument("1.0");
+			$imageDoc->encoding = 'UTF-8';
+
+			// … a link to the image …
+			$imageLink = $imageDoc->createElement('a');
+			$imageDoc->appendChild($imageLink);
+			$imageLink->setAttribute('class', 'mx-auto');
+			$imageLink->setAttribute('href', $image->getPath('full'));
+			$imageLink->setAttribute('width', $image->getDimension('width'));
+			$imageLink->setAttribute('data-caption', $image->getCaption());
+			$imageLink->setAttribute('data-fancybox', $rid);
+
+			// … and the image element …
+			$imageElement = $imageDoc->createElement('img');
+			$imageLink->appendChild($imageElement);
+			$imageElement->setAttribute('class', "mx-auto img-fluid wf-imagetype-{$deviceType}");
+			$imageElement->setAttribute('src', $image->getPath($deviceType));
+			$imageElement->setAttribute('width', $image->getDimension('width'));
+			$imageElement->setAttribute('title', $image->data['caption']);
+			$imageElement->setAttribute('alt', $image->data['description']);
+			$imageElement->setAttribute('data-image-id', $image->ID);
+
+			// … dump the link (containing the image element) as XML …
+			$replacement_text = $imageDoc->saveXML($imageLink);
+
+			// … create a pattern to do the replacement with …
+			$replacement_pattern = '{{IMAGE:{{' . strval(intval($strImageID)) . '}}}}';
+
+			// … and replace all occurrences in our `$content` with the link
+			$content = str_replace($replacement_pattern, $replacement_text, $content);
+		}
+
+		// Reset the "user error handling" flag of LibXML.
+		libxml_use_internal_errors($libxmlPreviousErrorMode);
+
+		return $content;
 	}
 
     public static function getInlines($text) {
