@@ -94,6 +94,44 @@ class WFText {
 		]);
 	}
 
+	public static function createUntrustedPostSanitizer(): Sanitizer {
+		/**
+		 * Create an HtmlSanitizer configured to sanitize the living daylights out
+		 * of untrusted input submitted via the post/page creation or edit forms.
+		 * This configuration allows the bare minimum through the filter, and should
+		 * ALWAYS be used for untrusted user-provided content.
+		 *
+		 * @return A configured HtmlSanitizer
+		 */
+
+		return self::createBaseSanitizer([
+			'waterfall-shortcodes' => [
+				'enabled' => [
+					'image', 'mention', 'readmore',
+				],
+			],
+
+			'tags' => [
+				'a' => [
+					'allowed_attributes' => ['href', 'title'],
+				],
+
+				'img' => [
+					'allowed_attributes' => ['src', 'alt', 'title'],
+
+					// Only allow images loaded from our own servers to pass through the
+					// filter, and always force loading those images over HTTPS
+					'allowed_hosts' => [$_ENV['SITE_URL']],
+					'force_https' => true,
+
+					// Strip all provided classes from image elements
+					'override_class' => '',
+					'preserve_classes' => false,
+				],
+			],
+		]);
+	}
+
 	public static function createUntrustedContentSanitizer(): Sanitizer {
 		/**
 		 * Create an HtmlSanitizer configured to sanitize the living daylights out
@@ -252,7 +290,47 @@ class WFText {
 		return $content;
 	}
 
-    public static function shorttagMentionRender($content) {
+	public static function makeTextPostContentSafe($content) {
+		/**
+		 * Sanitizes the input HTML content (which is assumed to be untrusted, as it
+		 * is provided directly to us by the user's browser), and converts it to a
+		 * format suitable for storing in the database as the content of a post or
+		 * blog page.
+		 *
+		 * @param content Untrusted input HTML
+		 * @return Safe Markdown-formatted content for storage
+		 */
+
+		// Create an HTML to Markdown converter
+		$converter = new \League\HTMLToMarkdown\HtmlConverter([
+			'strip_tags' => true,
+		]);
+
+		// Create an "untrusted content" HTML sanitizer
+		$sanitizer = self::createUntrustedPostSanitizer();
+
+		// Convert line breaks to <br> tags
+		$content = nl2br($content);
+
+		// Run through the sanitizer.
+		//
+		// This will automatically convert the following to shortcodes:
+		//   - <img> tags pointing to site-hosted images
+		//   - <a> tags that are blog @mentions
+		//   - <hr> tags (to a read-more)
+		$content = $sanitizer->sanitize($content);
+
+		// Convert the sanitized HTML to Markdown
+		$content = $converter->convert($content);
+
+		// Yeet the Zalgo text into the sun, hopefully.
+		$content = preg_replace("~(?:[\p{M}]{1})([\p{M}])~uis", "", $content);
+
+		// And we're done!
+		return $content;
+	}
+
+	public static function shorttagMentionRender($content) {
 		/**
 		 * Replace all MENTION short-tags in the content with a link to the blog
 		 * being mentioned.
