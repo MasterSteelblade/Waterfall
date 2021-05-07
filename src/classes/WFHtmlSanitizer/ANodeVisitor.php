@@ -7,7 +7,6 @@ use HtmlSanitizer\Node\NodeInterface;
 use HtmlSanitizer\Visitor\AbstractNodeVisitor;
 use HtmlSanitizer\Visitor\NamedNodeVisitorInterface;
 use HtmlSanitizer\Visitor\HasChildrenNodeVisitorTrait;
-use HtmlSanitizer\Extension\Basic\Node\ANode;
 
 class ANodeVisitor extends AbstractNodeVisitor implements NamedNodeVisitorInterface {
 	use HasChildrenNodeVisitorTrait;
