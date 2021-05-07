@@ -9,7 +9,7 @@ class QuotePost extends Post {
         $this->database = Postgres::getInstance();
         $this->createTags($postTags);
         $content = WFText::getInlines($postText);
-        $this->content = WFText::makeTextSafe($content[0]);
+        $this->content = WFText::makeTextPostContentSafe($content[0]);
         $this->inlineImages = $content[1];
         $postQuote = WFText::makeTextSafe($quote);
         $attribution = WFText::makeTextSafe($attrib);

@@ -169,7 +169,7 @@ class Post {
         $content = WFText::getInlines($this->content);
         $this->inlineImages = $content[1];
 
-        $this->content = WFText::makeTextSafe($content[0]);
+        $this->content = WFText::makeTextPostContentSafe($content[0]);
         $values = array($this->content, $this->postStatus, $this->database->php_to_postgres($this->getTagIDs($this->tags)), $this->database->php_to_postgres($this->imageIDs), $this->ID, $this->postTitle, $this->database->php_to_postgres($this->inlineImages), $this->timestamp);
         $res = $this->database->db_update("UPDATE posts SET post_content = $1, post_status = $2, tags = $3, image_id = $4, post_title = $6, inline_images = $7, timestamp = $8 WHERE id = $5", $values);
         
