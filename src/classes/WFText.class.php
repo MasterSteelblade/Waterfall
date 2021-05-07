@@ -338,6 +338,10 @@ class WFText {
 		 * @param content The content to search and modify
 		 * @return The modified content
 		 */
+		
+		// Turn on "user error handling" for LibXML, storing the old value so we
+		// can flip it back at the end of the function
+		$libxmlPreviousErrorMode = libxml_use_internal_errors(true);
 
 		$replacements = array();
 
@@ -360,6 +364,7 @@ class WFText {
 		foreach ($replacements as $strBlogID => $blog) {
 			// … construct a link to the mentioned blog …
 			$mentionDoc = new \DOMDocument("1.0");
+			$mentionDoc->encoding = 'UTF-8';
 			$mentionLink = $mentionDoc->createElement('a');
 			$mentionDoc->appendChild($mentionLink);
 			$mentionLink->nodeValue = "@{$blog->blogName}";
@@ -382,6 +387,7 @@ class WFText {
 		if (preg_match($match_regex, $content, $matches)) {
 			// Construct a link to the `unidentified-blog` …
 			$mentionDoc = new \DOMDocument("1.0");
+			$mentionDoc->encoding = 'UTF-8';
 			$mentionLink = $mentionDoc->createElement('a');
 			$mentionDoc->appendChild($mentionLink);
 			$mentionLink->nodeValue = "@unidentified-blog";
@@ -402,6 +408,9 @@ class WFText {
 				$content = str_replace($replacement_pattern, $replacement_text, $content);
 			}
 		}
+
+		// Reset the "user error handling" flag of LibXML.
+		libxml_use_internal_errors($libxmlPreviousErrorMode);
 
 		// And with that, we're done!
 		return $content;
