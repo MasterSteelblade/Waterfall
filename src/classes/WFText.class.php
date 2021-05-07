@@ -88,30 +88,37 @@ class WFText {
     }
 
     public static function makeTextRenderableForEdit($content, $segmentID = 0) {
-        /** Makes text be HTML formatted. Not necesary, but for safety.
-        * @param content The content to make renderable.
-        * @return result The renderable HMTL.
-        */
-        //$result =  str_replace('\;', ';', $result);
-        $result = $content;
-        //$result = imageReplace($result, $type);
-        $result = str_replace('\"', '"', $result);
-        $result = str_replace("\'", "'", $result);
-        #$result = str_replace('"images/', '"https://'.$_ENV['SITE_URL'].'/images/', $result);
-        #$result = str_replace('"../images/', '"https://'.$_ENV['SITE_URL'].'/images/', $result);
-        $Parsedown = new Parsedown();
-        $Parsedown->setSafeMode(true);
-        $Parsedown->setBreaksEnabled(true);
-        $result = $Parsedown->text($result);
-        $result = WFText::mentionReplace($result);
-        $result = WFText::imageReplace($result);
-        $result = str_replace('{{READMORE}}', '<hr>', $result);
+        /**
+		 * Makes the text of a post segment (or blog page) renderable by the 
+		 * post/page text editor, including HTML sanitization.
+		 * 
+		 * @param content The content to make renderable.
+         * @return The renderable HTML.
+         */
 
-        $result = str_replace('img src', 'img class="img-fluid" src', $result);
-        $result = str_replace('img  src', 'img class="img-fluid" src', $result);
-        $result = str_replace('\\', '', $result);
+		// Create a Parsedown instance
+		$parsedown = (new Parsedown())->setSafeMode(true)->setBreaksEnabled(true);
 
-        return $result;
+		// Create an HtmlSanitizer
+		$sanitizer = self::createDefaultPostSanitizer();
+
+		// Run Parsedown on the input
+		$content = $parsedown->text($content);
+
+		// Replace mentions and images
+		$content = self::mentionReplace($content);
+		$content = self::imageReplace($content);
+
+		// Run the HTML sanitizer
+		//
+		// Note that this should be done AFTER the call to `WFText::imageReplace`
+		// but BEFORE the read-more <hr> replacement below
+		$content = $sanitizer->sanitize($content);
+
+		// Replace read-more with a <hr>
+		$content = str_replace('{{READMORE}}', '<hr>', $content);
+
+		return $content;
     }
       
     public static function makeTextStripped($content, $segmentID = 0) {
