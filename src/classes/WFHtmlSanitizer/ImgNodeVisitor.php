@@ -19,7 +19,18 @@ class ImgNodeVisitor extends AbstractNodeVisitor implements NamedNodeVisitorInte
 	protected function createNode(\DOMNode $domNode, Cursor $cursor): NodeInterface {
 		$node = new ImgNode($cursor->node);
 
-		if ($this->config['override_class'] !== null) {
+		// Do we have image shortcoding enabled?
+		if (array_key_exists('enabled', $this->config['waterfall-shortcodes']) && in_array('image', $this->config['waterfall-shortcodes']['enabled'] ?? [])) {
+			// Does this image have a `data-image-id` attribute?
+			if (!empty($imageID = $this->getAttribute($domNode, 'data-image-id'))) {
+				// Yes it does, let's shortcode it
+				$newNode = new ShortcodeNode($cursor->node);
+				$newNode->setShortcode('{{IMAGE:{{' . $imageID . '}}}}');
+				return $newNode;
+			}
+		}
+
+		if (array_key_exists('override_class', $this->config) && $this->config['override_class'] !== null) {
 			$new_classes = $this->config['override_class'];
 
 			// If our configured `override_class` is _not_ an array, then treat it as
@@ -29,7 +40,7 @@ class ImgNodeVisitor extends AbstractNodeVisitor implements NamedNodeVisitorInte
 			}
 
 			// If we're preserving existing classes on the element …
-			if ($this->config['preserve_classes'] === true) {
+			if (array_key_exists('preserve_classes', $this->config) && $this->config['preserve_classes']) {
 				// … explode the existing class list …
 				$existing_classes = explode(" ", $this->getAttribute($domNode, 'class'));
 				// … and merge that with the new class list

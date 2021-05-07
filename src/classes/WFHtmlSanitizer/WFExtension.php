@@ -26,7 +26,7 @@ class WFExtension implements ExtensionInterface {
 
 	public function createNodeVisitors(array $config = []): array {
 		return [
-			'img' => new ImgNodeVisitor($config['tags']['img'] ?? []),
+			'img' => new ImgNodeVisitor(array_merge($config['tags']['img'] ?? [], ['waterfall-shortcodes' => $config['waterfall-shortcodes'] ?? []])),
 		];
 	}
 }
