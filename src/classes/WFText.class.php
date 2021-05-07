@@ -197,7 +197,7 @@ class WFText {
 
 		// Do the read-more check
 		if ($segmentID != 0) {
-			$content = self::doReadMoreCheck($content, $segmentID);
+			$content = self::shorttagReadMoreRender($content, $segmentID);
 		}
 
 		return $content;
@@ -448,15 +448,96 @@ class WFText {
 
     }
 
-    public static function doReadMoreCheck($postContent, $segmentID) {
-        if (strpos($postContent, '{{READMORE}}') !== false) {
-          $postContent = str_replace('{{READMORE}}', '<button class="btn btn-light btn-sm btn-block" type="button" data-toggle="collapse" data-target="#postSeg'.$segmentID.'" aria-expanded="false" aria-controls="'.$segmentID.'">
-          Read More
-        </button><div class="collapse" id="postSeg'.$segmentID.'">', $postContent);
-        $postContent = $postContent.'</div>';
-        }
-        return $postContent;
-      }
+	public static function shorttagReadMoreRender($postContent, $segmentID) {
+		/**
+		 * Searches for a READMORE shortcode within the content of the post, adding
+		 * the toggle button and putting everything after the READMORE shortcode
+		 * within a container element. Does nothing if there is not a READMORE
+		 * shortcode in the post content.
+		 *
+		 * @param content The content to search and modify
+		 * @return The modified content
+		 */
+
+		// Turn on "user error handling" for LibXML.
+		//
+		// Practically, this lets us ignore the (non-fatal) warnings that LibXML
+		// spews when parsing slightly-malformed HTML - like, when there's an end
+		// tag but not a start tag. These errors occur all the time with data that
+		// comes from users, so let's just ignore the bloody things.
+		//
+		// Storing the value of this so it can be put back to it's old value when
+		// we're done here.
+		$libxmlPreviousErrorMode = libxml_use_internal_errors(true);
+
+		if (strpos($postContent, '{{READMORE}}') !== false) {
+			// Create an instance of the default sanitizer
+			$sanitizer = self::createDefaultPostSanitizer();
+
+			// Split the post content, so that everything BEFORE the read-more marker
+			// is in `$contentPre`, and everything AFTER is in `$contentPost` - this
+			// helpfully excludes the marker shortcode itself.
+			list($contentPre, $contentPost) = explode("{{READMORE}}", $postContent, 2);
+
+			// Create a DOMDocument from a normal sanitize of the `$contentPost` section
+			$contentPreDoc = new \DOMDocument();
+			$contentPreDoc->encoding = 'UTF-8';
+			$contentPreDoc->loadHTML(
+				$sanitizer->sanitize($contentPre),
+				LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD | LIBXML_NOXMLDECL | LIBXML_NOWARNING,
+			);
+
+			// Create a DOMDocument from a normal sanitize of the `$contentPost` section
+			$contentPostDoc = new \DOMDocument();
+			$contentPostDoc->encoding = 'UTF-8';
+			$contentPostDoc->loadHTML(
+				$sanitizer->sanitize($contentPost),
+				LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD | LIBXML_NOXMLDECL | LIBXML_NOWARNING,
+			);
+
+			// Create the DOMDocument to use to construct the show/hide button and
+			// the read-more content container
+			$readMoreDoc = new \DOMDocument("1.0");
+			$readMoreDoc->encoding = 'UTF-8';
+
+			// Construct the button
+			$buttonElement = $readMoreDoc->createElement('button');
+			$readMoreDoc->appendChild($buttonElement);
+			$buttonElement->nodeValue = \L::string_read_more;
+			$buttonElement->setAttribute('class', "btn btn-light btn-sm btn-block");
+			$buttonElement->setAttribute('type', 'button');
+			$buttonElement->setAttribute('data-toggle', 'collapse');
+			$buttonElement->setAttribute('data-target', "#postReadMore{$segmentID}");
+			$buttonElement->setAttribute('aria-expanded', 'false');
+			$buttonElement->setAttribute('aria-controls', "postReadMore{$segmentID}");
+
+			// Construct the read more container
+			$containerElement = $readMoreDoc->createElement('div');
+			$readMoreDoc->appendChild($containerElement);
+			$containerElement->setAttribute('id', "postReadMore{$segmentID}");
+			$containerElement->setAttribute('class', 'collapse');
+			
+			// Add the child nodes from `$contentPostDoc` into the `$containerElement`
+			foreach ($contentPostDoc->childNodes as $cid => $child) {
+				$childElement = $contentPostDoc->removeChild($child);
+				$containerElement->appendChild($readMoreDoc->importNode($childElement, true));
+			}
+
+			// Set `$postContent` to the combination of `$contentPre` (which is
+			// everything BEFORE the read-more marker) and the HTML dump of the 
+			// `$readMoreDoc` (which contains the show/hide button and the container
+			// that holds everything AFTER the read-more marker).
+			$postContent = implode("\n", [
+				$contentPreDoc->saveHTML(),
+				$readMoreDoc->saveHTML(),
+			]);
+		}
+
+		// Reset the "user error handling" flag of LibXML.
+		libxml_use_internal_errors($libxmlPreviousErrorMode);
+
+		return $postContent;
+	}
 
     public static function getInlines($text) {
         $database = Postgres::getInstance();
