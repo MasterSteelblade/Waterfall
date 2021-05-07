@@ -94,6 +94,37 @@ class WFText {
 		]);
 	}
 
+	public static function createUntrustedContentSanitizer(): Sanitizer {
+		/**
+		 * Create an HtmlSanitizer configured to sanitize the living daylights out
+		 * of untrusted input. This sanitizer should always be used for untrusted
+		 * input that is not being used for blog post/page content.
+		 *
+		 * @return A configured HtmlSanitizer
+		 */
+
+		return self::createBaseSanitizer([
+			'tags' => [
+				'a' => [
+					'allowed_attributes' => ['href', 'title'],
+				],
+
+				'img' => [
+					'allowed_attributes' => ['src', 'alt', 'title'],
+
+					// Only allow images loaded from our own servers to pass through the
+					// filter, and always force loading those images over HTTPS
+					'allowed_hosts' => [$_ENV['SITE_URL']],
+					'force_https' => true,
+
+					// Strip all provided classes from image elements
+					'override_class' => '',
+					'preserve_classes' => false,
+				],
+			],
+		]);
+	}
+
     public static function makeTextRenderable($content, $segmentID = 0) {
         /**
 		 * Makes the text of a post segment (or blog page) renderable by the UI,
