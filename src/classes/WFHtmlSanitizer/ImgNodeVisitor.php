@@ -28,12 +28,27 @@ class ImgNodeVisitor extends AbstractNodeVisitor implements NamedNodeVisitorInte
 				$new_classes = explode(" ", strval($new_classes));
 			}
 
+			// If we're preserving existing classes on the element …
 			if ($this->config['preserve_classes'] === true) {
+				// … explode the existing class list …
 				$existing_classes = explode(" ", $this->getAttribute($domNode, 'class'));
-				$new_classes = array_unique(array_merge($new_classes, $existing_classes));
+				// … and merge that with the new class list
+				$new_classes = array_merge($new_classes, $existing_classes);
 			}
 
-			$node->setAttribute('class', implode(" ", $new_classes));
+			// Filter out empty values, and remove duplicates, leaving us with a
+			// clean list of classes to apply to the target element
+			$new_classes = array_unique(array_filter($new_classes));
+			
+			if (empty($new_classes)) {
+				// If we have no classes, remove the class attribute - if we don't do
+				// this, the classes that were already on the elemnet will remain, even
+				// in the case of `preserve_classes` not being `true`
+				$node->removeAttribute('class');
+			} else {
+				// But if we do have classes, set the element's class attribute
+				$node->setAttribute('class', implode(" ", $new_classes));
+			}
 		}
 
 		return $node;
