@@ -163,14 +163,14 @@ class WFText {
 		]);
 	}
 
-    public static function makeTextRenderable($content, $segmentID = 0) {
-        /**
+	public static function makeTextRenderable($content, $segmentID = 0) {
+		/**
 		 * Makes the text of a post segment (or blog page) renderable by the UI,
 		 * including HTML sanitization.
 		 * 
 		 * @param content The content to make renderable.
-         * @return The renderable HTML.
-         */
+		 * @return The renderable HTML.
+		 */
 
 		// Create a Parsedown instance
 		$parsedown = (new Parsedown())->setSafeMode(true)->setBreaksEnabled(true);
@@ -283,10 +283,10 @@ class WFText {
 		// strip *everything*, which is what we want.
 		$sanitizer = \HtmlSanitizer\Sanitizer::create(['extensions' => []]);
 		$content = $sanitizer->sanitize($content);
-		
+
 		// Yeet the Zalgo text into the sun, hopefully.
 		$content = preg_replace("~(?:[\p{M}]{1})([\p{M}])~uis", "", $content);
-		
+
 		return $content;
 	}
 
@@ -355,7 +355,7 @@ class WFText {
 				}
 			}
 		}
-		
+
 		// For each entry in the `replacements` array …
 		foreach ($replacements as $strBlogID => $blog) {
 			// … construct a link to the mentioned blog …
@@ -375,7 +375,7 @@ class WFText {
 			// … and replace all occurrences in our `$content` with the link
 			$content = str_replace($replacement_pattern, $replacement_text, $content);
 		}
-		
+
 		// Now, we want to scan for any MENTION short-tags left over (which will be
 		// the result of an invalid blog), and replace them with a mention link
 		// pointing to `unidentified-blog`.
@@ -506,11 +506,7 @@ class WFText {
     return array($text, $inlineImageIDs);
     }
 
-    public static function is_base64($s)
-    {
-          return (bool) preg_match('/^[a-zA-Z0-9\/\r\n+]*={0,2}$/', $s);
-    }
-
-
-
+	public static function is_base64($s) {
+		return (bool) preg_match('/^[a-zA-Z0-9\/\r\n+]+=*$/', $s);
+	}
 }
