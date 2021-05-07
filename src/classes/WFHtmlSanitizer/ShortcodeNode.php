@@ -13,8 +13,17 @@ class ShortcodeNode extends AbstractNode
 	public function setShortcode(string $shortcode) {
 		$this->shortcode = $shortcode;
 	}
-	
+
+	public bool $containShortcode = false;
+	public function setContainShortcode(bool $containShortcode) {
+		$this->containShortcode = $containShortcode;
+	}
+
 	public function render(): string {
+		if ($this->containShortcode) {
+			return "<p>{$this->shortcode}</p>";
+		}
+
 		return $this->shortcode;
 	}
 }

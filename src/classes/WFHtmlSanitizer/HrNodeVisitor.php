@@ -24,6 +24,7 @@ class HrNodeVisitor extends AbstractNodeVisitor implements NamedNodeVisitorInter
 			// Yes we do, let's shortcode it
 			$newNode = new ShortcodeNode($cursor->node);
 			$newNode->setShortcode('{{READMORE}}');
+			$newNode->setContainShortcode(true);
 			return $newNode;
 		}
 
