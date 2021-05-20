@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use \HtmlSanitizer\SanitizerBuilder;
 use \HtmlSanitizer\Sanitizer;
@@ -10,7 +10,7 @@ class WFText {
 		 * Creates a strict HtmlSanitizer for post content, optionally overriding
 		 * the base configuration provided by this function with the passed-in
 		 * options.
-		 * 
+		 *
 		 * @param options HtmlSanitizer option overrides
 		 * @return A configured HtmlSanitizer
 		 */
@@ -167,7 +167,7 @@ class WFText {
 		/**
 		 * Makes the text of a post segment (or blog page) renderable by the UI,
 		 * including HTML sanitization.
-		 * 
+		 *
 		 * @param content The content to make renderable.
 		 * @return The renderable HTML.
 		 */
@@ -204,13 +204,13 @@ class WFText {
     }
 
     public static function makeTextRenderableForEdit($content, $segmentID = 0) {
-        /**
-		 * Makes the text of a post segment (or blog page) renderable by the 
+		/**
+		 * Makes the text of a post segment (or blog page) renderable by the
 		 * post/page text editor, including HTML sanitization.
-		 * 
+		 *
 		 * @param content The content to make renderable.
-         * @return The renderable HTML.
-         */
+		 * @return The renderable HTML.
+		 */
 
 		// Create a Parsedown instance
 		$parsedown = (new Parsedown())->setSafeMode(true)->setBreaksEnabled(true);
@@ -236,16 +236,16 @@ class WFText {
 
 		return $content;
     }
-      
+
     public static function makeTextStripped($content, $segmentID = 0) {
-        /**
+		/**
 		 * Renders a stripped text-only version of the text of a post/page,
 		 * suitable for use in things like Open Graph description tags.
-		 * 
+		 *
 		 * @param content The content to make renderable.
-         * @return The rendered plain text.
-         */
-		
+		 * @return The rendered plain text.
+		 */
+
 		// Run Parsedown on the input
 		$parsedown = (new Parsedown())->setSafeMode(true)->setBreaksEnabled(true);
 		$content = $parsedown->text($content);
@@ -256,13 +256,13 @@ class WFText {
         // strip *everything*, which is what we want.
         $sanitizer = \HtmlSanitizer\Sanitizer::create(['extensions' => []]);
         $content = $sanitizer->sanitize($content);
-		
+
 		// Replace all linebreaks with a single space.
 		$content = str_replace("\n", " ", $content);
 
         return $content;
     }
-	
+
 	public static function makeTextSafe($content) {
 		/**
 		 * Makes the input content "safe" for rendering in most places in the user
@@ -276,7 +276,7 @@ class WFText {
 		 * @param content The content to make "safe"
 		 * @return The "safe" text
 		 */
-		
+
 		// Strip out all HTML.
 		//
 		// HtmlSanitizer at it's default settings (with no extensions) will
@@ -338,7 +338,7 @@ class WFText {
 		 * @param content The content to search and modify
 		 * @return The modified content
 		 */
-		
+
 		// Turn on "user error handling" for LibXML, storing the old value so we
 		// can flip it back at the end of the function
 		$libxmlPreviousErrorMode = libxml_use_internal_errors(true);
@@ -484,7 +484,7 @@ class WFText {
 			$readMoreDoc->appendChild($containerElement);
 			$containerElement->setAttribute('id', "postReadMore{$segmentID}");
 			$containerElement->setAttribute('class', 'collapse');
-			
+
 			// Add the child nodes from `$contentPostDoc` into the `$containerElement`
 			foreach ($contentPostDoc->childNodes as $cid => $child) {
 				$childElement = $contentPostDoc->removeChild($child);
@@ -492,7 +492,7 @@ class WFText {
 			}
 
 			// Set `$postContent` to the combination of `$contentPre` (which is
-			// everything BEFORE the read-more marker) and the HTML dump of the 
+			// everything BEFORE the read-more marker) and the HTML dump of the
 			// `$readMoreDoc` (which contains the show/hide button and the container
 			// that holds everything AFTER the read-more marker).
 			$postContent = implode("\n", [
@@ -514,7 +514,7 @@ class WFText {
 		 * @param content The content to search and modify
 		 * @return The modified content
 		 */
-		
+
 		// Turn on "user error handling" for LibXML, storing the old value so we
 		// can flip it back at the end of the function
 		$libxmlPreviousErrorMode = libxml_use_internal_errors(true);
@@ -586,61 +586,68 @@ class WFText {
 		return $content;
 	}
 
-    public static function getInlines($text) {
-        $database = Postgres::getInstance();
-        $htmlDom = new DOMDocument();
-        $htmlDom->loadHTML('<?xml encoding="utf-8" ?>'.$text, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
-        $htmlDomRef = new DOMDocument();
-        $htmlDomRef->loadHTML('<?xml encoding="utf-8" ?>'.$text, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
-        $imageTags = $htmlDom->getElementsByTagName('img');
-        $inlineImageIDs = array();
-        $imageRefs = $htmlDomRef->getElementsByTagName('img');
+	public static function getInlines($text) {
+		$database = Postgres::getInstance();
+		$htmlDom = new DOMDocument();
+		$htmlDom->loadHTML('<?xml encoding="utf-8" ?>'.$text, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+		$htmlDomRef = new DOMDocument();
+		$htmlDomRef->loadHTML('<?xml encoding="utf-8" ?>'.$text, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+		$imageTags = $htmlDom->getElementsByTagName('img');
+		$inlineImageIDs = array();
+		$imageRefs = $htmlDomRef->getElementsByTagName('img');
 
-        foreach($imageRefs as $key => $imageTag){
-            $extractedImage = $imageTag->getAttribute('src');
-            if (base64_decode($extractedImage) !== false) {
-                $randStr = WFUtils::generateRandomString(6);
-                file_put_contents('/tmp/phpfilepostimg'.$randStr, file_get_contents($extractedImage));
-                $ch = curl_init();
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-                $server = WFUtils::pickServer();
-                $url = $server.'/image/add';
-                curl_setopt($ch, CURLOPT_URL, $url);
-                $postData = array();
-                $postData['images'] = new CurlFile("/tmp/phpfilepostimg".$randStr);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
-                curl_setopt($ch,CURLOPT_TIMEOUT,100);
-                $chResponse = curl_exec($ch);
-                $json = json_decode($chResponse, true);
-                unset($data);
-                $data = array();
-                if (isset($json['imgData'])) {
-                    $data = $json['imgData'];
-                    $onServer = array($json['onServer']);
-                    $values = array(json_encode($data), 'f', $database->php_to_postgres($onServer));
-                    $imageID = $database->db_insert("INSERT INTO images (paths, is_art, servers, version) VALUES ($1,$2,$3,2)", $values);
-                } else {
-                    $imageID = 0;
-                    $failedImages[] = $extractedImage;
+		foreach($imageRefs as $key => $imageTag){
+			$extractedImage = $imageTag->getAttribute('src');
+			if (base64_decode($extractedImage) !== false) {
+				$randStr = WFUtils::generateRandomString(6);
+				file_put_contents('/tmp/phpfilepostimg'.$randStr, file_get_contents($extractedImage));
+				$ch = curl_init();
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+				$server = WFUtils::pickServer();
+				$url = $server.'/image/add';
+				curl_setopt($ch, CURLOPT_URL, $url);
+				$postData = array();
+				$postData['images'] = new CurlFile("/tmp/phpfilepostimg".$randStr);
+				curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
+				curl_setopt($ch,CURLOPT_TIMEOUT,100);
+				$chResponse = curl_exec($ch);
+				$json = json_decode($chResponse, true);
+				unset($data);
+				$data = array();
+				if (isset($json['imgData'])) {
+					$data = $json['imgData'];
+					$onServer = array($json['onServer']);
+					$values = array(json_encode($data), 'f', $database->php_to_postgres($onServer));
+					$imageID = $database->db_insert("INSERT INTO images (paths, is_art, servers, version) VALUES ($1,$2,$3,2)", $values);
+				} else {
+					$imageID = 0;
+					$failedImages[] = $extractedImage;
                 }
-                $inlineImageIDs[] = $imageID;
-                $imageText = $htmlDom->createTextNode('{{IMAGE:{{'.$imageID.'}}}}');
-                $imageTags[0]->parentNode->replaceChild($imageText, $imageTags[0]);
-            } elseif ($imageTag->hasAttribute('data-image-id')) {
-                $imageID = $imageTag->getAttribute('data-image-id');
-                $inlineImageIDs[] = $imageID;
-                $imageText = $htmlDom->createTextNode('{{IMAGE:{{'.$imageID.'}}}}');
-                $imageTags[0]->parentNode->replaceChild($imageText, $imageTags[0]);
-            }
-        }
-        foreach ($htmlDom->childNodes as $item)
-            if ($item->nodeType == XML_PI_NODE)
-                $htmlDom->removeChild($item); // remove hack
-        $htmlDom->encoding = 'UTF-8'; // insert proper
-        $text = $htmlDom->saveHTML();
 
-    
-    return array($text, $inlineImageIDs);
+				$inlineImageIDs[] = $imageID;
+				$imageText = $htmlDom->createTextNode('{{IMAGE:{{'.$imageID.'}}}}');
+				$imageTags[0]->parentNode->replaceChild($imageText, $imageTags[0]);
+
+			} elseif ($imageTag->hasAttribute('data-image-id')) {
+				$imageID = $imageTag->getAttribute('data-image-id');
+				$inlineImageIDs[] = $imageID;
+				$imageText = $htmlDom->createTextNode('{{IMAGE:{{'.$imageID.'}}}}');
+				$imageTags[0]->parentNode->replaceChild($imageText, $imageTags[0]);
+			}
+		}
+
+		// Remove hack
+		foreach ($htmlDom->childNodes as $item) {
+			if ($item->nodeType == XML_PI_NODE) {
+				$htmlDom->removeChild($item);
+			}
+		}
+
+		// Insert proper
+		$htmlDom->encoding = 'UTF-8';
+		$text = $htmlDom->saveHTML();
+
+		return array($text, $inlineImageIDs);
     }
 
 	public static function is_base64($s) {
