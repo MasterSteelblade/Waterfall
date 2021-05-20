@@ -1,6 +1,5 @@
 <?php
 declare(strict_types=1);
-require_once(dirname(dirname(__DIR__)) . "/vendor/autoload.php");
 
 use PHPUnit\Framework\TestCase;
 use HtmlSanitizer\SanitizerBuilder;
