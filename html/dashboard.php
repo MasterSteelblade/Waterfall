@@ -108,7 +108,11 @@ if (sizeof($posts) != 0) {
 <?php
 $combinedArray = array_merge($posts, $notes);
 function combinedSort($a, $b) {
-	return (intval($a->timestring) < intval($b->timestring));
+	$a_ts = intval($a->timestring);
+	$b_ts = intval($b->timestring);
+	
+	if ($a_ts == $b_ts) return 0;
+	return ($a_ts < $b_ts) ? 1 : -1;
 }
 usort($combinedArray, 'combinedSort');
 
