@@ -10,7 +10,7 @@ class Reblog extends Post {
         $this->createTags($postTags);
         $content = WFText::getInlines($postText);
 
-        $this->content = WFText::makeTextSafe($content[0]);
+        $this->content = WFText::makeTextPostContentSafe($content[0]);
         $this->inlineImages = $content[1];
         $this->onBlog = $onBlog;
         $this->postStatus = 'posted';

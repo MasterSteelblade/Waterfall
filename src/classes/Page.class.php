@@ -62,7 +62,7 @@ class Page {
         $this->onBlog = $onBlog;
         $content = WFText::getInlines($pageText);
         $this->content = str_replace('<hr>', '', $content[0]);
-        $this->content = WFText::makeTextSafe($this->content);
+        $this->content = WFText::makeTextPostContentSafe($this->content);
         $this->inlineImages = $content[1];
         $this->pageTitle = WFText::makeTextSafe($pageTitle);
         $this->url = WFUtils::urlFixer($pageURL);
@@ -82,7 +82,7 @@ class Page {
         $this->onBlog = $onBlog;
         $content = WFText::getInlines($pageText);
         $this->content = str_replace('<hr>', '', $content[0]);
-        $this->content = WFText::makeTextSafe($this->content);
+        $this->content = WFText::makeTextPostContentSafe($this->content);
         $this->inlineImages = $content[1];
         $this->pageTitle = WFText::makeTextSafe($pageTitle);
         $this->url = WFUtils::urlFixer($pageURL);

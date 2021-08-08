@@ -8,6 +8,34 @@
 */
 
 class WFUtils {
+	/** @var string[] RESTRICTED_BLOG_NAMES */
+	const RESTRICTED_BLOG_NAMES = [
+		"staff",
+		"mail",
+		"api",
+		"analytics",
+		"commissions",
+		"waterfall",
+		"glacier",
+		"security",
+		"www",
+		"testing",
+		"support",
+		"assets",
+		"media",
+		"cdn",
+		"labs",
+		"developers",
+		"dev",
+		"status",
+		"internal",
+		"internals",
+		"waterfall",
+		"theoverseerproject",
+		"departmentofapprovals",
+		"unidentified-blog",
+	];
+
     // All functions should be public static.
 
     public static function detectMobile() {
@@ -144,56 +172,34 @@ class WFUtils {
           }
     }
 
-    public static function blogNameCheck($blogName) {
-        /** Checks whether a blog name is taken or not. Runs through urlFixer().
-        *
-        * @param blogName The blog name.
-        * @return true if the name can be useD
-        * @return false if it's taken.
-        */
-        if (strlen($blogName) < 3) {
-            return false;
-        }
-        # Array of names we don't want them to be able to have. 
-        $restrictedArray = array(
-            "staff",
-            "mail",
-            "api",
-            "analytics",
-            "commissions",
-            "waterfall",
-            "glacier",
-            "security",
-            "www",
-            "testing",
-            "support",
-            "assets",
-            "media",
-            "cdn",
-            "labs",
-            "developers",
-            "dev",
-            "status",
-            "internal",
-            "internals",
-            "waterfall",
-            "theoverseerproject",
-            "departmentofapprovals"
-        );
-        $blogName = WFUtils::urlFixer($blogName);
-        $blogName = strtolower($blogName);
-        $database = Postgres::getInstance();
-        $query = "SELECT * FROM blogs WHERE blog_name = $1;";
-        $values = array($blogName);
-        $blogRow = $database->db_select($query, $values);
-        if ($blogRow) {
-            return false;
-        } elseif (in_array($blogName, $restrictedArray)) {
-            return false;
-        } else {
-            return true;
-        }  
-    }
+	public static function blogNameCheck(string $blogName) {
+		/**
+		 * Checks whether a blog name is taken or not. Runs through urlFixer().
+		 *
+		 * @param blogName The blog name
+		 * @return bool Whether the name can be used
+		 */
+
+		// Sanitize the blog name
+		$blogName = WFUtils::urlFixer($blogName);
+		$blogName = strtolower($blogName);
+
+		// Bail early if under three characters
+		if (strlen($blogName) < 3) {
+			return false;
+		}
+
+		// Bail early if it's a restricted name
+		if (in_array($blogName, self::RESTRICTED_BLOG_NAMES)) {
+			return false;
+		}
+
+		// Check the database for a blog with this name
+		$database = Postgres::getInstance();
+		$query = "SELECT * FROM blogs WHERE blog_name = $1;";
+		$blogRow = $database->db_select($query, [$blogName]);
+		return !$blogRow;
+	}
 
     public static function withinPercent($percentage, $desiredValue, $valueToCheck) {
         /** Checks whether a number is within a percentage range.

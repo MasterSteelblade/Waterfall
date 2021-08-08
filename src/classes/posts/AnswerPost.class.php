@@ -10,7 +10,7 @@ class AnswerPost extends Post {
         $this->database = Postgres::getInstance();
         $this->createTags($postTags);
         $content = WFText::getInlines($postText);
-        $this->content = WFText::makeTextSafe($content[0]);
+        $this->content = WFText::makeTextPostContentSafe($content[0]);
         $this->inlineImages = $content[1];
         $this->postTitle = '';
         $this->onBlog = $onBlog;
